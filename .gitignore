@@ -1,0 +1,8 @@
+information/config.json
+information/client_secret.json
+google/token.json
+information/guilds.json
+information/ranks.json
+google/credentialsOld.json
+google/credentials.json
+node_modules

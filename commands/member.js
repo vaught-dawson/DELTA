@@ -1,0 +1,40 @@
+const { getMemberData } = require('../functions/getMemberData.js');
+const { addMember } = require('../functions/addMember.js');
+const { removeMember } = require('../functions/removeMember.js');
+
+module.exports = {
+	name: 'member',
+	aliases: [ 'mbr' ],
+	description: 'Manage members.',
+	args: true,
+	usage: '<add/remove/info> <member name>',
+	guildOnly: true,
+	async execute(message, args, server) {
+		var subcommand = args.shift().toLowerCase();
+		var userId = 'name';
+		var userName = args[0];
+
+		if (message.mentions.members.size == 1) {
+			userId = message.mentions.members.first().id;
+			if (message.guild.members.fetch(userId).nickname) userName = (await message.member.fetch(userId)).nickname;
+			else userName = (await message.member.fetch(userId)).user.username;
+		} else if (args[0].length == 18 && !isNaN(args[0])) {
+			userId = args[0];
+			if (message.guild.members.fetch(userId).nickname) userName = (await message.member.fetch(userId)).nickname;
+			else userName = (await message.member.fetch(userId)).user.username;
+		}
+
+		if (args.length > 1)
+			return message.channel.send('Invalid arguments. Usage: `+member <add/remove/info> <member name>`');
+		switch (subcommand) {
+			case 'add':
+				return message.channel.send(await addMember(server.sheetId, userId, userName));
+			case 'remove':
+				return message.channel.send(await removeMember(server.sheetId, userId, userName));
+			case 'info':
+				return message.channel.send(await getMemberData(server.sheetId, userId, userName));
+			default:
+				return message.channel.send('Invalid arguments. Usage: `+member <add/remove/info> <member name>`');
+		}
+	}
+};

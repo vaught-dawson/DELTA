@@ -25,14 +25,23 @@ client.on('message', async (message) => {
 	if (message.channel.type != 'dm') {
 		//Checks if the guild & channel are valid
 		servers.guilds.forEach((guild) => {
-			if (guild.guildId == message.guild.id && guild.commandChannelId == message.channel.id) {
-				server = guild;
-				prefix = guild.prefix;
+			if (guild.guildId == message.guild.id) {
+				if (guild.commandChannelId == message.channel.id) {
+					server = guild;
+					prefix = guild.prefix;
+				} else if (guild.commandChannelId == null) {
+					server = guild;
+				}
 			}
 		});
-
 		if (server == null) return;
-		else if (!message.member.hasPermission('MANAGE_ROLES'))
+		if (server.commandChannelId == null) {
+			return message.channel.send(
+				'This server does not have a command channel set, notify the server owner to set this!'
+			);
+		}
+
+		if (!message.member.hasPermission('MANAGE_ROLES'))
 			return message.channel.send(
 				"You don't have the perms to run DELTA commands. You need permissions to `MANAGE_ROLES`."
 			);
@@ -76,6 +85,6 @@ client.on('message', async (message) => {
 });
 
 const { addGuild } = require('./functions/addGuild.js');
-client.on('guildCreate', guild => {
+client.on('guildCreate', (guild) => {
 	addGuild(guild);
-})
+});

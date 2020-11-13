@@ -9,8 +9,7 @@ module.exports = {
 	guildOnly: true,
 	async execute(message, args, server) {
 		if (args.length != 2)
-			return message.channel.send('Invalid arguments. Usage: `+currency <+/- monetary change> <member name>`');
-
+			return message.channel.send(`Invalid arguments! \nUsage: \`${server.prefix}${this.name} ${this.usage}\``);
 		var userId = 'name';
 		var monetaryChange = args[0];
 		var userName = args[1];

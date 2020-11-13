@@ -9,9 +9,7 @@ module.exports = {
 	guildOnly: true,
 	async execute(message, args, server) {
 		if (args.length != 3)
-			return message.channel.send(
-				'Invalid arguments. Usage: `+set <name/rank/subdiv/promo/status/steam/discord/currency> <member name> <data>`'
-			);
+			return message.channel.send(`Invalid arguments! \nUsage: \`${server.prefix}${this.name} ${this.usage}\``);
 		var userId = 'name';
 		var userName = args[1];
 		var subcommand = args[0].toLowerCase();

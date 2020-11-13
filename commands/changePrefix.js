@@ -15,6 +15,9 @@ module.exports = {
 				"You don't have the perms to change this! If this needs to be changed then talk to a server admin."
 			);
 
+		if (args.length > 1)
+			return message.channel.send(`Invalid arguments! \nUsage: \`${server.prefix}${this.name} ${this.usage}\``);
+
 		servers.guilds.forEach((guild) => {
 			if (server.name == guild.name) {
 				try {
@@ -23,7 +26,6 @@ module.exports = {
 					console.log(err);
 					return message.channel.send(`There was a problem changing the prefix to \`${args[0]}\`.`);
 				}
-				message.channel.send(`Successfully changed the prefix to \`${args[0]}\`.`);
 			}
 		});
 
@@ -33,5 +35,7 @@ module.exports = {
 				return message.channel.send('There was a problem saving to the config file.');
 			}
 		});
+
+		message.channel.send(`Successfully changed the prefix to \`${args[0]}\`.`);
 	}
 };

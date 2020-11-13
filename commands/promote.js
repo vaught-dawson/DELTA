@@ -8,7 +8,8 @@ module.exports = {
 	usage: '<member name>',
 	guildOnly: true,
 	async execute(message, args, server) {
-		if (args.length > 1) return message.channel.send('Invalid arguments. Usage: `+promote <member name>`');
+		if (args.length > 1)
+			return message.channel.send(`Invalid arguments! \nUsage: \`${server.prefix}${this.name} ${this.usage}\``);
 		var userId = 'name';
 		var userName = args[0];
 

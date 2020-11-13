@@ -9,7 +9,8 @@ module.exports = {
 	args: false,
 	guildOnly: true,
 	async execute(message, args, server) {
-		if (args.length > 0) return message.channel.send('Invalid arguments. Usage: `+members`');
+		if (args.length > 0)
+			return message.channel.send(`Invalid arguments! \nUsage: \`${server.prefix}${this.name} ${this.usage}\``);
 		var embed = new Discord.MessageEmbed({
 			color: 15105570,
 			thumbnail: { url: 'https://i.ibb.co/2MHY6wn/D-E-L-T-A-4.jpg' },

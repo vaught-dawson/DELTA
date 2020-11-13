@@ -25,7 +25,7 @@ module.exports = {
 		}
 
 		if (args.length > 1)
-			return message.channel.send('Invalid arguments. Usage: `+member <add/remove/info> <member name>`');
+			return message.channel.send(`Invalid arguments! \nUsage: \`${server.prefix}${this.name} ${this.usage}\``);
 		switch (subcommand) {
 			case 'add':
 				return message.channel.send(await addMember(server.sheetId, userId, userName));
@@ -34,7 +34,9 @@ module.exports = {
 			case 'info':
 				return message.channel.send(await getMemberData(server.sheetId, userId, userName));
 			default:
-				return message.channel.send('Invalid arguments. Usage: `+member <add/remove/info> <member name>`');
+				return message.channel.send(
+					`Invalid arguments! \nUsage: \`${server.prefix}${this.name} ${this.usage}\``
+				);
 		}
 	}
 };

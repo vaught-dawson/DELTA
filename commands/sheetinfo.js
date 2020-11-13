@@ -10,6 +10,12 @@ module.exports = {
 	usage: '<sheet name>',
 	guildOnly: true,
 	async execute(message, args, server) {
+		if (server.sheetId == null) {
+			return message.channel.send(
+				'This server does not have a sheet id set, notify the server owner to set this!'
+			);
+		}
+
 		//Combining the remaining arguments into a complete sheet name
 		var sheetName = '';
 		for (let i = 0; i < args.length; i++) {

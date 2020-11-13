@@ -87,4 +87,10 @@ client.on('message', async (message) => {
 const { addGuild } = require('./functions/addGuild.js');
 client.on('guildCreate', (guild) => {
 	addGuild(guild);
+	var owner = guild.owner;
+	if (owner != null) {
+		owner.user.send(
+			`DELTA has recently been added to \`${guild.name}\`. \nMake sure you set the command channel with \`+setchannel\`. \nAs well as your roster spreadsheet id with \`+setsheet\`!`
+		);
+	}
 });

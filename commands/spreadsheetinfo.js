@@ -9,6 +9,12 @@ module.exports = {
 	args: false,
 	guildOnly: true,
 	async execute(message, args, server) {
+		if (server.sheetId == null) {
+			return message.channel.send(
+				'This server does not have a sheet id set, notify the server owner to set this!'
+			);
+		}
+
 		var embed = new Discord.MessageEmbed({
 			color: 15105570,
 			title: await getSpreadsheetName(server.sheetId),

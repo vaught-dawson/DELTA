@@ -8,6 +8,12 @@ module.exports = {
 	usage: '<name/rank/subdiv/promo/status/steam/discord/currency> <member name> <data>',
 	guildOnly: true,
 	async execute(message, args, server) {
+		if (server.sheetId == null) {
+			return message.channel.send(
+				'This server does not have a sheet id set, notify the server owner to set this!'
+			);
+		}
+
 		if (args.length != 3)
 			return message.channel.send(`Invalid arguments! \nUsage: \`${server.prefix}${this.name} ${this.usage}\``);
 		var userId = 'name';

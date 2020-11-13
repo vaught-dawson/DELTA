@@ -14,6 +14,12 @@ module.exports = {
 		var userId = 'name';
 		var userName = args[0];
 
+		if (server.sheetId == null) {
+			return message.channel.send(
+				'This server does not have a sheet id set, notify the server owner to set this!'
+			);
+		}
+
 		if (message.mentions.members.size == 1) {
 			userId = message.mentions.members.first().id;
 			if (message.guild.members.fetch(userId).nickname) userName = (await message.member.fetch(userId)).nickname;

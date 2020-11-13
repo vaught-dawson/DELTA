@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 
 module.exports = {
 	name: 'info',
-	aliases: [],
+	aliases: [ 'info' ],
 	description: 'Gives info about DELTA.',
 	args: false,
 	guildOnly: false,

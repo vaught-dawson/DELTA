@@ -2,7 +2,7 @@ const { set } = require('../functions/set.js');
 
 module.exports = {
 	name: 'set',
-	aliases: [],
+	aliases: [ 'set' ],
 	description: 'Sets data of members.',
 	args: true,
 	usage: '<name/rank/subdiv/promo/status/steam/discord/currency> <member name> <data>',

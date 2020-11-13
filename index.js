@@ -17,10 +17,8 @@ client.login(TOKEN);
 client.on('ready', () => {
 	console.log(`Logged in as ${client.user.tag}!`);
 });
-
 client.on('message', async (message) => {
 	if (message.author.bot) return;
-
 	//Checks if the message isn't a dm
 	var server = null;
 	var prefix = '+';
@@ -76,3 +74,8 @@ client.on('message', async (message) => {
 		return message.channel.send('There was an error executing the command.');
 	}
 });
+
+const { addGuild } = require('./functions/addGuild.js');
+client.on('guildCreate', guild => {
+	addGuild(guild);
+})

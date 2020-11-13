@@ -2,7 +2,7 @@ const { demoteMember } = require('../functions/demoteMember.js');
 
 module.exports = {
 	name: 'demote',
-	aliases: [ 'dmt' ],
+	aliases: [ 'dmt', 'demo' ],
 	description: 'Demotes a member on the roster.',
 	args: true,
 	usage: '<member name>',

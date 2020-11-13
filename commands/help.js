@@ -1,4 +1,4 @@
-const { PREFIX } = require('../information/config.json');
+var { PREFIX } = require('../information/config.json');
 const Discord = require('discord.js');
 
 module.exports = {
@@ -11,17 +11,19 @@ module.exports = {
 		const { commands } = message.client;
 		const embed = new Discord.MessageEmbed();
 
+		if (!message.channel.type == 'dm') PREFIX = server.prefix;
+
 		if (!args.length) {
 			embed.color = 15105570;
 			embed.thumbnail = { url: 'https://i.ibb.co/2MHY6wn/D-E-L-T-A-4.jpg' };
 			embed.title = "Here's a list of all my commands:";
 			embed.footer = {
-				text: `You can send \`${server.prefix}help [command name]\` to get more info on a specific command!`,
+				text: `You can send \`${PREFIX}help [command name]\` to get more info on a specific command!`,
 				iconURL: 'https://i.ibb.co/Wzd001F/677a08d8682923ca8cb51fe48df38208.png'
 			};
 
 			commands.forEach((command) => {
-				embed.addField(`${server.prefix}${command.name}`, command.description, false);
+				embed.addField(`${PREFIX}${command.name}`, command.description, false);
 			});
 
 			return message.author
@@ -52,7 +54,7 @@ module.exports = {
 
 		if (command.aliases) embed.addField('Aliases:', command.aliases.join(', '), false);
 		if (command.description) embed.addField('Description:', command.description, false);
-		if (command.usage) embed.addField('Usage:', `+${command.name} ${command.usage}`);
+		if (command.usage) embed.addField('Usage:', `+${command.name} ${command.usage}`, false);
 
 		return message.channel.send(embed);
 	}

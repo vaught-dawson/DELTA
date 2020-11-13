@@ -2,7 +2,7 @@ const { promoteMember } = require('../functions/promoteMember.js');
 
 module.exports = {
 	name: 'promote',
-	aliases: [ 'pmt' ],
+	aliases: [ 'pmt', 'promo' ],
 	description: 'Promotes a member on the roster (Up to SGM).',
 	args: true,
 	usage: '<member name>',

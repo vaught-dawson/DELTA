@@ -1,5 +1,5 @@
 const fs = require('fs');
-const fileName = '.\\information\\guilds.json';
+const path = '.\\information\\guilds.json';
 const servers = require('../information/guilds.json');
 
 module.exports = {
@@ -27,7 +27,7 @@ module.exports = {
 			}
 		});
 
-		fs.writeFile(fileName, JSON.stringify(servers, null, 2), function writeJSON(err) {
+		fs.writeFile(path, JSON.stringify(servers, null, 2), function writeJSON(err) {
 			if (err) {
 				console.log(err);
 				return message.channel.send('There was a problem saving to the config file.');

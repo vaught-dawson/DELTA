@@ -12,7 +12,7 @@ module.exports = {
 	async execute(message, args, server) {
 		if (!message.member.hasPermission('ADMINISTRATOR'))
 			return message.channel.send(
-				"You don't have the perms to chage this! If this needs to be changed then talk to a server admin."
+				"You don't have the perms to change this! If this needs to be changed then talk to a server admin."
 			);
 
 		servers.guilds.forEach((guild) => {

@@ -3,7 +3,7 @@ const { changeCurrency } = require('../functions/changeCurrency.js');
 module.exports = {
 	name: 'currency',
 	aliases: [ 'money', 'bal', 'balance' ],
-	description: "Modifies a member's currency",
+	description: "Modifies a member's currency.",
 	args: true,
 	usage: '<+/- monetary change> <member name>',
 	guildOnly: true,

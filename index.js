@@ -41,10 +41,6 @@ client.on('message', async (message) => {
 			);
 		}
 
-		if (!message.member.hasPermission('MANAGE_ROLES'))
-			return message.channel.send(
-				"You don't have the perms to run DELTA commands. You need permissions to `MANAGE_ROLES`."
-			);
 	} else server = 'dm';
 	if (server == null) return;
 	if (!message.content.startsWith(prefix)) {
@@ -54,6 +50,14 @@ client.on('message', async (message) => {
 			}
 		}
 		return;
+	}
+
+	if (message.channel.type != 'dm') {
+		if (!message.member.hasPermission('MANAGE_ROLES')) {
+			return message.channel.send(
+				"You don't have the perms to run DELTA commands. You need permissions to `MANAGE_ROLES`."
+			);
+		}
 	}
 
 	var args = message.content.substring(1).split(/ +/);

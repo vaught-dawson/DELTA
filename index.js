@@ -74,7 +74,6 @@ client.on('message', async (message) => {
 		reply += `\nThe proper usage would be: \`${prefix}${commandName} ${command.usage}\``;
 		return message.channel.send(reply);
 	}
-
 	//Run command block
 	try {
 		command.execute(message, args, server);
@@ -85,12 +84,9 @@ client.on('message', async (message) => {
 });
 
 const { addGuild } = require('./functions/addGuild.js');
+const { notifyOwner } = require('./functions/notifyOwner.js');
+const { addLogChannel } = require('./functions/addLogChannel.js');
 client.on('guildCreate', (guild) => {
 	addGuild(guild);
-	var owner = guild.owner;
-	if (owner != null) {
-		owner.user.send(
-			`DELTA has recently been added to \`${guild.name}\`. \nMake sure you set the command channel with \`+setchannel\`. \nAs well as your roster spreadsheet id with \`+setsheet\`!`
-		);
-	}
+	notifyOwner(guild);
 });

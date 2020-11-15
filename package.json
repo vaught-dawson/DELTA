@@ -12,6 +12,7 @@
   "dependencies": {
     "discord.js": "^12.3.1",
     "google-spreadsheet": "^3.0.13",
-    "googleapis": "^39.2.0"
+    "googleapis": "^39.2.0",
+    "xmlhttprequest": "^1.8.0"
   }
 }

@@ -10,20 +10,20 @@ module.exports = {
 	execute(message, args, server) {
 		const { commands } = message.client;
 		const embed = new Discord.MessageEmbed();
-
-		if (!message.channel.type == 'dm') PREFIX = server.prefix;
+		var pre = PREFIX;
+		if (!message.channel.type == 'dm') pre = server.prefix;
 
 		if (!args.length) {
 			embed.color = 15105570;
 			embed.thumbnail = { url: 'https://i.ibb.co/2MHY6wn/D-E-L-T-A-4.jpg' };
 			embed.title = "Here's a list of all my commands:";
 			embed.footer = {
-				text: `You can send \`${PREFIX}help [command name]\` to get more info on a specific command!`,
+				text: `You can send \`${pre}help [command name]\` to get more info on a specific command!`,
 				iconURL: 'https://i.ibb.co/Wzd001F/677a08d8682923ca8cb51fe48df38208.png'
 			};
 
 			commands.forEach((command) => {
-				embed.addField(`${PREFIX}${command.name}`, command.description, false);
+				embed.addField(`${pre}${command.name}`, command.description, false);
 			});
 
 			return message.author

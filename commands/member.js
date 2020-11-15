@@ -10,6 +10,7 @@ module.exports = {
 	usage: '<add/remove/info> <member name>',
 	guildOnly: true,
 	async execute(message, args, server) {
+		if (args.length != 2) return message.channel.send(`Invalid arguments! \nUsage: \`${server.prefix}${this.name} ${this.usage}\``);
 		var subcommand = args.shift().toLowerCase();
 		var userId = 'name';
 		var userName = args[0];
@@ -30,8 +31,6 @@ module.exports = {
 			else userName = (await message.member.fetch(userId)).user.username;
 		}
 
-		if (args.length > 1)
-			return message.channel.send(`Invalid arguments! \nUsage: \`${server.prefix}${this.name} ${this.usage}\``);
 		switch (subcommand) {
 			case 'add':
 				return message.channel.send(await addMember(server.sheetId, userId, userName));

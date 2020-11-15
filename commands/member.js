@@ -23,12 +23,10 @@ module.exports = {
 
 		if (message.mentions.members.size == 1) {
 			userId = message.mentions.members.first().id;
-			if (message.guild.members.fetch(userId).nickname) userName = (await message.member.fetch(userId)).nickname;
-			else userName = (await message.member.fetch(userId)).user.username;
+			userName = (await message.guild.members.fetch(userId)).displayName;
 		} else if (args[0].length == 18 && !isNaN(args[0])) {
 			userId = args[0];
-			if (message.guild.members.fetch(userId).nickname) userName = (await message.member.fetch(userId)).nickname;
-			else userName = (await message.member.fetch(userId)).user.username;
+			userName = (await message.guild.members.fetch(userId)).displayName;
 		}
 
 		switch (subcommand) {

@@ -11,6 +11,7 @@ module.exports = {
 	guildOnly: true,
 	async execute(message, args, server) {
 		if (args.length != 2) return message.channel.send(`Invalid arguments! \nUsage: \`${server.prefix}${this.name} ${this.usage}\``);
+		if (args[1].length > 256) return message.channel.send('Name is too long! The name field maxes out at \`256\` characters.')
 		var subcommand = args.shift().toLowerCase();
 		var userId = 'name';
 		var userName = args[0];
@@ -31,8 +32,8 @@ module.exports = {
 		if (message.mentions.members.size == 1) {
 			userId = message.mentions.members.first().id;
 			userName = (await message.guild.members.fetch(userId)).displayName;
-		} else if (args[0].length == 18 && !isNaN(args[0])) {
-			userId = args[0];
+		} else if (userName.length == 18 && !isNaN(userName)) {
+			userId = userName;
 			userName = (await message.guild.members.fetch(userId)).displayName;
 		}
 

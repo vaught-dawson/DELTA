@@ -23,13 +23,13 @@ async function demoteMember(sheetId, userId, userName) {
 				output = `There was a problem saving to the roster.`;
 			}
 			if (output == null) {
-				output = `Successfully demoted \`${row.Name}\` to \`${newRank}\` from \`${rank}\``;
+				output = `Successfully demoted \`${row.Name}\` to \`${newRank}\` from \`${rank}\`.`;
 			}
 		}
 	});
 
 	if (output == null) {
-		output = `Failed to find the member \`${userName}\``;
+		output = `Failed to find the member \`${userName}\`.`;
 	}
 	return output;
 }

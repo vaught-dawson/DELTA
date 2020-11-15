@@ -11,7 +11,8 @@ async function addMember(sheetId, userId, userName) {
 			Name: userName,
 			Rank: '-01-TR',
 			Status: 'ACTIVE',
-			Discord: userId || 'None'
+			Discord: userId || 'None',
+			Currency: 0
 		})
 		.catch((err) => {
 			return `Failed to add \`${userName}\` to the roster.`;

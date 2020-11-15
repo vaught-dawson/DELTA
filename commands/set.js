@@ -24,8 +24,8 @@ module.exports = {
 		if (message.mentions.members.size == 1) {
 			userId = message.mentions.members.first().id;
 			userName = (await message.guild.members.fetch(userId)).displayName;
-		} else if (args[1].length == 18 && !isNaN(args[1])) {
-			userId = args[0];
+		} else if (userName.length == 18 && !isNaN(userName)) {
+			userId = userName;
 			userName = (await message.guild.members.fetch(userId)).displayName;
 		}
 		return message.channel.send(await set(userName, userId, subcommand, data, server.sheetId));

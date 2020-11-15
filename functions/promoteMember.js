@@ -15,7 +15,7 @@ async function promoteMember(sheetId, userId, userName) {
 			lastPromo = row.LastPromo;
 			rank = row.Rank;
 			newRank = promote(rank);
-			if (newRank == null) output = `Failed to promote \`${row.Name}\` from \`${rank}\``;
+			if (newRank == null) output = `Failed to promote \`${row.Name}\` from \`${rank}\`.`;
 			try {
 				row.Rank = newRank;
 				if (newRank == '01-PVT') {
@@ -30,7 +30,7 @@ async function promoteMember(sheetId, userId, userName) {
 			}
 
 			if (output == null) {
-				output = `Successfully promoted \`${row.Name}\` to \`${newRank}\` from \`${rank}\``;
+				output = `Successfully promoted \`${row.Name}\` to \`${newRank}\` from \`${rank}\`.`;
 			}
 
 			if (new Date().valueOf() - Date.parse(lastPromo) < 86400000 * 7) {
@@ -40,7 +40,7 @@ async function promoteMember(sheetId, userId, userName) {
 	});
 
 	if (output == null) {
-		output = `Failed to find the member \`${userName}\``;
+		output = `Failed to find the member \`${userName}\`.`;
 	}
 	return output;
 }

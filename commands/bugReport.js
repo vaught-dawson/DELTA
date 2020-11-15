@@ -12,7 +12,7 @@ module.exports = {
             .setColor(15158332)
             .setAuthor(message.author.tag)
             .setThumbnail(message.author.displayAvatarURL())
-			.setTitle(`${server.name}:`)
+			.setTitle(`${message.guild.name}:`)
 			.setDescription(args.join(" "))
             .setFooter('Resistance Logistics', 'https://i.ibb.co/Wzd001F/677a08d8682923ca8cb51fe48df38208.png');
         try {

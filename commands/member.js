@@ -30,21 +30,10 @@ module.exports = {
 
 		if (message.mentions.members.size == 1) {
 			userId = message.mentions.members.first().id;
-			try {
-				let member = await message.guild.members.fetch(userId);
-				userName = member.displayName;
-			} catch (err) {
-				return message.channel.send('Unknown user id!');
-			}
-			
+			userName = (await message.guild.members.fetch(userId)).displayName;
 		} else if (args[0].length == 18 && !isNaN(args[0])) {
 			userId = args[0];
-			try {
-				let member = await message.guild.members.fetch(userId);
-				userName = member.displayName;
-			} catch (err) {
-				return message.channel.send('Unknown user id!');
-			}
+			userName = (await message.guild.members.fetch(userId)).displayName;
 		}
 
 		switch (subcommand) {

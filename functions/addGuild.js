@@ -8,7 +8,8 @@ function addGuild(guild) {
 		guildId: guild.id,
 		commandChannelId: null,
 		sheetId: null,
-		prefix: '+'
+		prefix: '+',
+		bugReportWebhook: ''
 	});
 	fs.writeFile(path, JSON.stringify(servers, null, 2), function writeJSON(err) {
 		if (err) {

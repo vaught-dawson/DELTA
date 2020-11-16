@@ -9,9 +9,7 @@ function addGuild(guild) {
 		guildId: guild.id,
 		commandChannelId: null,
 		sheetId: null,
-		prefix: '+',
-		bugReportWebhookId: '771235196904669224',
-		bugReportWebhookToken: 'sp8mQvbq3GLSKDgOJtnEOYF1PhT8Ar-CKA6czLzQ-cEDhoEs9EB5B0singwaZcJKzt2_'
+		prefix: '+'
 	});
 	fs.writeFile(path, JSON.stringify(servers, null, 2), function writeJSON(err) {
 		if (err) {

@@ -1,0 +1,8 @@
+{
+	"TOKEN": "",
+	"PREFIX": "+",
+	"bugReportWebhook": {
+		"id": "",
+		"token": ""
+	}
+}

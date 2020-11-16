@@ -10,21 +10,15 @@ module.exports = {
 	usage: '<add/remove/info> <member name>',
 	guildOnly: true,
 	async execute(message, args, server) {
-		if (args.length != 2) return message.channel.send(`Invalid arguments! \nUsage: \`${server.prefix}${this.name} ${this.usage}\``);
-		if (args[1].length > 256) return message.channel.send('Name is too long! The name field maxes out at \`256\` characters.')
-		var subcommand = args.shift().toLowerCase();
-		var userId = 'name';
-		var userName = args[0];
-
 		if (server.sheetId == null) {
 			return message.channel.send(
 				'This server does not have a sheet id set, notify the server owner to set this!'
 			);
 		}
-
-		if (args.length != 2)
-			return message.channel.send(`Invalid arguments! \nUsage: \`${server.prefix}${this.name} ${this.usage}\``);
-
+		
+		if (args.length != 2) return message.channel.send(`Invalid arguments! \nUsage: \`${server.prefix}${this.name} ${this.usage}\``);
+		if (args[1].length > 256) return message.channel.send('Name is too long! The name field maxes out at \`256\` characters.');
+		
 		var subcommand = args.shift().toLowerCase();
 		var userId = 'name';
 		var userName = args[0];

@@ -17,9 +17,9 @@ module.exports = {
 		if (args.length != 3)
 			return message.channel.send(`Invalid arguments! \nUsage: \`${server.prefix}${this.name} ${this.usage}\``);
 		var userId = 'name';
-		var userName = args[1];
-		var subcommand = args[0].toLowerCase();
-		var data = args[2];
+		var subcommand = args.shift().toLowerCase();
+		var userName = args.shift();
+		var data = args.shift();
 
 		if (message.mentions.members.size == 1) {
 			userId = message.mentions.members.first().id;

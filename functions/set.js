@@ -25,7 +25,7 @@ async function set(userName, userId, subcommand, data, sheetId) {
 				}
 				if (output == null) output = `Successfully changed the rank of \`${row.Name}\` to \`${data}\`.`;
 			} else if (subcommand == 'subdiv') {
-				row.SubDuv = data;
+				row.SubDiv = data;
 				try {
 					row.save();
 				} catch (err) {

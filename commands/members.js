@@ -33,7 +33,6 @@ module.exports = {
 				color: 15105570,
 				fields: fields
 			});
-
 			if (isFirstEmbed) {
 				embed.setTitle(spreadsheetName);
 				embed.setThumbnail('https://i.ibb.co/2MHY6wn/D-E-L-T-A-4.jpg');

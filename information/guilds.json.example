@@ -1,0 +1,13 @@
+{
+  "guilds": [
+    {
+      "name": "logistics",
+      "guildId": "749775101435838554",
+      "commandChannelId": "",
+      "sheetId": "",
+      "prefix": "+",
+      "bugReportWebhookId": "",
+      "bugReportWebhookToken": ""
+    }
+  ]
+}

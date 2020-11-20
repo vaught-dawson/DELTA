@@ -1,9 +1,9 @@
-const { loadDocument } = require('./loadDocument.js');
+const { loadSpreadsheet } = require('./loadSpreadsheet.js');
 const Discord = require('discord.js');
 
 //Function to return an embed with member's data
 async function getMemberData(sheetId, userId, userName) {
-	const doc = await loadDocument(sheetId);
+	const doc = await loadSpreadsheet(sheetId);
 	var sheet = doc.sheetsByTitle['Roster'];
 	var rows = await sheet.getRows();
 	var embed, subdivDate, lastPromoDate, discordId, steamId, rank, status, name, currency;

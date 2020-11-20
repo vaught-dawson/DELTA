@@ -1,33 +1,39 @@
-const { set } = require('../functions/set.js');
+const { loadSpreadsheet } = require('../functions/loadSpreadsheet.js');
+const { isSheetHeader } = require('../functions/isSheetHeader.js');
+const { combineElementsByCharacter } = require('../functions/combineElementsByCharacter.js');
+const { getDiscordMember } = require('../functions/getDiscordMember.js');
 
 module.exports = {
 	name: 'set',
 	aliases: [ 'set' ],
 	description: 'Sets data of members.',
 	args: true,
-	usage: '<name/rank/subdiv/promo/status/steam/discord/currency> <member name> <data>',
+	usage: '<column header> <member> <data>',
 	guildOnly: true,
 	async execute(message, args, server) {
-		if (server.sheetId == null) {
-			return message.channel.send(
-				'This server does not have a sheet id set, notify the server owner to set this!'
-			);
-		}
+		const spreadsheet = loadSpreadsheet(server.sheetId);
+		const rosterSheet = (await spreadsheet).sheetsByTitle['Roster'];
+		var columnHeader = args.shift();
+		if (!await isSheetHeader(columnHeader, rosterSheet))
+			return message.channel.send('Invalid column header! \n\n`Warning: Column headers are CaSe-sensitive!`');
+		args = combineElementsByCharacter(args, '\"');
+		var inputMember = args.shift();
+		var member = await getDiscordMember(inputMember, message);
+		var data = args.join(' ');
+		var output = null;
 
-		if (args.length != 3)
-			return message.channel.send(`Invalid arguments! \nUsage: \`${server.prefix}${this.name} ${this.usage}\``);
-		var userId = 'name';
-		var userName = args[1];
-		var subcommand = args[0].toLowerCase();
-		var data = args[2];
+		(await rosterSheet.getRows()).forEach(row => {
+			if (row['Name'].toLowerCase() == member.name.toLowerCase() || row['Discord'] == member.id) {
+				row[columnHeader] = data;
+				row.save();
+				return output = `Successfully changed \`${columnHeader}\` for \`${member.name}\` to \`${data}\`.`
+			}
+		});
 
-		if (message.mentions.members.size == 1) {
-			userId = message.mentions.members.first().id;
-			userName = (await message.guild.members.fetch(userId)).displayName;
-		} else if (userName.length == 18 && !isNaN(userName)) {
-			userId = userName;
-			userName = (await message.guild.members.fetch(userId)).displayName;
+		if (output == null) {
+			output = `Could not find member \`${inputMember}\` on the roster!`;
 		}
-		return message.channel.send(await set(userName, userId, subcommand, data, server.sheetId));
+		
+		return message.channel.send(output);
 	}
 };

@@ -1,7 +1,7 @@
-const { loadDocument } = require('./loadDocument.js');
+const { loadSpreadsheet } = require('./loadSpreadsheet.js');
 
 async function set(userName, userId, subcommand, data, sheetId) {
-	const doc = await loadDocument(sheetId);
+	const doc = await loadSpreadsheet(sheetId);
 	var sheet = doc.sheetsByTitle['Roster'];
 	var rows = await sheet.getRows();
 	var output = null;

@@ -3,6 +3,8 @@ const Discord = require('discord.js');
 const { TOKEN } = require('./information/config.json');
 const client = new Discord.Client();
 
+const { isSheetHeader } = require('./functions/isSheetHeader.js');
+
 //Setting up commands
 client.commands = new Discord.Collection();
 const commandFiles = fs.readdirSync('./commands').filter((file) => file.endsWith('.js'));
@@ -12,9 +14,8 @@ for (const file of commandFiles) {
 }
 //Setting up servers
 const servers = require('./information/guilds.json');
-
 client.login(TOKEN);
-client.on('ready', () => {
+client.on('ready', async () => {
 	console.log(`Logged in as ${client.user.tag}!`);
 });
 client.on('message', async (message) => {
@@ -35,15 +36,13 @@ client.on('message', async (message) => {
 			}
 		});
 		if (server == null) return;
-		if (server.commandChannelId == null) {
+		if (server.commandChannelId == null)
 			return message.channel.send(
-				'This server does not have a command channel set, notify the server owner to set this!'
+				'This server does not have a command channel set, notify a server admin to set this!'
 			);
-		}
-
-		if (!message.member.hasPermission('MANAGE_ROLES'))
+		else if (server.sheetId == null)
 			return message.channel.send(
-				"You don't have the perms to run DELTA commands. You need permissions to `MANAGE_ROLES`."
+				'This server does not have a sheet id set, notify a server admin to set this!'
 			);
 	} else server = 'dm';
 	if (server == null) return;
@@ -54,6 +53,14 @@ client.on('message', async (message) => {
 			}
 		}
 		return;
+	}
+
+	if (message.channel.type != 'dm') {
+		if (!message.member.hasPermission('MANAGE_ROLES')) {
+			return message.channel.send(
+				"You don't have the perms to run DELTA commands. You need permissions to `MANAGE_ROLES`."
+			);
+		}
 	}
 
 	var args = message.content.substring(1).split(/ +/);
@@ -83,10 +90,13 @@ client.on('message', async (message) => {
 	}
 });
 
-const { addGuild } = require('./functions/addGuild.js');
+const { addGuildToConfig } = require('./functions/addGuildToConfig.js');
 const { notifyOwner } = require('./functions/notifyOwner.js');
-const { addLogChannel } = require('./functions/addLogChannel.js');
 client.on('guildCreate', (guild) => {
-	addGuild(guild);
+	addGuildToConfig(guild);
 	notifyOwner(guild);
+});
+
+process.on('uncaughtException', (err) => {
+	console.log(`Error: ${err.name}\n\nMessage: ${err.message}`);
 });

@@ -1,7 +1,4 @@
-information/config.json
-information/client_secret.json
-google/token.json
-information/guilds.json
-google/credentialsOld.json
-google/credentials.json
 node_modules
+information/config.json
+information/guilds.json
+information/client_secret.json

@@ -1,8 +1,8 @@
-const { loadDocument } = require('./loadDocument.js');
+const { loadSpreadsheet } = require('./loadSpreadsheet.js');
 
 //Function to list members in an embed-ready array
 async function listMembers(sheetId) {
-	const doc = await loadDocument(sheetId);
+	const doc = await loadSpreadsheet(sheetId);
 	var sheet = doc.sheetsByTitle['Roster'];
 	var rows = await sheet.getRows();
 	var output = [];

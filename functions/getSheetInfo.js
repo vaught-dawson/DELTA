@@ -1,8 +1,8 @@
-const { loadDocument } = require('./loadDocument.js');
+const { loadSpreadsheet } = require('./loadSpreadsheet.js');
 
 //Function to get spreadsheet info in an embed-ready array
 async function getSheetInfo(sheetName, sheetId) {
-	const doc = await loadDocument(sheetId);
+	const doc = await loadSpreadsheet(sheetId);
 	try {
 		var sheet = doc.sheetsByTitle[sheetName];
 	} catch (err) {

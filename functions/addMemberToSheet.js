@@ -1,9 +1,9 @@
-const { loadDocument } = require('./loadDocument.js');
+const { loadSpreadsheet } = require('./loadSpreadsheet.js');
 const { isNameOnSheet } = require('./isNameOnSheet.js');
 
 //Function to add a member to the roster
-async function addMember(sheetId, userId, userName) {
-	const doc = await loadDocument(sheetId), sheet = doc.sheetsByTitle['Roster'];
+async function addMemberToSheet(sheetId, userId, userName) {
+	const doc = await loadSpreadsheet(sheetId), sheet = doc.sheetsByTitle['Roster'];
 	if (userId == 'name') userId = null;
 	if (await isNameOnSheet(userName, sheetId)) return `This name is already in use!`;
 	await sheet
@@ -20,4 +20,4 @@ async function addMember(sheetId, userId, userName) {
 	return `Successfully added \`${userName}\` to the roster.`;
 }
 
-module.exports.addMember = addMember;
+module.exports.addMemberToSheet = addMemberToSheet;

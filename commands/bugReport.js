@@ -1,4 +1,5 @@
 const Discord = require('discord.js');
+const { bugReportWebhook } = require('../information/config.json');
 
 module.exports = {
 	name: 'bugreport',
@@ -16,7 +17,7 @@ module.exports = {
 			.setDescription(args.join(" "))
             .setFooter('Resistance Logistics', 'https://i.ibb.co/Wzd001F/677a08d8682923ca8cb51fe48df38208.png');
         try {
-            const bugReportWebhookClient = new Discord.WebhookClient(server.bugReportWebhookId, server.bugReportWebhookToken);
+            const bugReportWebhookClient = new Discord.WebhookClient(bugReportWebhook.id, bugReportWebhook.token);
                 bugReportWebhookClient.send('', {
                 username: 'Bug Report',
                 avatarURL: 'https://i.ibb.co/2MHY6wn/D-E-L-T-A-4.jpg',

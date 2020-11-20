@@ -1,8 +1,8 @@
-const { loadDocument } = require('./loadDocument.js');
+const { loadSpreadsheet } = require("./loadSpreadsheet.js");
 
 //Function to change a member's currency
 async function changeCurrency(sheetId, userId, userName, monetaryChange) {
-	const doc = await loadDocument(sheetId);
+	const doc = await loadSpreadsheet(sheetId);
 	var sheet = doc.sheetsByTitle['Roster'];
 	var rows = await sheet.getRows();
 	var output = null;

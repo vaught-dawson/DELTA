@@ -1,9 +1,9 @@
-const { loadDocument } = require('./loadDocument.js');
+const { loadSpreadsheet } = require('./loadSpreadsheet.js');
 const ranks = require('../information/ranks.json');
 
 //Function to grab a member and promote them
 async function promoteMember(sheetId, userId, userName) {
-	const doc = await loadDocument(sheetId);
+	const doc = await loadSpreadsheet(sheetId);
 	var sheet = doc.sheetsByTitle['Roster'];
 	var rows = await sheet.getRows();
 	var rank;

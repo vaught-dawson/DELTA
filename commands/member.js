@@ -1,5 +1,5 @@
 const { getMemberData } = require('../functions/getMemberData.js');
-const { addMember } = require('../functions/addMember.js');
+const { addMemberToSheet } = require('../functions/addMemberToSheet.js');
 const { removeMember } = require('../functions/removeMember.js');
 
 module.exports = {
@@ -10,6 +10,7 @@ module.exports = {
 	usage: '<add/remove/info> <member name>',
 	guildOnly: true,
 	async execute(message, args, server) {
+		if (args.length <= 1 || args == undefined) return message.channel.send(`Invalid Arguments! Usage: \`${server.prefix}${this.name} ${this.usage}\``)
 		if (args[1].length > 256) return message.channel.send('Name is too long! The name field maxes out at \`256\` characters.')
 		var subcommand = args.shift().toLowerCase();
 		var userId = 'name';
@@ -31,7 +32,7 @@ module.exports = {
 
 		switch (subcommand) {
 			case 'add':
-				return message.channel.send(await addMember(server.sheetId, userId, userName));
+				return message.channel.send(await addMemberToSheet(server.sheetId, userId, userName));
 			case 'remove':
 				return message.channel.send(await removeMember(server.sheetId, userId, userName));
 			case 'info':

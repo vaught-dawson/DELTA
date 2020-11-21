@@ -1,6 +1,5 @@
-const fs = require('fs');
-const path = '.\\information\\guilds.json';
-const servers = require('../information/guilds.json');
+const { changeGuildConfig } = require('../functions/changeGuildConfig.js');
+const { sendErrorEmbed } = require('../functions/sendErrorEmbed.js');
 
 module.exports = {
 	name: 'changeprefix',
@@ -18,24 +17,12 @@ module.exports = {
 		if (args.length > 1)
 			return message.channel.send(`Invalid arguments! \nUsage: \`${server.prefix}${this.name} ${this.usage}\``);
 
-		servers.guilds.forEach((guild) => {
-			if (server.name == guild.name) {
-				try {
-					guild.prefix = args[0];
-				} catch (err) {
-					console.log(err);
-					return message.channel.send(`There was a problem changing the prefix to \`${args[0]}\`.`);
-				}
-			}
-		});
-
-		fs.writeFile(path, JSON.stringify(servers, null, 2), function writeJSON(err) {
-			if (err) {
-				console.log(err);
-				return message.channel.send('There was a problem saving to the config file.');
-			}
-		});
-
-		message.channel.send(`Successfully changed the prefix to \`${args[0]}\`.`);
+		try {
+			await changeGuildConfig(server, 'prefix', args[0]);
+		} catch (err) {
+			await sendErrorEmbed(message, { message: `**Command:** ${message.content}\n**Error:** ${err}`});
+			return message.channel.send(`Failed to change the prefix to \`${args[0]}\`.`);
+		}
+		return message.channel.send(`Successfully changed the prefix to \`${args[0]}\`.`);
 	}
 };

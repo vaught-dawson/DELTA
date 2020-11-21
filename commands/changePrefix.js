@@ -20,7 +20,7 @@ module.exports = {
 		try {
 			await changeGuildConfig(server, 'prefix', args[0]);
 		} catch (err) {
-			await sendErrorEmbed(message, { message: `**Command:** ${message.content}\n**Error:** ${err}`});
+			await sendErrorEmbed(message, { message: `**Command:** ${message.content}\n**Error:** ${err}` });
 			return message.channel.send(`Failed to change the prefix to \`${args[0]}\`.`);
 		}
 		return message.channel.send(`Successfully changed the prefix to \`${args[0]}\`.`);

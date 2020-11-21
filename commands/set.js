@@ -8,6 +8,7 @@ module.exports = {
 	aliases: [ 'set' ],
 	description: 'Sets data of members.',
 	args: true,
+	sheets: true,
 	usage: '<column header> <member> <data>',
 	guildOnly: true,
 	async execute(message, args, server) {

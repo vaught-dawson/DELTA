@@ -6,6 +6,7 @@ module.exports = {
 	name: 'members',
 	aliases: [ 'mbrs', 'listmembers', 'lstmbrs', 'list', 'lst' ],
 	description: 'Lists all members in a roster.',
+	sheets: true,
 	usage: '<here?>',
 	guildOnly: true,
 	async execute(message, args, server) {

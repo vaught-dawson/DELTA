@@ -3,8 +3,6 @@ const Discord = require('discord.js');
 const { TOKEN } = require('./information/config.json');
 const client = new Discord.Client();
 
-const { isSheetHeader } = require('./functions/isSheetHeader.js');
-
 //Setting up commands
 client.commands = new Discord.Collection();
 const commandFiles = fs.readdirSync('./commands').filter((file) => file.endsWith('.js'));
@@ -40,10 +38,6 @@ client.on('message', async (message) => {
 			return message.channel.send(
 				'This server does not have a command channel set, notify a server admin to set this!'
 			);
-		else if (server.sheetId == null)
-			return message.channel.send(
-				'This server does not have a sheet id set, notify a server admin to set this!'
-			);
 	} else server = 'dm';
 	if (server == null) return;
 	if (!message.content.startsWith(prefix)) {
@@ -76,11 +70,14 @@ client.on('message', async (message) => {
 		return message.reply("I can't execute that command inside DMs!");
 	}
 	//Checks if the command requires arguments
-	if (command.args && !args.length) {
-		let reply = "You didn't add any arguments!";
-		reply += `\nThe proper usage would be: \`${prefix}${commandName} ${command.usage}\``;
-		return message.channel.send(reply);
-	}
+	if (command.args && !args.length)
+		return message.channel.send(
+			`You didn't add any arguments!\nThe proper usage would be: \`${server.prefix}${command.name} ${command.usage}\``
+		);
+	if (command.sheets && server.sheetId == null)
+		return message.channel.send(
+			`You don't have a Google Sheet configured!\nGet an admin to set it with: \`${server.prefix}setSpreadsheetID <spreadsheet id>\`.`
+		);
 	//Run command block
 	try {
 		command.execute(message, args, server);

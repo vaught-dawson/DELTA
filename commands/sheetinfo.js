@@ -7,6 +7,7 @@ module.exports = {
 	aliases: [ 'sheet' ],
 	description: "Gets a roster sheet's info.",
 	args: true,
+	sheets: true,
 	usage: '<sheet name>',
 	guildOnly: true,
 	async execute(message, args, server) {

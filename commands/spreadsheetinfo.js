@@ -7,6 +7,7 @@ module.exports = {
 	aliases: [ 'sheets' ],
 	description: 'Get the info of the whole spreadsheet.',
 	args: false,
+	sheets: true,
 	guildOnly: true,
 	async execute(message, args, server) {
 		if (server.sheetId == null) {

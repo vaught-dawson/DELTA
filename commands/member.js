@@ -7,6 +7,7 @@ module.exports = {
 	aliases: [ 'mbr' ],
 	description: 'Manage members.',
 	args: true,
+	sheets: true,
 	usage: '<add/remove/info> <member name>',
 	guildOnly: true,
 	async execute(message, args, server) {

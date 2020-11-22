@@ -1,16 +1,14 @@
-const { loadSpreadsheet } = require('./loadSpreadsheet.js');
+const { getSheetHeaders } = require('./getSheetHeaders.js');
 
-//Function to get spreadsheet info in an embed-ready array
-async function getSheetInfo(sheetName, sheetId) {
-	const doc = await loadSpreadsheet(sheetId);
-	try {
-		var sheet = doc.sheetsByTitle[sheetName];
-	} catch (err) {
-		return null;
-	}
-	if (sheet == undefined) return null;
-	var info = [ sheet.title, sheet.rowCount ];
-	return info;
+async function getSheetInfo(sheet) {
+	var output = [];
+	output.push({ name: 'Id:', value: sheet.sheetId });
+	output.push({ name: 'Rows:', value: sheet.rowCount });
+	output.push({ name: 'Columns:', value: sheet.columnCount });
+	output.push({ name: 'Type:', value: sheet.sheetType });
+	let headers = await getSheetHeaders(sheet);
+	output.push({ name: 'Headers:', value: headers.join(', ') });
+	return output;
 }
 
 module.exports.getSheetInfo = getSheetInfo;

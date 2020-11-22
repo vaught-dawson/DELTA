@@ -1,11 +1,7 @@
-const { loadSpreadsheet } = require('./loadSpreadsheet.js');
-
-//Function to get spreadsheet info in an embed-ready array
-async function getSpreadsheetInfo(sheetId) {
-	const doc = await loadSpreadsheet(sheetId);
+async function getSpreadsheetInfo(spreadsheet) {
 	var output = [];
-	for (var i = 0; i < doc.sheetCount; i++) {
-		var sheet = doc.sheetsByIndex[i];
+	for (var i = 0; i < spreadsheet.sheetCount; i++) {
+		var sheet = spreadsheet.sheetsByIndex[i];
 		output.push({ name: `Sheet: ${sheet.title}`, value: `**Rows:** ${sheet.rowCount}`, inline: true });
 	}
 	return output;

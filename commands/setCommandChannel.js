@@ -1,49 +1,25 @@
-const fs = require('fs');
-const path = '.\\information\\guilds.json';
-const servers = require('../information/guilds.json');
+const { sendErrorEmbed } = require('../functions/sendErrorEmbed.js');
+const { changeGuildConfig } = require('../functions/changeGuildConfig.js');
 
 module.exports = {
 	name: 'setcommandchannel',
 	aliases: [ 'commandchannel', 'setchannel', 'channelset' ],
 	description: "Changes the server's command channel for DELTA.",
-	args: true,
-	usage: '<guild id> <channel id>',
-	guildOnly: false,
+	args: false,
+	guildOnly: true,
 	async execute(message, args, server) {
-		if (server != 'dm')
-			return message.channel.send('This command needs to be completed by the server owner in a dm!');
-
-		if (args.length != 2) {
-			return message.channel.send(`Invalid Arguments! Usage: \`+${this.name} ${this.usage}\``);
-		}
+		//TODO: Work this command into index to make sure it can run when no command channel id is set!!
+		if (!message.member.hasPermission('ADMINISTRATOR'))
+			return message.channel.send(
+				"You don't have the perms to change this! If this needs to be changed then message a server admin."
+			);
 
 		try {
-			var varGuild = await message.client.guilds.fetch(args[0]);
-			if (varGuild == null) throw 'Invalid guild id!';
+			await changeGuildConfig(server, 'commandChannelId', message.channel.id);
 		} catch (err) {
-			return message.channel.send('Invalid guild id!');
+			await sendErrorEmbed(message, { message: `**Command:** ${message.content}\n**Error:** ${err}` });
+			return message.channel.send(`Failed to change the prefix to \`${args[0]}\`.`);
 		}
-
-		if (varGuild.ownerID != message.author.id) return message.channel.send("You don't own that discord server!");
-
-		if ((await varGuild.channels.cache.get(args[1])) == undefined)
-			return message.channel.send('The channel specified is not in that server!');
-
-		servers.guilds.forEach((server) => {
-			if (varGuild.id == server.guildId) {
-				server.commandChannelId = args[1];
-			}
-		});
-
-		fs.writeFile(path, JSON.stringify(servers, null, 2), function writeJSON(err) {
-			if (err) {
-				console.log(err);
-				return message.channel.send('There was a problem saving to the config file.');
-			}
-		});
-
-		return message.channel.send(
-			`Sucessfully set the guild command channel to \`#${await varGuild.channels.cache.get(args[1]).name}\`.`
-		);
+		return message.channel.send(`Successfully made this the command channel!`);
 	}
 };

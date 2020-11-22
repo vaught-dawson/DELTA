@@ -1,4 +1,4 @@
-const { loadSpreadsheet } = require("./loadSpreadsheet.js");
+const { loadSpreadsheet } = require('./loadSpreadsheet.js');
 
 //Function to change a member's currency
 async function changeCurrency(sheetId, userId, userName, monetaryChange) {

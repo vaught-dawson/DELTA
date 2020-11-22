@@ -1,6 +1,6 @@
 const { getSheetInfo } = require('../functions/getSheetInfo.js');
-const { getSpreadsheetName } = require('../functions/getSpreadsheetName.js');
-const Discord = require('discord.js');
+const { loadSpreadsheet } = require('../functions/loadSpreadsheet.js');
+const { splitEmbedsByFields } = require('../functions/splitEmbedsByFields');
 
 module.exports = {
 	name: 'sheetinfo',
@@ -11,29 +11,18 @@ module.exports = {
 	usage: '<sheet name>',
 	guildOnly: true,
 	async execute(message, args, server) {
-		if (server.sheetId == null) {
+		const spreadsheet = loadSpreadsheet(server.sheetId);
+		const sheet = (await spreadsheet).sheetsByTitle[args.join(' ')];
+		if (!sheet)
 			return message.channel.send(
-				'This server does not have a sheet id set, notify the server owner to set this!'
+				`Could not find the sheet \`${args[0]}\`!\n\n\`Sheet names are CaSe-Sensitive. Make sure you typed it the same as it is in the spreadsheetInfo command!\``
 			);
+		try {
+			message.channel.send(splitEmbedsByFields(await getSheetInfo(sheet), 24, sheet.title));
+		} catch (err) {
+			console.log(err);
+			await sendErrorEmbed(message, { message: `**Command:** ${message.content}\n**Error:** ${err}` });
+			return message.channel.send(`Failed to grab the sheet.`);
 		}
-
-		//Combining the remaining arguments into a complete sheet name
-		var sheetName = '';
-		for (let i = 0; i < args.length; i++) {
-			if (i == args.length - 1) sheetName += args[i];
-			else sheetName += args[i] + ' ';
-		}
-		var info = await getSheetInfo(sheetName, server.sheetId);
-		if (info == null) return message.channel.send(`Could not find the sheet called: \`${sheetName}\``);
-		var embed = new Discord.MessageEmbed({
-			color: 15105570,
-			title: await getSpreadsheetName(server.sheetId),
-			fields: [ { name: `Sheet: ${info[0]}`, value: `Rows: ${info[1]}`, inline: true } ],
-			footer: {
-				text: 'Resistance Logistics',
-				icon_url: 'https://i.ibb.co/Wzd001F/677a08d8682923ca8cb51fe48df38208.png'
-			}
-		});
-		message.channel.send(embed);
 	}
 };

@@ -15,7 +15,7 @@ module.exports = {
 		try {
 			await sendErrorEmbed(message, error);
 		} catch (err) {
-            console.log(err);
+			console.log(err);
 			return message.channel.send('Failed to send bug report.');
 		}
 		return message.channel.send('Successfully sent bug report!');

@@ -17,24 +17,24 @@ module.exports = {
 		var columnHeader = args.shift();
 		if (!await isSheetHeader(columnHeader, rosterSheet))
 			return message.channel.send('Invalid column header! \n\n`Warning: Column headers are CaSe-sensitive!`');
-		args = combineElementsByCharacter(args, '\"');
+		args = combineElementsByCharacter(args, '"');
 		var inputMember = args.shift();
 		var member = await getDiscordMember(inputMember, message);
 		var data = args.join(' ');
 		var output = null;
 
-		(await rosterSheet.getRows()).forEach(row => {
+		(await rosterSheet.getRows()).forEach((row) => {
 			if (row['Name'].toLowerCase() == member.name.toLowerCase() || row['Discord'] == member.id) {
 				row[columnHeader] = data;
 				row.save();
-				return output = `Successfully changed \`${columnHeader}\` for \`${member.name}\` to \`${data}\`.`
+				return (output = `Successfully changed \`${columnHeader}\` for \`${member.name}\` to \`${data}\`.`);
 			}
 		});
 
 		if (output == null) {
 			output = `Could not find member \`${inputMember}\` on the roster!`;
 		}
-		
+
 		return message.channel.send(output);
 	}
 };

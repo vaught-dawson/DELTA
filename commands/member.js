@@ -21,21 +21,25 @@ module.exports = {
 		var inputMember = args.join('_');
 		if (inputMember.length > 256)
 			return message.channel.send('Name is too long! The name field maxes out at `256` characters.');
-		var member = await getDiscordMember(inputMember, message);
-		const doc = await loadSpreadsheet(server.sheetId);
-		var sheet = doc.sheetsByTitle['Roster'];
+		try {
+			var member = await getDiscordMember(inputMember, message);
+		} catch (err) {
+			return message.channel.send('Unknown user! Make sure you typed in a user id.');
+		}
+		const spreadsheet = await loadSpreadsheet(server.sheetId);
+		var rosterSheet = spreadsheet.sheetsByTitle['Roster'];
 		try {
 			switch (subcommand) {
 				case 'add':
-					if (await isNameOnSheet(member.name, sheet))
+					if (await isNameOnSheet(member.name, rosterSheet))
 						return message.channel.send(`This name is already in use!`);
-					await addMemberToSheet(member, sheet);
+					await addMemberToSheet(member, rosterSheet);
 					return message.channel.send(`Successfully added \`${member.name}\` to the roster.`);
 				case 'remove':
-					await removeMemberFromSheet(member, sheet);
+					await removeMemberFromSheet(member, rosterSheet);
 					return message.channel.send(`Successfully removed \`${member.name}\` from the roster.`);
 				case 'info':
-					return message.channel.send(await getMemberInfo(member, sheet));
+					return message.channel.send(await getMemberInfo(member, rosterSheet));
 				default:
 					return message.channel.send(
 						`Invalid arguments! \nUsage: \`${server.prefix}${this.name} ${this.usage}\``
@@ -43,7 +47,7 @@ module.exports = {
 			}
 		} catch (err) {
 			console.log(err);
-			await sendErrorEmbed(message, { message: `Error: ${err.name}\n\nMessage: ${err.message}` });
+			await sendErrorEmbed(message, { message: `**Command:** ${message.content}\n**Error:** ${err}` });
 			return message.channel.send(`Failed to run \`${subcommand}\` on \`${member.name}\`.`);
 		}
 	}

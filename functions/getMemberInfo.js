@@ -1,9 +1,10 @@
 const { getMemberFromSheet } = require('./getMemberFromSheet.js');
+const { getSheetHeaders } = require('./getSheetHeaders.js');
 const Discord = require('discord.js');
 
 async function getMemberInfo(member, sheet) {
 	var memberData = await getMemberFromSheet(member, sheet);
-	var headers = memberData['_sheet']['headerValues'];
+	var headers = await getSheetHeaders(sheet);
 	const embed = new Discord.MessageEmbed({
 		thumbnail: { url: 'https://i.ibb.co/2MHY6wn/D-E-L-T-A-4.jpg' },
 		color: 15105570,

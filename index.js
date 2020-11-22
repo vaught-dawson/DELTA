@@ -88,10 +88,8 @@ client.on('message', async (message) => {
 });
 
 const { addGuildToConfig } = require('./functions/addGuildToConfig.js');
-const { notifyOwner } = require('./functions/notifyOwner.js');
 client.on('guildCreate', (guild) => {
 	addGuildToConfig(guild);
-	notifyOwner(guild);
 });
 
 process.on('uncaughtException', (err) => {

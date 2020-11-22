@@ -3,7 +3,7 @@ const { changeGuildConfig } = require('../functions/changeGuildConfig.js');
 
 module.exports = {
 	name: 'setcommandchannel',
-	aliases: [ 'commandchannel', 'setchannel', 'channelset' ],
+	aliases: [ 'setcommandchannel' ],
 	description: "Changes the server's command channel for DELTA.",
 	args: false,
 	guildOnly: true,

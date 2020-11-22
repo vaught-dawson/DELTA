@@ -25,6 +25,7 @@ module.exports = {
 
 		(await rosterSheet.getRows()).forEach((row) => {
 			if (row['Name'].toLowerCase() == member.name.toLowerCase() || row['Discord'] == member.id) {
+				member.name = row['Name'];
 				row[columnHeader] = data;
 				row.save();
 				return (output = `Successfully changed \`${columnHeader}\` for \`${member.name}\` to \`${data}\`.`);

@@ -1,6 +1,7 @@
+const { token, prefixDefault } = require('./information/config.json');
+const { sendErrorEmbed } = require('./functions/sendErrorEmbed.js');
 const fs = require('fs');
 const Discord = require('discord.js');
-const { token, prefixDefault } = require('./information/config.json');
 const client = new Discord.Client();
 
 client.commands = new Discord.Collection();
@@ -28,9 +29,9 @@ client.on('message', async (message) => {
 		if (!command) return message.channel.send('Unknown command!');
 		if (command.guildOnly) {
 			return message.reply("I can't execute that command inside DMs!");
-		} 
+		}
 	} else {
-		server = servers.guilds.find(o => o.guildId === message.guild.id);
+		server = servers.guilds.find((o) => o.guildId === message.guild.id);
 		if (!server) return message.channel.send('This guild is not registered in my database!');
 		if (prefix != server.prefix) return;
 		command =
@@ -46,13 +47,18 @@ client.on('message', async (message) => {
 		if (command.sheets && server.sheetId == null)
 			return message.channel.send(
 				`You don't have a Google Sheet configured!\nGet an admin to set it with: \`${server.prefix}setSpreadsheetID <spreadsheet id>\`.`
-		);
+			);
 	}
 	if (command.args && !args.length)
 		return message.channel.send(
 			`You didn't add any arguments!\nThe proper usage would be: \`${server.prefix}${command.name} ${command.usage}\``
 		);
-	command.execute(message, args, server);
+	try {
+		command.execute(message, args, server);
+	} catch (err) {
+		await sendErrorEmbed(message, { message: `**Command:** ${message.content}\n**Error:** ${err}` });
+		return message.channel.send('Command failed! A report with the error has automatically been sent to logistics.');
+	}
 });
 
 const { addGuildToConfig } = require('./functions/addGuildToConfig.js');

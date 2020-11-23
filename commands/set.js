@@ -1,7 +1,7 @@
-const { loadSpreadsheet } = require('../functions/loadSpreadsheet.js');
-const { isSheetHeader } = require('../functions/isSheetHeader.js');
 const { combineElementsByCharacter } = require('../functions/combineElementsByCharacter.js');
 const { getDiscordMember } = require('../functions/getDiscordMember.js');
+const { isSheetHeader } = require('../functions/isSheetHeader.js');
+const { loadSpreadsheet } = require('../functions/loadSpreadsheet.js');
 
 module.exports = {
 	name: 'set',

@@ -1,10 +1,10 @@
+const { addMemberToSheet } = require('../functions/addMemberToSheet.js');
 const { getDiscordMember } = require('../functions/getDiscordMember.js');
 const { getMemberInfo } = require('../functions/getMemberInfo.js');
-const { addMemberToSheet } = require('../functions/addMemberToSheet.js');
+const { isNameOnSheet } = require('../functions/isNameOnSheet.js');
+const { loadSpreadsheet } = require('../functions/loadSpreadsheet.js');
 const { removeMemberFromSheet } = require('../functions/removeMemberFromSheet.js');
 const { sendErrorEmbed } = require('../functions/sendErrorEmbed.js');
-const { loadSpreadsheet } = require('../functions/loadSpreadsheet.js');
-const { isNameOnSheet } = require('../functions/isNameOnSheet.js');
 
 module.exports = {
 	name: 'member',

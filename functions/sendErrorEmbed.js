@@ -2,6 +2,7 @@ const Discord = require('discord.js');
 const { bugReportWebhook } = require('../information/config.json');
 
 async function sendErrorEmbed(message, error) {
+	console.log(error);
 	const embed = new Discord.MessageEmbed()
 		.setColor(15158332)
 		.setAuthor(message.author.tag)

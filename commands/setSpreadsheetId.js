@@ -1,5 +1,5 @@
-const { sendErrorEmbed } = require('../functions/sendErrorEmbed.js');
 const { changeGuildConfig } = require('../functions/changeGuildConfig.js');
+const { sendErrorEmbed } = require('../functions/sendErrorEmbed.js');
 
 module.exports = {
 	name: 'setspreadsheetid',

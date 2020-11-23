@@ -1,5 +1,5 @@
-const { loadSpreadsheet } = require('../functions/loadSpreadsheet.js');
 const { getDiscordMember } = require('../functions/getDiscordMember.js');
+const { loadSpreadsheet } = require('../functions/loadSpreadsheet.js');
 const { sendErrorEmbed } = require('../functions/sendErrorEmbed.js');
 const ranks = require('../information/ranks.json');
 

@@ -6,7 +6,7 @@ async function getMemberFromSheet(member, sheet) {
 			output = row;
 		}
 	});
-	if (!output) return `Could not find member: ${member.name}`;
+	if (!output) return;
 	return output;
 }
 

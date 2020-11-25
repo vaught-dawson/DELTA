@@ -16,7 +16,8 @@ module.exports = {
 
 		if (args.length > 1)
 			return message.channel.send(`Invalid arguments! \nUsage: \`${server.prefix}${this.name} ${this.usage}\``);
-
+		if (args[0].length > 1)
+			return message.channel.send(`Invalid length! A prefix can only be one character!`);
 		try {
 			await changeGuildConfig(server, 'prefix', args[0]);
 		} catch (err) {

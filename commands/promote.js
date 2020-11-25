@@ -12,7 +12,7 @@ module.exports = {
 	usage: '<member name>',
 	guildOnly: true,
 	async execute(message, args, server) {
-		const spreadsheet = loadSpreadsheet(server.sheetId);
+		const spreadsheet = await loadSpreadsheet(server.sheetId);
 		const rosterSheet = (await spreadsheet).sheetsByTitle['Roster'];
 		const rows = await rosterSheet.getRows();
 		var inputMember = args.join('_');

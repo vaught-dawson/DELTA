@@ -3,7 +3,6 @@ const { getSheetHeaders } = require('./getSheetHeaders.js');
 const Discord = require('discord.js');
 
 async function getMemberInfo(member, sheet) {
-	console.log(member);
 	var memberData = await getMemberFromSheet(member, sheet);
 	if (!memberData) return `Member \`${member.name}\` not found!`;
 	var headers = await getSheetHeaders(sheet);

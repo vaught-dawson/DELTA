@@ -6,7 +6,6 @@ async function getMemberFromSheet(member, sheet) {
 			output = row;
 		}
 	});
-	if (!output) return;
 	return output;
 }
 

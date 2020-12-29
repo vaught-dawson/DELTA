@@ -34,13 +34,13 @@ client.on('message', async (message) => {
 		server = servers.guilds.find((o) => o.guildId === message.guild.id);
 		if (!server) return message.channel.send('This guild is not registered in my database!');
 		if (prefix != server.prefix) return;
+		if (server.commandChannelId != message.channel.id && commandName != 'setcommandchannel') return;
 		command =
 			client.commands.get(commandName) ||
 			client.commands.find((cmd) => cmd.aliases && cmd.aliases.includes(commandName));
 		if (!command) return message.channel.send('Unknown command!');
-		if (server.commandChannelId != message.channel.id && commandName != 'setcommandchannel') return;
-		if (!message.member.hasPermission('MANAGE_ROLES') && commandName != 'setcommandchannel') {
-			return message.channel.send(
+		if (!message.member.hasPermission('MANAGE_ROLES')) {
+			message.channel.send(
 				"You don't have the perms to run DELTA commands. You need permissions to `MANAGE_ROLES`."
 			);
 		}

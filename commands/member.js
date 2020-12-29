@@ -34,7 +34,13 @@ module.exports = {
 					if (await isNameOnSheet(member.name, rosterSheet))
 						return message.channel.send(`This name is already in use!`);
 					await addMemberToSheet(member, rosterSheet);
-					return message.channel.send(`Successfully added \`${member.name}\` to the roster.`);
+					let output = `Successfully added \`${member.name}\` to the roster.`;
+					if (member.id === null) {
+						output += '\n\`Don\'t forget to add their Discord and Steam I.D.!\`';
+					} else {
+						output += '\n\`Don\'t forget to add their Steam I.D.!\`'; 
+					}
+					return message.channel.send(output);
 				case 'remove':
 					await removeMemberFromSheet(member, rosterSheet);
 					return message.channel.send(`Successfully removed \`${member.name}\` from the roster.`);

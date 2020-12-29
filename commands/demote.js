@@ -1,6 +1,7 @@
 const { getDiscordMember } = require('../functions/getDiscordMember.js');
 const { loadSpreadsheet } = require('../functions/loadSpreadsheet.js');
 const { sendErrorEmbed } = require('../functions/sendErrorEmbed.js');
+const dateFormat = require('dateformat');
 const ranks = require('../information/ranks.json');
 
 module.exports = {
@@ -22,13 +23,15 @@ module.exports = {
 			if (row['Name'].toLowerCase() == member.name.toLowerCase() || row['Discord'] == member.id) {
 				let rank = row['Rank'];
 				newRank = demote(rank);
-				if (newRank == null)
-					output = `Failed to demote \`${row[
-						'Name'
-					]}\` from \`${rank}\`\nWO+ and PVT- demotions have to be set manually with the \`set\` command to avoid hiccups.`;
+				if (newRank == null) output = `Failed to demote \`${row['Name']}\` from \`${rank}\`.`;
 				else {
 					try {
 						row['Rank'] = newRank;
+						let today = dateFormat(new Date(), 'mm/dd/yy');
+						row['LastPromo'] = today;
+						if (newRank == '-01-TR') {
+							row['Status'] = 'TR';
+						}
 						row.save();
 						output = `Successfully demoted \`${row['Name']}\` to \`${newRank}\` from \`${rank}\`.`;
 					} catch (err) {
@@ -44,22 +47,36 @@ module.exports = {
 
 function demote(rank) {
 	switch (rank) {
-		case ranks.pfc:
-			return ranks.pvt.toString();
-		case ranks.spc:
-			return ranks.pfc.toString();
-		case ranks.lcpl:
-			return ranks.spc.toString();
-		case ranks.cpl:
-			return ranks.lcpl.toString();
-		case ranks.sgt:
-			return ranks.cpl.toString();
-		case ranks.ssgt:
-			return ranks.sgt.toString();
-		case ranks.msgt:
-			return ranks.ssgt.toString();
-		case ranks.sgm:
-			return ranks.msgt.toString();
+		case ranks['pvt']:
+			return ranks['tr'].toString();
+		case ranks['pfc']:
+			return ranks['pvt'].toString();
+		case ranks['spc']:
+			return ranks['pfc'].toString();
+		case ranks['lcpl']:
+			return ranks['spc'].toString();
+		case ranks['cpl']:
+			return ranks['lcpl'].toString();
+		case ranks['sgt']:
+			return ranks['cpl'].toString();
+		case ranks['ssgt']:
+			return ranks['sgt'].toString();
+		case ranks['msgt']:
+			return ranks['ssgt'].toString();
+		case ranks['sgm']:
+			return ranks['msgt'].toString();
+		case ranks['wo']:
+			return ranks['sgm'].toString();
+		case ranks['2lt']:
+			return ranks['wo'].toString();
+		case ranks['1lt']:
+			return ranks['2lt'].toString();
+		case ranks['cpt']:
+			return ranks['1lt'].toString();
+		case ranks['mjr']:
+			return ranks['cpt'].toString();
+		case ranks['colonel']:
+			return ranks['mjr'].toString();
 	}
 	return null;
 }

@@ -10,6 +10,7 @@
   "author": "Vio",
   "license": "ISC",
   "dependencies": {
+    "dateformat": "^4.4.1",
     "discord.js": "^12.3.1",
     "google-spreadsheet": "^3.0.13",
     "googleapis": "^39.2.0",

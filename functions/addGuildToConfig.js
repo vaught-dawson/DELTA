@@ -8,7 +8,16 @@ function addGuildToConfig(guild) {
 		guildId: guild.id,
 		commandChannelId: null,
 		sheetId: null,
-		prefix: '+'
+		prefix: '+',
+		rosterSheet: {
+			name: 'Roster',
+			nameHeader: 'Name',
+			rankHeader: 'Rank',
+			subdivisionChangeHeader: 'SubDiv',
+			lastPromotionDateHeader: 'LastPromo',
+			discordHeader: 'Discord',
+			statusHeader: 'Status'
+		}
 	});
 	fs.writeFile(path, JSON.stringify(servers, null, 2), function writeJSON(err) {
 		if (err) {

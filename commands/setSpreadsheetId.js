@@ -21,6 +21,7 @@ module.exports = {
 			await sendErrorEmbed(message, { message: `**Command:** ${message.content}\n**Error:** ${err}` });
 			return message.channel.send(`Failed to change the spreadsheet id.`);
 		}
+		message.delete();
 		return message.channel.send(`Successfully set the spreadsheet id!`);
 	}
 };

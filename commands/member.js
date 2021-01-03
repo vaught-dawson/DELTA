@@ -27,7 +27,7 @@ module.exports = {
 			return message.channel.send('Unknown user! Make sure you typed in a user id.');
 		}
 		const spreadsheet = await loadSpreadsheet(server.sheetId);
-		var rosterSheet = spreadsheet.sheetsByTitle['Roster'];
+		var rosterSheet = spreadsheet.sheetsByTitle[server.rosterName];
 		try {
 			switch (subcommand) {
 				case 'add':
@@ -35,17 +35,16 @@ module.exports = {
 						return message.channel.send(`This name is already in use!`);
 					await addMemberToSheet(member, rosterSheet);
 					let output = `Successfully added \`${member.name}\` to the roster.`;
-					if (member.id === null) {
+					if (member.id === 'None') {
 						output += '\n\`Don\'t forget to add their Discord and Steam I.D.!\`';
 					} else {
 						output += '\n\`Don\'t forget to add their Steam I.D.!\`'; 
 					}
 					return message.channel.send(output);
 				case 'remove':
-					await removeMemberFromSheet(member, rosterSheet);
-					return message.channel.send(`Successfully removed \`${member.name}\` from the roster.`);
+					return message.channel.send(await removeMemberFromSheet(member, rosterSheet, server));
 				case 'info':
-					return message.channel.send(await getMemberInfo(member, rosterSheet));
+					return message.channel.send(await getMemberInfo(member, rosterSheet, server));
 				default:
 					return message.channel.send(
 						`Invalid arguments! \nUsage: \`${server.prefix}${this.name} ${this.usage}\``

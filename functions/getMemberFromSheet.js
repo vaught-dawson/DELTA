@@ -1,8 +1,8 @@
-async function getMemberFromSheet(member, sheet) {
+async function getMemberFromSheet(member, sheet, server) {
 	var rows = await sheet.getRows();
 	let output;
 	rows.forEach((row) => {
-		if (row['Name'].toLowerCase() == member.name.toLowerCase() || row['Discord'] == member.id) {
+		if (row[server.nameHeader].toLowerCase() == member.name.toLowerCase() || row[server.discordHeader] == member.id) {
 			output = row;
 		}
 	});

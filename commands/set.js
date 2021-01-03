@@ -14,21 +14,21 @@ module.exports = {
 	guildOnly: true,
 	async execute(message, args, server) {
 		const spreadsheet = loadSpreadsheet(server.sheetId);
-		const rosterSheet = (await spreadsheet).sheetsByTitle['Roster'];
+		const rosterSheet = (await spreadsheet).sheetsByTitle[server.rosterName];
+		args = combineElementsByCharacter(args, '"');
 		var inputHeader = args.shift();
 		var headers = await getSheetHeaders(rosterSheet);
 		var header = await getHeader(headers, inputHeader)
 		if (!header)
 			return message.channel.send('Invalid column header!');
-		args = combineElementsByCharacter(args, '"');
 		var inputMember = args.shift();
 		var member = await getDiscordMember(inputMember, message);
 		var data = args.join(' ');
 		var output = null;
 
 		(await rosterSheet.getRows()).forEach((row) => {
-			if (row['Name'].toLowerCase() == member.name.toLowerCase() || row['Discord'] == member.id) {
-				member.name = row['Name'];
+			if (row[server.nameHeader].toLowerCase() == member.name.toLowerCase() || row[server.discordHeader] == member.id) {
+				member.name = row[server.nameHeader];
 				row[header] = data;
 				row.save();
 				return (output = `Successfully changed \`${header}\` for \`${member.name}\` to \`${data}\`.`);

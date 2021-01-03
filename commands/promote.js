@@ -14,26 +14,31 @@ module.exports = {
 	guildOnly: true,
 	async execute(message, args, server) {
 		const spreadsheet = await loadSpreadsheet(server.sheetId);
-		const rosterSheet = (await spreadsheet).sheetsByTitle['Roster'];
+		const rosterSheet = (await spreadsheet).sheetsByTitle[server.rosterName];
 		const rows = await rosterSheet.getRows();
 		var inputMember = args.join('_');
 		var member = await getDiscordMember(inputMember, message);
 		var output;
 		rows.forEach((row) => {
-			if (row['Name'].toLowerCase() == member.name.toLowerCase() || row['Discord'] == member.id) {
-				let rank = row['Rank'];
+			if (
+				row[server.nameHeader].toLowerCase() == member.name.toLowerCase() ||
+				row[server.discordHeader] == member.id
+			) {
+				let rank = row[server.rankHeader];
 				newRank = promote(rank);
-				if (newRank == null) output = `Failed to promote \`${row['Name']}\` from \`${rank}\`.`;
+				if (newRank == null) output = `Failed to promote \`${row[server.nameHeader]}\` from \`${rank}\`.`;
 				else {
 					try {
-						row['Rank'] = newRank;
-						let today = dateFormat(new Date(), "mm/dd/yy");
-						row['LastPromo'] = today;
+						row[server.rankHeader] = newRank;
+						let today = dateFormat(new Date(), 'mm/dd/yy');
+						row[server.lastPromotionDateHeader] = today;
 						if (newRank == '01-PVT') {
-							row['Status'] = 'ACTIVE';
+							row[server.statusHeader] = 'ACTIVE';
 						}
 						row.save();
-						output = `Successfully promoted \`${row['Name']}\` to \`${newRank}\` from \`${rank}\`.`;
+						output = `Successfully promoted \`${row[
+							server.nameHeader
+						]}\` to \`${newRank}\` from \`${rank}\`.`;
 					} catch (err) {
 						sendErrorEmbed(message, { message: `**Command:** ${message.content}\n**Error:** ${err}` });
 						output = `There was a problem saving to the roster.`;

@@ -33,6 +33,10 @@ client.on('message', async (message) => {
 	} else {
 		server = servers.guilds.find((o) => o.guildId === message.guild.id);
 		if (!server) return message.channel.send('This guild is not registered in my database!');
+		if (message.content.includes("@here") || message.content.includes("@everyone")) return;
+		if (message.mentions.has(client.user.id)) {
+			message.channel.send(`I'm up! My prefix is \`${server.prefix}\`.`);
+		};
 		if (prefix != server.prefix) return;
 		if (server.commandChannelId != message.channel.id && commandName != 'setcommandchannel') return;
 		command =

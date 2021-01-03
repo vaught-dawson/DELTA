@@ -1,8 +1,8 @@
-async function removeMemberFromSheet(member, sheet) {
+async function removeMemberFromSheet(member, sheet, server) {
 	var rows = await sheet.getRows();
 	var index = -1;
 	rows.forEach((row) => {
-		if (row['Name'].toLowerCase() == member.name.toLowerCase() || row['Discord'] == member.id)
+		if (row[server.nameHeader].toLowerCase() == member.name.toLowerCase() || row[server.discordHeader] == member.id)
 			return (index = row.rowIndex - 2);
 	});
 	if (index != -1) {

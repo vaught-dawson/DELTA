@@ -11,7 +11,7 @@ module.exports = {
 	guildOnly: true,
 	async execute(message, args, server) {
 		const spreadsheet = await loadSpreadsheet(server.sheetId);
-		var rosterSheet = spreadsheet.sheetsByTitle['Roster'];
+		var rosterSheet = spreadsheet.sheetsByTitle[server.rosterName];
 		var membersInfo = await getMembersInfo(rosterSheet);
 		var embeds = await splitEmbedsByFields(membersInfo, 24, spreadsheet.title);
 

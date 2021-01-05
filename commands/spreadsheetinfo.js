@@ -9,6 +9,7 @@ module.exports = {
 	args: false,
 	sheets: true,
 	guildOnly: true,
+	commandChannel: true,
 	async execute(message, args, server) {
 		const spreadsheet = await loadSpreadsheet(server.sheetId);
 		try {

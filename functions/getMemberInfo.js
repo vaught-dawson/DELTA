@@ -1,10 +1,14 @@
-const { getMemberFromSheet } = require('./getMemberFromSheet.js');
+const { getMemberFromSheetById } = require('./getMemberFromSheetById.js');
+const { getMemberFromSheetByName } = require('./getMemberFromSheetByName.js');
 const { getSheetHeaders } = require('./getSheetHeaders.js');
 const Discord = require('discord.js');
 
 async function getMemberInfo(member, sheet, server) {
-	var memberData = await getMemberFromSheet(member, sheet, server);
-	if (!memberData) return `Member \`${member.name}\` not found!`;
+	var memberData = await getMemberFromSheetById(member, sheet, server)
+	if (!memberData) {
+		memberData = await getMemberFromSheetByName(member, sheet, server);
+		if (!memberData) return `Member \`${member.name}\` not found!`;
+	}
 	var headers = await getSheetHeaders(sheet);
 	const embed = new Discord.MessageEmbed({
 		thumbnail: { url: 'https://i.ibb.co/2MHY6wn/D-E-L-T-A-4.jpg' },

@@ -7,6 +7,7 @@ module.exports = {
 	description: 'Gives info about DELTA.',
 	args: false,
 	guildOnly: false,
+	commandChannel: true,
 	async execute(message, args, server) {
 		const embed = new Discord.MessageEmbed()
 			.setColor(15105570)

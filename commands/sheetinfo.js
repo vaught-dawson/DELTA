@@ -10,6 +10,7 @@ module.exports = {
 	sheets: true,
 	usage: '<sheet name>',
 	guildOnly: true,
+	commandChannel: true,
 	async execute(message, args, server) {
 		const spreadsheet = loadSpreadsheet(server.sheetId);
 		const sheet = (await spreadsheet).sheetsByTitle[args.join(' ')];

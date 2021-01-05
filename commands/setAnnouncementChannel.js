@@ -2,12 +2,12 @@ const { changeGuildConfig } = require('../functions/changeGuildConfig.js');
 const { sendErrorEmbed } = require('../functions/sendErrorEmbed.js');
 
 module.exports = {
-	name: 'setcommandchannel',
-	aliases: [ 'setcommand' ],
-	description: "Changes the server's command channel for DELTA.",
+	name: 'setannouncementchannel',
+	aliases: [ 'setannouncement' ],
+	description: "Changes the server's announcement channel for DELTA.",
 	args: false,
-	guildOnly: true,
-	commandChannel: false,
+    guildOnly: true,
+    commandChannel: false,
 	async execute(message, args, server) {
 		if (!message.member.hasPermission('ADMINISTRATOR'))
 			return message.channel.send(
@@ -15,11 +15,11 @@ module.exports = {
 			);
 
 		try {
-			await changeGuildConfig(server, 'commandChannelId', message.channel.id);
+			await changeGuildConfig(server, 'announcementChannelId', message.channel.id);
 		} catch (err) {
 			await sendErrorEmbed(message, { message: `**Command:** ${message.content}\n**Error:** ${err}` });
-			return message.channel.send(`Failed to change the command channel to \`${args[0]}\`.`);
+			return message.channel.send(`Failed to change the announcement channel to \`${args[0]}\`.`);
 		}
-		return message.channel.send(`Successfully made this the command channel!`);
+		return message.channel.send(`Successfully made this the announcement channel!`);
 	}
 };

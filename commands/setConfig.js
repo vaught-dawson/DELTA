@@ -7,7 +7,8 @@ module.exports = {
 	description: "Changes the config values for your server (Roster sheet name, id, and essential column headers).",
 	args: true,
 	usage: '<spreadsheetId, rostername, name, rank, subdivisionChange, lastPromotionDate, steam, discord, status> <data>',
-	guildOnly: true,
+    guildOnly: true,
+    commandChannel: true,
 	async execute(message, args, server) {
 		if (!message.member.hasPermission('ADMINISTRATOR'))
 			return message.channel.send(
@@ -37,9 +38,6 @@ module.exports = {
                 case 'lastpromotiondate':
                     await changeGuildConfig(server, 'lastPromotionDateHeader', args[0]);
                     return message.channel.send(`Successfully set the last promotion-date header to \`${args[0]}\`!`);
-                case 'steam':
-                    await changeGuildConfig(server, 'steamHeader', args[0]);
-                    return message.channel.send(`Successfully set the steam header to \`${args[0]}\`!`);
                 case 'discord':
                     await changeGuildConfig(server, 'discordHeader', args[0]);
                     return message.channel.send(`Successfully set the discord header to \`${args[0]}\`!`);

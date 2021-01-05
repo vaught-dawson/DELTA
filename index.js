@@ -20,6 +20,7 @@ client.on('message', async (message) => {
 	var prefix = message.content.substring(0, 1);
 	var args = message.content.substring(1).split(/ +/);
 	var commandName = args.shift().toLowerCase();
+	client.channels.fetch()
 	var server, command;
 	if (message.channel.type == 'dm') {
 		if (prefix != prefixDefault) return;
@@ -38,11 +39,17 @@ client.on('message', async (message) => {
 			message.channel.send(`I'm up! My prefix is \`${server.prefix}\`.`);
 		};
 		if (prefix != server.prefix) return;
-		if (server.commandChannelId != message.channel.id && commandName != 'setcommandchannel') return;
 		command =
 			client.commands.get(commandName) ||
 			client.commands.find((cmd) => cmd.aliases && cmd.aliases.includes(commandName));
-		if (!command) return message.channel.send('Unknown command!');
+		if (command) {
+			if (server.commandChannelId != message.channel.id && command.commandChannel == true) return;
+		}
+		else if (!command) {
+			if (server.commandChannelId == message.channel.id)
+				return message.channel.send('Unknown command!');
+			else return;
+		}
 		if (!message.member.hasPermission('MANAGE_ROLES')) {
 			message.channel.send(
 				"You don't have the perms to run DELTA commands. You need permissions to `MANAGE_ROLES`."
@@ -58,7 +65,7 @@ client.on('message', async (message) => {
 			`You didn't add any arguments!\nThe proper usage would be: \`${server.prefix}${command.name} ${command.usage}\``
 		);
 	try {
-		command.execute(message, args, server);
+		command.execute(message, args, server, client);
 	} catch (err) {
 		await sendErrorEmbed(message, { message: `**Command:** ${message.content}\n**Error:** ${err}` });
 		return message.channel.send('Command failed! A report with the error has automatically been sent to logistics.');
@@ -69,6 +76,27 @@ const { addGuildToConfig } = require('./functions/addGuildToConfig.js');
 client.on('guildCreate', (guild) => {
 	addGuildToConfig(guild);
 });
+
+const { getMemberFromSheetById } = require('./functions/getMemberFromSheetById.js');
+const { loadSpreadsheet } = require('./functions/loadSpreadsheet.js');
+client.on('guildMemberRemove', async (member) => {
+	let server = servers.guilds.find((server) => server.guildId === member.guild.id);
+	if (!server) return;
+	if (!server.announcementChannelId) return;
+	const spreadsheet = await loadSpreadsheet(server.sheetId);
+	var rosterSheet = spreadsheet.sheetsByTitle[server.rosterName];
+	let rosterMember = await getMemberFromSheetById({ id: member.id }, rosterSheet, server);
+	if (!rosterMember) return;
+	if (rosterMember.length === 0) return;
+	let announcementChannel = await client.channels.fetch(server.announcementChannelId);
+	let embed = new Discord.MessageEmbed()
+		.setTitle('Leave Notification')
+		.setColor(15105570)
+		.setAuthor(member.user.tag)
+		.setDescription(`User \`${member.displayName} / ${rosterMember[server.nameHeader]}\` has left the discord and is still on the roster!`)
+		.setFooter('Resistance Logistics', 'https://i.ibb.co/Wzd001F/677a08d8682923ca8cb51fe48df38208.png');
+	announcementChannel.send(embed);
+})
 
 process.on('uncaughtException', (err) => {
 	console.log(`Error: ${err.name}\n\nMessage: ${err.message}`);

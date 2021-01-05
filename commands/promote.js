@@ -12,6 +12,7 @@ module.exports = {
 	sheets: true,
 	usage: '<member name>',
 	guildOnly: true,
+	commandChannel: true,
 	async execute(message, args, server) {
 		const spreadsheet = await loadSpreadsheet(server.sheetId);
 		const rosterSheet = (await spreadsheet).sheetsByTitle[server.rosterName];
@@ -30,6 +31,7 @@ module.exports = {
 				else {
 					try {
 						row[server.rankHeader] = newRank;
+						let lastPromoDate = dateFormat(row[server.lastPromotionDateHeader]);
 						let today = dateFormat(new Date(), 'mm/dd/yy');
 						row[server.lastPromotionDateHeader] = today;
 						if (newRank == '01-PVT') {
@@ -39,6 +41,9 @@ module.exports = {
 						output = `Successfully promoted \`${row[
 							server.nameHeader
 						]}\` to \`${newRank}\` from \`${rank}\`.`;
+						if (Date.parse(today) - Date.parse(lastPromoDate) < 86400000 * 7) {
+							output += `\n\n\`Warning: This user has been promoted within the last week!\``;
+						}
 					} catch (err) {
 						sendErrorEmbed(message, { message: `**Command:** ${message.content}\n**Error:** ${err}` });
 						output = `There was a problem saving to the roster.`;

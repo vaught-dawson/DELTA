@@ -14,6 +14,7 @@ module.exports = {
 	sheets: true,
 	usage: '<add/remove/info> <member name>',
 	guildOnly: true,
+	commandChannel: true,
 	async execute(message, args, server) {
 		if (args.length <= 1 || args == undefined)
 			return message.channel.send(`Invalid Arguments! Usage: \`${server.prefix}${this.name} ${this.usage}\``);

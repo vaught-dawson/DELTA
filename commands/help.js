@@ -7,6 +7,7 @@ module.exports = {
 	description: 'List all commands or usage on specific commands.',
 	usage: '<command name>',
 	guildOnly: false,
+	commandChannel: true,
 	execute(message, args, server) {
 		const { commands } = message.client;
 		let prefix = prefixDefault;

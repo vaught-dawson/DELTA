@@ -7,6 +7,7 @@ module.exports = {
 	args: true,
 	usage: '<report info>',
 	guildOnly: true,
+	commandChannel: true,
 	async execute(message, args, server) {
 		var error = {
 			bug: true,

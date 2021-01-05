@@ -8,6 +8,7 @@ module.exports = {
 	args: true,
 	usage: '<spreadsheet id>',
 	guildOnly: true,
+	commandChannel: true,
 	async execute(message, args, server) {
 		if (!message.member.hasPermission('ADMINISTRATOR'))
 			return message.channel.send(

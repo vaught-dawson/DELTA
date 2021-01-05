@@ -9,15 +9,13 @@ function addGuildToConfig(guild) {
 		commandChannelId: null,
 		sheetId: null,
 		prefix: '+',
-		rosterSheet: {
-			name: 'Roster',
-			nameHeader: 'Name',
-			rankHeader: 'Rank',
-			subdivisionChangeHeader: 'SubDiv',
-			lastPromotionDateHeader: 'LastPromo',
-			discordHeader: 'Discord',
-			statusHeader: 'Status'
-		}
+		rosterName: 'Roster',
+		nameHeader: 'Name',
+		rankHeader: 'Rank',
+		subdivisionChangeHeader: 'SubDiv',
+		lastPromotionDateHeader: 'LastPromo',
+		statusHeader: 'Status',
+		discordHeader: 'Discord',
 	});
 	fs.writeFile(path, JSON.stringify(servers, null, 2), function writeJSON(err) {
 		if (err) {

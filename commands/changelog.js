@@ -6,7 +6,7 @@ const Discord = require('discord.js');
 module.exports = {
 	name: 'changelog',
 	aliases: [ 'change' ],
-	description: 'Sends a change log to every DELTA server with an announcements channel set up.',
+	description: 'Sends a change log to every DELTA server with an announcements channel set up (Dev Only).',
 	args: true,
     guildOnly: true,
     commandChannel: false,

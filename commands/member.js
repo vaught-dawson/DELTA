@@ -12,7 +12,7 @@ module.exports = {
 	description: 'Manage members.',
 	args: true,
 	sheets: true,
-	usage: '<add/remove/info> <member name>',
+	usage: '<add/remove/info> <member name/id>',
 	guildOnly: true,
 	commandChannel: true,
 	async execute(message, args, server) {
@@ -32,8 +32,12 @@ module.exports = {
 		try {
 			switch (subcommand) {
 				case 'add':
-					if (await isNameOnSheet(member.name, rosterSheet))
+					try {
+						if (await isNameOnSheet(member.name, rosterSheet))
 						return message.channel.send(`This name is already in use!`);
+					} catch {
+						return message.channel.send('Cannot set a numerical name the same length as a Discord id!');
+					}
 					await addMemberToSheet(member, rosterSheet);
 					let output = `Successfully added \`${member.name}\` to the roster.`;
 					if (member.id === 'None') {

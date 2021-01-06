@@ -1,0 +1,63 @@
+{
+    "ranks": [
+	{
+        "name": "01-E10",
+        "index": 2
+    },
+	{
+        "name": "02-E9",
+        "index": 3
+    },
+	{
+        "name": "03-E8",
+        "index": 4
+    },
+	{
+        "name": "04-E7",
+        "index": 5
+    },
+	{
+        "name": "05-E6",
+        "index": 6
+    },
+	{
+        "name": "06-E5",
+        "index": 7
+    },
+	{
+        "name": "07-E4",
+        "index": 8
+    },
+	{
+        "name": "08-E3",
+        "index": 9
+    },
+	{
+        "name": "09-E2",
+        "index": 10
+    },
+	{
+        "name": "10-E1",
+        "index": 11
+    },
+	{
+        "name": "11-C1",
+        "index": 12
+    },
+	{
+        "name": "12-C2",
+        "index": 13
+    },
+	{
+        "name": "13-C3",
+        "index": 14
+    },
+	{
+        "name": "14-C4",
+        "index": 15
+    },
+	{
+        "name": "15-A0",
+        "index": 16
+    }
+]}

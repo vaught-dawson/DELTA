@@ -5,7 +5,7 @@ const { splitEmbedsByFields } = require('../functions/splitEmbedsByFields');
 module.exports = {
 	name: 'spreadsheetinfo',
 	aliases: [ 'sheets' ],
-	description: 'Get the info of the whole spreadsheet.',
+	description: 'Gets basic info from the spreadsheet.',
 	args: false,
 	sheets: true,
 	guildOnly: true,

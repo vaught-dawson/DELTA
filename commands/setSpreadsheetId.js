@@ -4,7 +4,7 @@ const { sendErrorEmbed } = require('../functions/sendErrorEmbed.js');
 module.exports = {
 	name: 'setspreadsheetid',
 	aliases: [ 'setsheet', 'setspreadhseet', 'setsheetid' ],
-	description: "Changes the server's spreadsheet id for DELTA.",
+	description: "Changes the server's spreadsheet id.",
 	args: true,
 	usage: '<spreadsheet id>',
 	guildOnly: true,
@@ -23,6 +23,6 @@ module.exports = {
 			return message.channel.send(`Failed to change the spreadsheet id.`);
 		}
 		message.delete();
-		return message.channel.send(`Successfully set the spreadsheet id!`);
+		return message.channel.send('Successfully set the spreadsheet id (Your message was deleted for privacy).');
 	}
 };

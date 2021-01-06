@@ -1,0 +1,67 @@
+{
+    "ranks": [
+	{
+        "name": "-01-SQUID",
+        "index": 1
+    },
+	{
+        "name": "01-PVT",
+        "index": 2
+    },
+	{
+        "name": "02-PFC",
+        "index": 3
+    },
+	{
+        "name": "03-SPC",
+        "index": 4
+    },
+	{
+        "name": "04-LCPL",
+        "index": 5
+    },
+	{
+        "name": "05-CPL",
+        "index": 6
+    },
+	{
+        "name": "06-SGT",
+        "index": 7
+    },
+	{
+        "name": "07-SSGT",
+        "index": 8
+    },
+	{
+        "name": "08-MSGT",
+        "index": 9
+    },
+	{
+        "name": "09-SGM",
+        "index": 10
+    },
+	{
+        "name": "10-WO",
+        "index": 11
+    },
+	{
+        "name": "11-2ndLT",
+        "index": 12
+    },
+	{
+        "name": "12-1stLT",
+        "index": 13
+    },
+	{
+        "name": "13-CPT",
+        "index": 14
+    },
+	{
+        "name": "14-Major",
+        "index": 15
+    },
+	{
+        "name": "15-Colonel",
+        "index": 16
+    }
+]}

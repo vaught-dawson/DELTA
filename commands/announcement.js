@@ -6,8 +6,9 @@ const Discord = require('discord.js');
 module.exports = {
 	name: 'announcement',
 	aliases: [ 'announce' ],
-	description: 'Sends an announcement to every DELTA server with an announcements channel set up.',
+	description: 'Sends an announcement to every DELTA server with an announcements channel set up (Dev only).',
 	args: true,
+	usage: '<data>',
 	guildOnly: true,
 	commandChannel: false,
 	async execute(message, args, server, client) {

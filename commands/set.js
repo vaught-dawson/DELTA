@@ -3,6 +3,9 @@ const { getDiscordMember } = require('../functions/getDiscordMember.js');
 const { getHeader } = require('../functions/getHeader.js');
 const { getSheetHeaders } = require('../functions/getSheetHeaders.js');
 const { loadSpreadsheet } = require('../functions/loadSpreadsheet.js');
+const { getMemberFromSheetById } = require('../functions/getMemberFromSheetById.js');
+const { getMemberFromSheetByName } = require('../functions/getMemberFromSheetByName.js');
+const { sendErrorEmbed } = require('../functions/sendErrorEmbed.js');
 
 module.exports = {
 	name: 'set',
@@ -10,7 +13,7 @@ module.exports = {
 	description: 'Sets data of members.',
 	args: true,
 	sheets: true,
-	usage: '<column header> <member> <data>',
+	usage: '<column header> <member name/id> <data>',
 	guildOnly: true,
 	commandChannel: true,
 	async execute(message, args, server) {
@@ -25,19 +28,30 @@ module.exports = {
 		var inputMember = args.shift();
 		var member = await getDiscordMember(inputMember, message);
 		var data = args.join(' ');
-		var output = null;
 
-		(await rosterSheet.getRows()).forEach((row) => {
-			if (row[server.nameHeader].toLowerCase() == member.name.toLowerCase() || row[server.discordHeader] == member.id) {
-				member.name = row[server.nameHeader];
-				row[header] = data;
-				row.save();
-				return (output = `Successfully changed \`${header}\` for \`${member.name}\` to \`${data}\`.`);
+		var memberData = await getMemberFromSheetById(member, rosterSheet, server);
+		if (!memberData) {
+			memberData = await getMemberFromSheetByName(member, rosterSheet, server);
+			if (!memberData) return message.channel.send(`Member \`${member.name == null ? member.id : member.name}\` not found on the roster!`);
+		}
+
+		memberData[header] = data;
+
+		let output;
+		try {
+			const rows = await rosterSheet.getRows();
+			var foundIndex = rows.findIndex((row) => row[server.discordHeader] == member.id);
+			if (foundIndex === -1) {
+				foundIndex = rows.findIndex((row) => row[server.nameHeader].toLowerCase() == member.name.toLowerCase());
+				if (foundIndex === -1) return message.channel.send(`Failed to find \`${member.name}\` on the roster.`);
 			}
-		});
 
-		if (output == null) {
-			output = `Could not find member \`${inputMember}\` on the roster!`;
+			rows[foundIndex] = memberData;
+			rows[foundIndex].save();
+			output = `Successfully changed \`${header}\` for \`${memberData[server.nameHeader]}\` to \`${data}\`.`;
+		} catch (err) {
+			sendErrorEmbed(message, { message: `**Command:** ${message.content}\n**Error:** ${err}` });
+			output = `There was a problem saving to the roster.`;
 		}
 
 		return message.channel.send(output);

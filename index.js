@@ -20,7 +20,6 @@ client.on('message', async (message) => {
 	var prefix = message.content.substring(0, 1);
 	var args = message.content.substring(1).split(/ +/);
 	var commandName = args.shift().toLowerCase();
-	client.channels.fetch()
 	var server, command;
 	if (message.channel.type == 'dm') {
 		if (prefix != prefixDefault) return;
@@ -65,7 +64,9 @@ client.on('message', async (message) => {
 			`You didn't add any arguments!\nThe proper usage would be: \`${server.prefix}${command.name} ${command.usage}\``
 		);
 	try {
-		command.execute(message, args, server, client);
+		command.execute(message, args, server, client).catch(err => {
+			console.log(err);
+		});
 	} catch (err) {
 		await sendErrorEmbed(message, { message: `**Command:** ${message.content}\n**Error:** ${err}` });
 		return message.channel.send('Command failed! A report with the error has automatically been sent to logistics.');

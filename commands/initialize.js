@@ -4,7 +4,7 @@ const { sendErrorEmbed } = require('../functions/sendErrorEmbed.js');
 module.exports = {
 	name: 'initialize',
 	aliases: [ 'init' ],
-	description: "Sets up DELTA step-by-step.",
+	description: "Walks through setting up DELTA in Discord. Sets current channel as command channel.",
 	args: false,
 	guildOnly: true,
 	commandChannel: false,

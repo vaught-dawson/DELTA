@@ -1,8 +1,9 @@
 const { getDiscordMember } = require('../functions/getDiscordMember.js');
+const { getMemberFromSheetById } = require('../functions/getMemberFromSheetById.js');
+const { getMemberFromSheetByName } = require('../functions/getMemberFromSheetByName.js');
 const { loadSpreadsheet } = require('../functions/loadSpreadsheet.js');
 const { sendErrorEmbed } = require('../functions/sendErrorEmbed.js');
 const dateFormat = require('dateformat');
-const ranks = require('../information/ranks.json');
 
 module.exports = {
 	name: 'promote',
@@ -10,83 +11,67 @@ module.exports = {
 	description: 'Promotes a member on the roster.',
 	args: true,
 	sheets: true,
-	usage: '<member name>',
+	usage: '<member name/id>',
 	guildOnly: true,
 	commandChannel: true,
 	async execute(message, args, server) {
 		const spreadsheet = await loadSpreadsheet(server.sheetId);
 		const rosterSheet = (await spreadsheet).sheetsByTitle[server.rosterName];
-		const rows = await rosterSheet.getRows();
-		var inputMember = args.join('_');
-		var member = await getDiscordMember(inputMember, message);
-		var output;
-		rows.forEach((row) => {
-			if (
-				row[server.nameHeader].toLowerCase() == member.name.toLowerCase() ||
-				row[server.discordHeader] == member.id
-			) {
-				let rank = row[server.rankHeader];
-				newRank = promote(rank);
-				if (newRank == null) output = `Failed to promote \`${row[server.nameHeader]}\` from \`${rank}\`.`;
-				else {
-					try {
-						row[server.rankHeader] = newRank;
-						let lastPromoDate = dateFormat(row[server.lastPromotionDateHeader]);
-						let today = dateFormat(new Date(), 'mm/dd/yy');
-						row[server.lastPromotionDateHeader] = today;
-						if (newRank == '01-PVT') {
-							row[server.statusHeader] = 'ACTIVE';
-						}
-						row.save();
-						output = `Successfully promoted \`${row[
-							server.nameHeader
-						]}\` to \`${newRank}\` from \`${rank}\`.`;
-						if (Date.parse(today) - Date.parse(lastPromoDate) < 86400000 * 7) {
-							output += `\n\n\`Warning: This user has been promoted within the last week!\``;
-						}
-					} catch (err) {
-						sendErrorEmbed(message, { message: `**Command:** ${message.content}\n**Error:** ${err}` });
-						output = `There was a problem saving to the roster.`;
-					}
-				}
+		var member = await getDiscordMember(args.join('_'), message);
+		var memberData = await getMemberFromSheetById(member, rosterSheet, server);
+		if (!memberData) {
+			memberData = await getMemberFromSheetByName(member, rosterSheet, server);
+			if (!memberData) return message.channel.send(`Member \`${member.name == null ? member.id : member.name}\` not found on the roster!`);
+		}
+
+		let previousRank = memberData[server.rankHeader];
+		let newRank = promote(previousRank, server);
+		if (!newRank) {
+			return message.channel.send(`Failed to promote \`${memberData[server.nameHeader]}\` from \`${memberData[server.rankHeader]}\`.\n\nAre you using the right rank system?`);
+		} else if (newRank === null) {
+			return message.channel.send('This server has an invalid rank structure set in the config.\nHave an admin change this with the \`setConfig\` command!');
+		}
+			
+		let lastPromoDate = memberData[server.lastPromotionDateHeader];
+		let today = dateFormat(new Date(), 'mm/dd/yy');
+		let promoWarning = false;
+		if (Date.parse(today) - Date.parse(lastPromoDate) < 86400000 * 7) promoWarning = true;
+
+		if (newRank === '01-PVT') memberData[server.statusHeader] = 'ACTIVE';
+
+		memberData[server.rankHeader] = newRank;
+		memberData[server.lastPromotionDateHeader] = today;
+
+		let output;
+		try {
+			const rows = await rosterSheet.getRows();
+			var foundIndex = rows.findIndex((row) => row[server.discordHeader] == member.id);
+			if (foundIndex === -1) {
+				foundIndex = rows.findIndex((row) => row[server.nameHeader].toLowerCase() == member.name.toLowerCase());
+				if (foundIndex === -1) return message.channel.send(`Failed to find \`${member.name}\` on the roster.`);
 			}
-		});
+
+			rows[foundIndex] = memberData;
+			rows[foundIndex].save();
+			output = `Successfully promoted \`${memberData[server.nameHeader]}\` to \`${newRank}\` from \`${previousRank}\`.`;
+			if (promoWarning) output += `\n\n\`Warning: This user has been promoted within the last week!\``;
+		} catch (err) {
+			sendErrorEmbed(message, { message: `**Command:** ${message.content}\n**Error:** ${err}` });
+			output = `There was a problem saving to the roster.`;
+		}
 		return message.channel.send(output ? output : `Failed to find \`${member.name}\` on the roster.`);
 	}
 };
 
-function promote(rank) {
-	switch (rank) {
-		case ranks['tr']:
-			return ranks['pvt'].toString();
-		case ranks['pvt']:
-			return ranks['pfc'].toString();
-		case ranks['pfc']:
-			return ranks['spc'].toString();
-		case ranks['spc']:
-			return ranks['lcpl'].toString();
-		case ranks['lcpl']:
-			return ranks['cpl'].toString();
-		case ranks['cpl']:
-			return ranks['sgt'].toString();
-		case ranks['sgt']:
-			return ranks['ssgt'].toString();
-		case ranks['ssgt']:
-			return ranks['msgt'].toString();
-		case ranks['msgt']:
-			return ranks['sgm'].toString();
-		case ranks['sgm']:
-			return ranks['wo'].toString();
-		case ranks['wo']:
-			return ranks['2lt'].toString();
-		case ranks['2lt']:
-			return ranks['1lt'].toString();
-		case ranks['1lt']:
-			return ranks['cpt'].toString();
-		case ranks['cpt']:
-			return ranks['mjr'].toString();
-		case ranks['mjr']:
-			return ranks['colonel'].toString();
+function promote(currentRank, server) {
+	try {
+		let rankSystem = server.rankSystem;
+		const { ranks } = require(`../information/ranks/${rankSystem}.json`)
+		let currRank = ranks.find((r) => r.name == currentRank);
+		if (!currRank) return null;
+		let newRank = ranks.find((r) => r.index == currRank.index + 1);
+		return newRank.name;
+	} catch (err) {
+		return null;
 	}
-	return null;
 }

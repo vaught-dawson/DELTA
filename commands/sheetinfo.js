@@ -5,18 +5,26 @@ const { splitEmbedsByFields } = require('../functions/splitEmbedsByFields');
 module.exports = {
 	name: 'sheetinfo',
 	aliases: [ 'sheet' ],
-	description: "Gets a roster sheet's info.",
+	description: "Gets a sheet's basic info.",
 	args: true,
 	sheets: true,
 	usage: '<sheet name>',
 	guildOnly: true,
 	commandChannel: true,
 	async execute(message, args, server) {
-		const spreadsheet = loadSpreadsheet(server.sheetId);
-		const sheet = (await spreadsheet).sheetsByTitle[args.join(' ')];
+		let inputSheetName = args.join(' ');
+		let outputSheetName;
+		const spreadsheet = await loadSpreadsheet(server.sheetId);
+		for (let i = 0; i < spreadsheet.sheetCount; i++) {
+			if (spreadsheet.sheetsByIndex[i].title.toLowerCase() == inputSheetName.toLowerCase()) {
+				outputSheetName = spreadsheet.sheetsByIndex[i].title;
+				i = spreadsheet.sheetCount;
+			}
+		}
+		const sheet = spreadsheet.sheetsByTitle[outputSheetName];
 		if (!sheet)
 			return message.channel.send(
-				`Could not find the sheet \`${args[0]}\`!\n\n\`Sheet names are CaSe-Sensitive. Make sure you typed it the same as it is in the spreadsheetInfo command!\``
+				`Could not find the sheet \`${args[0]}\`!`
 			);
 		try {
 			message.channel.send(splitEmbedsByFields(await getSheetInfo(sheet), 24, sheet.title));

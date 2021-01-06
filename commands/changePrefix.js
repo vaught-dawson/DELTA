@@ -4,7 +4,7 @@ const { sendErrorEmbed } = require('../functions/sendErrorEmbed.js');
 module.exports = {
 	name: 'changeprefix',
 	aliases: [ 'prefix', 'cngpre', 'prefixchange', 'setprefix' ],
-	description: "Changes the server's prefix for DELTA.",
+	description: "Changes the server's current prefix.",
 	args: true,
 	usage: '<new prefix>',
 	guildOnly: true,

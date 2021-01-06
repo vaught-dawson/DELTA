@@ -7,7 +7,7 @@ async function getMemberInfo(member, sheet, server) {
 	var memberData = await getMemberFromSheetById(member, sheet, server)
 	if (!memberData) {
 		memberData = await getMemberFromSheetByName(member, sheet, server);
-		if (!memberData) return `Member \`${member.name}\` not found!`;
+		if (!memberData) return `Member \`${member.name == null ? member.id : member.name}\` not found!`;
 	}
 	var headers = await getSheetHeaders(sheet);
 	const embed = new Discord.MessageEmbed({

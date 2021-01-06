@@ -4,9 +4,9 @@ const { sendErrorEmbed } = require('../functions/sendErrorEmbed.js');
 module.exports = {
 	name: 'setconfig',
 	aliases: [ 'config' ],
-	description: "Changes the config values for your server (Roster sheet name, id, and essential column headers).",
+	description: "Changed the server's config values (Roster sheet name, id, rank system, and essential column headers).",
 	args: true,
-	usage: '<spreadsheetId, rostername, name, rank, subdivisionChange, lastPromotionDate, steam, discord, status> <data>',
+	usage: '<spreadsheetId, rostername, name, rank, subdivisionChange, lastPromotionDate, steam, discord, status, ranksystem> <data>',
     guildOnly: true,
     commandChannel: true,
 	async execute(message, args, server) {
@@ -44,6 +44,9 @@ module.exports = {
                 case 'status':
                     await changeGuildConfig(server, 'statusHeader', args[0]);
                     return message.channel.send(`Successfully set the status header to \`${args[0]}\`!`);
+                case 'ranksystem':
+                    await changeGuildConfig(server, 'rankSystem', args[0].toLowerCase());
+                    return message.channel.send(`Successfully set the rank system to \`${args[0].toLowerCase()}\`!`);
                 default:
                     return message.channel.send(`Invalid arguemnts! Usage: ${server.prefix}${this.name} ${this.usage}`);
             }

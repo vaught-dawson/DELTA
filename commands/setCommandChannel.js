@@ -4,7 +4,7 @@ const { sendErrorEmbed } = require('../functions/sendErrorEmbed.js');
 module.exports = {
 	name: 'setcommandchannel',
 	aliases: [ 'setcommand' ],
-	description: "Changes the server's command channel for DELTA.",
+	description: "Changes the server's command channel",
 	args: false,
 	guildOnly: true,
 	commandChannel: false,

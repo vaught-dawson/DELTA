@@ -40,8 +40,7 @@ module.exports = {
 		let promoWarning = false;
 		if (Date.parse(today) - Date.parse(lastPromoDate) < 86400000 * 7) promoWarning = true;
 
-		if (newRank === '01-PVT') memberData[server.statusHeader] = 'ACTIVE';
-
+		memberData[server.statusHeader] = 'ACTIVE';
 		memberData[server.rankHeader] = newRank;
 		memberData[server.lastPromotionDateHeader] = today;
 

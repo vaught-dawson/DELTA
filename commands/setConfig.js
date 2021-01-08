@@ -19,7 +19,7 @@ module.exports = {
             switch (inputChange) {
                 case 'spreadsheetid':
                     await changeGuildConfig(server, 'sheetId', args.join(' '));
-                    message.delete();
+                    await message.delete();
                     return message.channel.send(`Successfully set the spreadsheet id!`);
                 case 'rostername': 
                     await changeGuildConfig(server, 'rosterName', args.join(' '));

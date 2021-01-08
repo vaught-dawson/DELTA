@@ -12,6 +12,8 @@ module.exports = {
 	commandChannel: true,
 	async execute(message, args, server) {
 		const spreadsheet = await loadSpreadsheet(server.sheetId);
+		if (spreadsheet === null) 
+			return message.channel.send('Invalid spreadsheet id! Make sure you set it up properly in the config.');
 		try {
 			message.channel.send(splitEmbedsByFields(await getSpreadsheetInfo(spreadsheet), 24, spreadsheet.title));
 		} catch (err) {

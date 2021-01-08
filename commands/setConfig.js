@@ -14,39 +14,37 @@ module.exports = {
 			return message.channel.send(
 				"You don't have the perms to change this! If this needs to be changed then message a server admin."
 			);
-		if (args.length != 2)
-            return message.channel.send(`Invalid arguemnts! Usage: ${server.prefix}${this.name} ${this.usage}`);
         let inputChange = args.shift().toLowerCase();
         try {
             switch (inputChange) {
                 case 'spreadsheetid':
-                    await changeGuildConfig(server, 'sheetId', args[0]);
+                    await changeGuildConfig(server, 'sheetId', args.join(' '));
                     message.delete();
                     return message.channel.send(`Successfully set the spreadsheet id!`);
                 case 'rostername': 
-                    await changeGuildConfig(server, 'rosterName', args[0]);
-                    return message.channel.send(`Successfully set the roster name to \`${args[0]}\`!`);
+                    await changeGuildConfig(server, 'rosterName', args.join(' '));
+                    return message.channel.send(`Successfully set the roster name to \`${args.join(' ')}\`!`);
                 case 'name':
-                    await changeGuildConfig(server, 'nameHeader', args[0]);
-                    return message.channel.send(`Successfully set the name header to \`${args[0]}\`!`);
+                    await changeGuildConfig(server, 'nameHeader', args.join(' '));
+                    return message.channel.send(`Successfully set the name header to \`${args.join(' ')}\`!`);
                 case 'rank':
-                    await changeGuildConfig(server, 'rankHeader', args[0]);
-                    return message.channel.send(`Successfully set the rank header to \`${args[0]}\`!`);
+                    await changeGuildConfig(server, 'rankHeader', args.join(' '));
+                    return message.channel.send(`Successfully set the rank header to \`${args.join(' ')}\`!`);
                 case 'subdivisionchange':
-                    await changeGuildConfig(server, 'subdivisionChangeHeader', args[0]);
-                    return message.channel.send(`Successfully set the subdivision-change header to \`${args[0]}\`!`);
+                    await changeGuildConfig(server, 'subdivisionChangeHeader', args.join(' '));
+                    return message.channel.send(`Successfully set the subdivision-change header to \`${args.join(' ')}\`!`);
                 case 'lastpromotiondate':
-                    await changeGuildConfig(server, 'lastPromotionDateHeader', args[0]);
-                    return message.channel.send(`Successfully set the last promotion-date header to \`${args[0]}\`!`);
+                    await changeGuildConfig(server, 'lastPromotionDateHeader', args.join(' '));
+                    return message.channel.send(`Successfully set the last promotion-date header to \`${args.join(' ')}\`!`);
                 case 'discord':
-                    await changeGuildConfig(server, 'discordHeader', args[0]);
-                    return message.channel.send(`Successfully set the discord header to \`${args[0]}\`!`);
+                    await changeGuildConfig(server, 'discordHeader', args.join(' '));
+                    return message.channel.send(`Successfully set the discord header to \`${args.join(' ')}\`!`);
                 case 'status':
-                    await changeGuildConfig(server, 'statusHeader', args[0]);
-                    return message.channel.send(`Successfully set the status header to \`${args[0]}\`!`);
+                    await changeGuildConfig(server, 'statusHeader', args.join(' '));
+                    return message.channel.send(`Successfully set the status header to \`${args.join(' ')}\`!`);
                 case 'ranksystem':
-                    await changeGuildConfig(server, 'rankSystem', args[0].toLowerCase());
-                    return message.channel.send(`Successfully set the rank system to \`${args[0].toLowerCase()}\`!`);
+                    await changeGuildConfig(server, 'rankSystem', args.join(' ').toLowerCase());
+                    return message.channel.send(`Successfully set the rank system to \`${args.join(' ').toLowerCase()}\`!`);
                 default:
                     return message.channel.send(`Invalid arguemnts! Usage: ${server.prefix}${this.name} ${this.usage}`);
             }

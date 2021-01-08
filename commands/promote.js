@@ -16,12 +16,15 @@ module.exports = {
 	commandChannel: true,
 	async execute(message, args, server) {
 		const spreadsheet = await loadSpreadsheet(server.sheetId);
+		if (spreadsheet === null) 
+			return message.channel.send('Invalid spreadsheet id! Make sure you set it up properly in the config.');
 		const rosterSheet = (await spreadsheet).sheetsByTitle[server.rosterName];
 		var member = await getDiscordMember(args.join('_'), message);
 		var memberData = await getMemberFromSheetById(member, rosterSheet, server);
 		if (!memberData) {
 			memberData = await getMemberFromSheetByName(member, rosterSheet, server);
-			if (!memberData) return message.channel.send(`Member \`${member.name == null ? member.id : member.name}\` not found on the roster!`);
+			if (!memberData) 
+				return message.channel.send(`Member \`${member.name == null ? member.id : member.name}\` not found on the roster!`);
 		}
 
 		let previousRank = memberData[server.rankHeader];

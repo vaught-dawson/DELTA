@@ -21,10 +21,14 @@ module.exports = {
 		var memberData = await getMemberFromSheetById(member, rosterSheet, server);
 		if (!memberData) {
 			memberData = await getMemberFromSheetByName(member, rosterSheet, server);
-			if (!memberData) return message.channel.send(`Member \`${member.name == null ? member.id : member.name}\` not found on the roster!`);
+			if (!memberData) 
+				return message.channel.send(`Member \`${member.name == null ? member.id : member.name}\` not found on the roster!`);
 		}
-
 		let previousRank = memberData[server.rankHeader];
+		if (!previousRank)
+			return message.channel.send('Invalid rank header! Make sure this is correct in the config.')
+		if (!memberData[server.nameHeader])
+			return message.channel.send('Invalid name header! Make sure this is correct in the config.')
 		let newRank = demote(previousRank, server);
 		if (!newRank) {
 			return message.channel.send(`Failed to demote \`${memberData[server.nameHeader]}\` from \`${memberData[server.rankHeader]}\`.\n\nAre you using the right rank system?`);

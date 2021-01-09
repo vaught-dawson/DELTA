@@ -35,6 +35,7 @@ module.exports = {
 			if (!memberData) return message.channel.send(`Member \`${member.name == null ? member.id : member.name}\` not found on the roster!`);
 		}
 
+		let oldData = memberData[header];
 		memberData[header] = data;
 
 		let output;
@@ -48,7 +49,7 @@ module.exports = {
 
 			rows[foundIndex] = memberData;
 			rows[foundIndex].save();
-			output = `Successfully changed \`${header}\` for \`${memberData[server.nameHeader]}\` to \`${data}\`.`;
+			output = `Successfully changed \`${header}\` for \`${oldData}\` to \`${data}\`.`;
 		} catch (err) {
 			sendErrorEmbed(message, { message: `**Command:** ${message.content}\n**Error:** ${err}` });
 			output = `There was a problem saving to the roster.`;

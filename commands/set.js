@@ -34,7 +34,7 @@ module.exports = {
 			memberData = await getMemberFromSheetByName(member, rosterSheet, server);
 			if (!memberData) return message.channel.send(`Member \`${member.name == null ? member.id : member.name}\` not found on the roster!`);
 		}
-
+		let memberName = memberData[server.nameHeader];
 		let oldData = memberData[header];
 		memberData[header] = data;
 
@@ -49,7 +49,7 @@ module.exports = {
 
 			rows[foundIndex] = memberData;
 			rows[foundIndex].save();
-			output = `Successfully changed \`${header}\` for \`${oldData}\` to \`${data}\`.`;
+			output = `Successfully changed \`${header}\` for \`${memberName}\` from \`${oldData}\` to \`${data}\`.`;
 		} catch (err) {
 			sendErrorEmbed(message, { message: `**Command:** ${message.content}\n**Error:** ${err}` });
 			output = `There was a problem saving to the roster.`;

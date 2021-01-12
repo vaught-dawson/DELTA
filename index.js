@@ -22,6 +22,9 @@ client.on('message', async (message) => {
 	var commandName = args.shift().toLowerCase();
 	var server, command;
 	if (message.channel.type == 'dm') {
+		if (message.mentions.has(client.user.id)) {
+			message.channel.send(`I'm up! My prefix is \`+\`.`);
+		};
 		if (prefix != prefixDefault) return;
 		command =
 			client.commands.get(commandName) ||
@@ -31,34 +34,44 @@ client.on('message', async (message) => {
 			return message.reply("I can't execute that command inside DMs!");
 		}
 	} else {
-		server = servers.guilds.find((o) => o.guildId === message.guild.id);
-		if (!server) return message.channel.send('This guild is not registered in my database!');
-		if (message.content.includes("@here") || message.content.includes("@everyone")) return;
-		if (message.mentions.has(client.user.id)) {
-			message.channel.send(`I'm up! My prefix is \`${server.prefix}\`.`);
-		};
-		if (prefix != server.prefix) return;
-		command =
-			client.commands.get(commandName) ||
-			client.commands.find((cmd) => cmd.aliases && cmd.aliases.includes(commandName));
-		if (command) {
-			if (server.commandChannelId != message.channel.id && command.commandChannel == true) return;
+		let instances = servers.guilds.filter((o) => o.guildId === message.guild.id);
+		for (let i = 0; i < instances.length; i++) {
+			if (!instances[i]) return message.channel.send('This guild is not registered in my database!');
+			if (message.content.includes("@here") || message.content.includes("@everyone")) continue;
+			command =
+				client.commands.get(commandName) ||
+				client.commands.find((cmd) => cmd.aliases && cmd.aliases.includes(commandName));
+			if (command) {
+				if (instances[i].commandChannelId != message.channel.id && command.commandChannel == true) continue;
+			}
+			else if (!command) {
+				if (instances[i].commandChannelId == message.channel.id) {
+					if (message.mentions.has(client.user.id)) {
+						return message.channel.send(`I'm up! My prefix is \`${instances[i].prefix}\`.`);
+					}
+					else {
+						if (prefix != instances[i].prefix) continue;
+						return message.channel.send('Unknown command!');
+					}
+				}
+				else continue;
+			}
+			if (prefix != instances[i].prefix) continue;
+			if (!message.member.hasPermission('MANAGE_ROLES')) {
+				return message.channel.send(
+					"You don't have the perms to run DELTA commands. You need permissions to `MANAGE_ROLES`."
+				);
+			}
+			if (command.sheets && instances[i].spreadsheetId == null) {
+				return message.channel.send(
+					`You don't have a Google Sheet configured!\nGet an admin to set it with: \`${instances[i].prefix}setSpreadsheetID <spreadsheet id>\`.`
+				);
+			}
+			server = instances[i];
 		}
-		else if (!command) {
-			if (server.commandChannelId == message.channel.id)
-				return message.channel.send('Unknown command!');
-			else return;
-		}
-		if (!message.member.hasPermission('MANAGE_ROLES')) {
-			message.channel.send(
-				"You don't have the perms to run DELTA commands. You need permissions to `MANAGE_ROLES`."
-			);
-		}
-		if (command.sheets && server.spreadsheetId == null)
-			return message.channel.send(
-				`You don't have a Google Sheet configured!\nGet an admin to set it with: \`${server.prefix}setSpreadsheetID <spreadsheet id>\`.`
-			);
 	}
+	if (!server) 
+		return;
 	if (command.args && !args.length)
 		return message.channel.send(
 			`You didn't add any arguments!\nThe proper usage would be: \`${server.prefix}${command.name} ${command.usage}\``

@@ -37,7 +37,7 @@ module.exports = {
 		}
 			
 		let lastPromoDate = memberData[server.lastPromotionDateHeader];
-		let today = dateFormat(new Date(), 'mm/dd/yy');
+		let today = dateFormat(new Date(), 'mm/dd/yy', true);
 		let promoWarning = false;
 		if (Date.parse(today) - Date.parse(lastPromoDate) < 86400000 * 7) promoWarning = true;
 

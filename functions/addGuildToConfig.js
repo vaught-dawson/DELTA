@@ -4,7 +4,7 @@ const servers = require('../information/guilds.json');
 
 function addGuildToConfig(guild) {
 	servers.guilds.push({
-		name: guild.name.toLowerCase(),
+		guildName: guild.name.toLowerCase(),
 		guildId: guild.id,
 		commandChannelId: null,
 		spreadsheetId: null,

@@ -6,14 +6,12 @@ async function removeMemberFromSheet(member, sheet, server) {
 		memberIndex = rows.findIndex((row) => row[server.nameHeader].toLowerCase() == member.name.toLowerCase());
 		if (memberIndex === -1) return `Failed to find \`${member.name}\` on the roster.`;
 	}
+	let updatedRows;
 	try {
-		await rows[memberIndex].delete();
-		await new Promise((resolve) =>
-			setTimeout(function() {
-				resolve();
-			}, 2000)
-		);
-		await sheet.resize({ rowCount: sheet.rowCount - 1, columnCount: sheet.columnCount });
+		await sheet.deleteDimension('ROWS', {
+			startIndex: memberIndex + 1,
+          	endIndex: memberIndex + 2,
+		})
 		return `Successfully removed \`${member.name == null ? member.id : member.name}\` from the roster.`;
 	} catch (err) {
 		console.error(err);

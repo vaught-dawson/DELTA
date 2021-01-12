@@ -1,4 +1,4 @@
-const { GoogleSpreadsheet } = require('google-spreadsheet');
+const { GoogleSpreadsheet } = require('delta-google-spreadsheet');
 const creds = require('../information/client_secret.json');
 
 async function loadSpreadsheet(spreadsheetId) {

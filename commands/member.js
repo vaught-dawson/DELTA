@@ -38,12 +38,12 @@ module.exports = {
 			switch (subcommand) {
 				case 'add':
 					try {
-						if (await isNameOnSheet(member.name, rosterSheet))
+						if (await isNameOnSheet(member.name, rosterSheet, server))
 						return message.channel.send(`This name is already in use!`);
 					} catch {
 						return message.channel.send('Cannot set a numerical name the same length as a Discord id!');
 					}
-					await addMemberToSheet(member, rosterSheet);
+					await addMemberToSheet(member, rosterSheet, server);
 					let output = `Successfully added \`${member.name}\` to the roster.`;
 					if (member.id === 'None') {
 						output += '\n\`Don\'t forget to add their Discord and Steam I.D.!\`';

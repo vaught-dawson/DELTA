@@ -67,8 +67,8 @@ module.exports = {
 
 function promote(currentRank, server) {
 	try {
-		let rankSystem = server.rankSystem;
-		const { ranks } = require(`../information/ranks/${rankSystem}.json`)
+		let structure = server.rankStructure;
+		const { ranks } = require(`../information/ranks/${structure}.json`)
 		let currRank = ranks.find((r) => r.name == currentRank);
 		if (!currRank) return null;
 		let newRank = ranks.find((r) => r.index == currRank.index + 1);

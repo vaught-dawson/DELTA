@@ -16,7 +16,7 @@ function addGuildToConfig(guild) {
 		lastPromotionDateHeader: 'LastPromo',
 		statusHeader: 'Status',
 		discordHeader: 'Discord',
-		rankSystem: 'standard'
+		rankStructure: 'standard'
 	});
 	fs.writeFile(path, JSON.stringify(servers, null, 2), function writeJSON(err) {
 		if (err) {

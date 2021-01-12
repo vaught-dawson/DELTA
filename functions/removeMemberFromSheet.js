@@ -6,7 +6,6 @@ async function removeMemberFromSheet(member, sheet, server) {
 		memberIndex = rows.findIndex((row) => row[server.nameHeader].toLowerCase() == member.name.toLowerCase());
 		if (memberIndex === -1) return `Failed to find \`${member.name}\` on the roster.`;
 	}
-	let updatedRows;
 	try {
 		await sheet.deleteDimension('ROWS', {
 			startIndex: memberIndex + 1,

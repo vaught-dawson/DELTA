@@ -21,7 +21,7 @@ async function getMemberInfo(member, sheet, server) {
 	});
 	let description = '';
 	headers.forEach((header) => {
-		if (memberData[header] != '' && memberData[header] && header != server.nameHeader)
+		if (memberData[header] && memberData[header] != '' && header != server.nameHeader)
 			description += `**${header}:** ${memberData[header]}\n`;
 	});
 	if (description != '') embed.setDescription(description);

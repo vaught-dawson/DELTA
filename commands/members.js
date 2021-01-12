@@ -17,7 +17,7 @@ module.exports = {
 		var rosterSheet = spreadsheet.sheetsByTitle[server.rosterName];
 if (!rosterSheet) 
 			return message.channel.send('Invalid roster sheet name! Make sure you set it up properly in the config.');
-		var membersInfo = await getMembersInfo(rosterSheet);
+		var membersInfo = await getMembersInfo(rosterSheet, server);
 		var embeds = await splitEmbedsByFields(membersInfo, 24, spreadsheet.title);
 
 		embeds.forEach((embed) => {

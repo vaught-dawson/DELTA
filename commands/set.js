@@ -49,7 +49,7 @@ module.exports = {
 
 			rows[foundIndex] = memberData;
 			rows[foundIndex].save();
-			output = `Successfully changed \`${header}\` for \`${memberName}\` from \`${oldData}\` to \`${data}\`.`;
+			output = `Successfully changed \`${header}\` for \`${memberName}\` from \`${oldData ? oldData : 'Undefined'}\` to \`${data}\`.`;
 		} catch (err) {
 			sendErrorEmbed(message, { message: `**Command:** ${message.content}\n**Error:** ${err}` });
 			output = `There was a problem saving to the roster.`;

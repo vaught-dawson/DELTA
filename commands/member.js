@@ -27,7 +27,7 @@ module.exports = {
 		} catch (err) {
 			return message.channel.send('Unknown user! Make sure you typed in a user id.');
 		}
-		const spreadsheet = await loadSpreadsheet(server.sheetId);
+		const spreadsheet = await loadSpreadsheet(server.spreadsheetId);
 		if (spreadsheet === null) 
 			return message.channel.send('Invalid spreadsheet id! Make sure you set it up properly in the config.');
 		var rosterSheet = spreadsheet.sheetsByTitle[server.rosterName];

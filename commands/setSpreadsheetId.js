@@ -17,7 +17,7 @@ module.exports = {
 		if (args.length != 1)
 			return message.channel.send(`Invalid arguemnts! Usage: ${server.prefix}${this.name} ${this.usage}`);
 		try {
-			await changeGuildConfig(server, 'sheetId', args[0]);
+			await changeGuildConfig(server, 'spreadsheetId', args[0]);
 		} catch (err) {
 			await sendErrorEmbed(message, { message: `**Command:** ${message.content}\n**Error:** ${err}` });
 			return message.channel.send(`Failed to change the spreadsheet id.`);

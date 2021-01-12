@@ -20,7 +20,7 @@ module.exports = {
         message.channel.send('Successfully set this channel as the command channel.');
 
         let spreadsheetIdMessage = await requestMessageInput(message, 'Enter your spreadsheet id:');
-        await changeGuildConfig(server, 'sheetId', spreadsheetIdMessage.content).then(async () => {
+        await changeGuildConfig(server, 'spreadsheetId', spreadsheetIdMessage.content).then(async () => {
             await spreadsheetIdMessage.delete();
             return message.channel.send('Successfully set the spreadsheet id (Your message was deleted for privacy).');
         }).catch((err) => {

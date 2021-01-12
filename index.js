@@ -54,7 +54,7 @@ client.on('message', async (message) => {
 				"You don't have the perms to run DELTA commands. You need permissions to `MANAGE_ROLES`."
 			);
 		}
-		if (command.sheets && server.sheetId == null)
+		if (command.sheets && server.spreadsheetId == null)
 			return message.channel.send(
 				`You don't have a Google Sheet configured!\nGet an admin to set it with: \`${server.prefix}setSpreadsheetID <spreadsheet id>\`.`
 			);
@@ -84,7 +84,7 @@ client.on('guildMemberRemove', async (member) => {
 	let server = servers.guilds.find((server) => server.guildId === member.guild.id);
 	if (!server) return;
 	if (!server.announcementChannelId) return;
-	const spreadsheet = await loadSpreadsheet(server.sheetId);
+	const spreadsheet = await loadSpreadsheet(server.spreadsheetId);
 	if (spreadsheet === null) 
 		return message.channel.send('Invalid spreadsheet id! Make sure you set it up properly in the config.');
 	var rosterSheet = spreadsheet.sheetsByTitle[server.rosterName];

@@ -15,7 +15,7 @@ module.exports = {
 	guildOnly: true,
 	commandChannel: true,
 	async execute(message, args, server) {
-		const spreadsheet = await loadSpreadsheet(server.sheetId);
+		const spreadsheet = await loadSpreadsheet(server.spreadsheetId);
 		if (spreadsheet === null) 
 			return message.channel.send('Invalid spreadsheet id! Make sure you set it up properly in the config.');
 		const rosterSheet = (await spreadsheet).sheetsByTitle[server.rosterName];

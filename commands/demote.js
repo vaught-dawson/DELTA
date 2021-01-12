@@ -15,7 +15,7 @@ module.exports = {
 	guildOnly: true,
 	commandChannel: true,
 	async execute(message, args, server) {
-		const spreadsheet = loadSpreadsheet(server.sheetId);
+		const spreadsheet = loadSpreadsheet(server.spreadsheetId);
 		const rosterSheet = (await spreadsheet).sheetsByTitle[server.rosterName];
 		var member = await getDiscordMember(args.join('_'), message);
 		var memberData = await getMemberFromSheetById(member, rosterSheet, server);

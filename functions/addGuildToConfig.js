@@ -7,7 +7,7 @@ function addGuildToConfig(guild) {
 		name: guild.name.toLowerCase(),
 		guildId: guild.id,
 		commandChannelId: null,
-		sheetId: null,
+		spreadsheetId: null,
 		prefix: '+',
 		rosterName: 'Roster',
 		nameHeader: 'Name',

@@ -14,7 +14,7 @@ module.exports = {
 	async execute(message, args, server) {
 		let inputSheetName = args.join(' ');
 		let outputSheetName;
-		const spreadsheet = await loadSpreadsheet(server.sheetId);
+		const spreadsheet = await loadSpreadsheet(server.spreadsheetId);
 		if (spreadsheet === null) 
 			return message.channel.send('Invalid spreadsheet id! Make sure you set it up properly in the config.');
 		for (let i = 0; i < spreadsheet.sheetCount; i++) {

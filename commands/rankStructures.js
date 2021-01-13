@@ -4,14 +4,14 @@ const fs = require ('fs');
 module.exports = {
 	name: 'rankstructures',
 	aliases: [ 'ranks' ],
-	description: 'Lists the available rank systems to choose from.',
+	description: 'Lists the available rank structures to choose from.',
 	args: false,
 	guildOnly: false,
 	commandChannel: true,
 	async execute(message, args, server) {
 		const embed = new Discord.MessageEmbed()
 			.setColor(15105570)
-			.setTitle(`Avaliable rank systems:`)
+			.setTitle(`Avaliable rank structures:`)
             .setFooter('Resistance Logistics', 'https://i.ibb.co/Wzd001F/677a08d8682923ca8cb51fe48df38208.png');
         
         let path = '.\\information\\ranks'

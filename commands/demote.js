@@ -29,17 +29,14 @@ module.exports = {
 			return message.channel.send('Invalid rank header! Make sure this is correct in the config.')
 		if (!memberData[server.nameHeader])
 			return message.channel.send('Invalid name header! Make sure this is correct in the config.')
-		let newRank = demote(previousRank, server);
+		let newRank = await demote(previousRank, server);
 		if (!newRank) {
 			return message.channel.send(`Failed to demote \`${memberData[server.nameHeader]}\` from \`${memberData[server.rankHeader]}\`.\n\nAre you using the right rank system?`);
 		} else if (newRank === null) {
 			return message.channel.send('This server has an invalid rank structure set in the config.\nHave an admin change this with the \`setConfig\` command!');
 		}
 			
-		let lastPromoDate = memberData[server.lastPromotionDateHeader];
 		let today = dateFormat(new Date(), 'mm/dd/yy', true);
-		let promoWarning = false;
-		if (Date.parse(today) - Date.parse(lastPromoDate) < 86400000 * 7) promoWarning = true;
 
 		memberData[server.rankHeader] = newRank;
 		memberData[server.lastPromotionDateHeader] = today;
@@ -54,8 +51,7 @@ module.exports = {
 
 			rows[foundIndex] = memberData;
 			rows[foundIndex].save();
-			output = `Successfully promoted \`${memberData[server.nameHeader]}\` to \`${newRank}\` from \`${previousRank}\`.`;
-			if (promoWarning) output += `\n\n\`Warning: This user has been promoted within the last week!\``;
+			output = `Successfully demoted \`${memberData[server.nameHeader]}\` to \`${newRank}\` from \`${previousRank}\`.`;
 		} catch (err) {
 			sendErrorEmbed(message, { message: `**Command:** ${message.content}\n**Error:** ${err}` });
 			output = `There was a problem saving to the roster.`;
@@ -64,15 +60,16 @@ module.exports = {
 	}
 };
 
-function demote(currentRank, server) {
+async function demote(currentRank, server) {
 	try {
-		let rankSystem = server.rankSystem;
-		const { ranks } = require(`../information/ranks/${rankSystem}.json`)
-		let currRank = ranks.find((r) => r.name == currentRank);
-		if (!currRank) return null;
-		let newRank = ranks.find((r) => r.index == currRank.index - 1);
+		let rankStructure = server.rankStructure;
+		const { ranks } = require(`../information/ranks/${rankStructure}.json`)
+		let currRank = await ranks.find((r) => r.name == currentRank);
+		if (!currRank) throw 'Invalid Rank.';
+		let newRank = await ranks.find((r) => r.index == currRank.index - 1);
 		return newRank.name;
 	} catch (err) {
+		console.log(err);
 		return null;
 	}
 }

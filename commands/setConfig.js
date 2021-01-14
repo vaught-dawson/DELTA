@@ -6,7 +6,7 @@ module.exports = {
 	aliases: [ 'config' ],
 	description: "Changed the server's config values (Roster sheet name, id, rank system, and essential column headers).",
 	args: true,
-	usage: '<spreadsheetId, rostername, name, rank, subdivisionChange, lastPromotionDate, steam, discord, status, ranksystem> <data>',
+	usage: '<config header> <data>',
     guildOnly: true,
     commandChannel: true,
 	async execute(message, args, server) {

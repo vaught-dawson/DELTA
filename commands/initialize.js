@@ -51,14 +51,6 @@ module.exports = {
             console.log(err);
             return message.channel.send('Failed to set the \'rank\' header');
         });
-       
-        let subdivisionChangeHeaderMessage = await requestMessageInput(message, 'Enter your \'subdivision change\' header:');
-        await changeGuildConfig(server, 'subdivisionChangeHeader', subdivisionChangeHeaderMessage.content).then( async() => {
-            return message.channel.send('Successfully set the \'subdivision change\' header');
-        }).catch((err) => {
-            console.log(err);
-            return message.channel.send('Failed to set the \'subdivision change\' header');
-        });
 
         let lastPromotionDateHeaderMessage = await requestMessageInput(message, 'Enter your \'last promotion date\' header:');
         await changeGuildConfig(server, 'lastPromotionDateHeader', lastPromotionDateHeaderMessage.content).then( async() => {

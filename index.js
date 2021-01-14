@@ -38,9 +38,6 @@ client.on('message', async (message) => {
 		for (let i = 0; i < instances.length; i++) {
 			if (!instances[i]) return message.channel.send('This guild is not registered in my database!');
 			if (message.content.includes("@here") || message.content.includes("@everyone")) continue;
-			// if (message.mentions.has(client.user.id)) {
-			// 	message.channel.send(`I'm up! My prefix is \`${instances[i].prefix}\`.`);
-			// };
 			command =
 				client.commands.get(commandName) ||
 				client.commands.find((cmd) => cmd.aliases && cmd.aliases.includes(commandName));
@@ -61,7 +58,7 @@ client.on('message', async (message) => {
 			}
 			if (prefix != instances[i].prefix) continue;
 			if (!message.member.hasPermission('MANAGE_ROLES')) {
-				message.channel.send(
+				return message.channel.send(
 					"You don't have the perms to run DELTA commands. You need permissions to `MANAGE_ROLES`."
 				);
 			}

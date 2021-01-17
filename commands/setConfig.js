@@ -4,7 +4,7 @@ const { sendErrorEmbed } = require('../functions/sendErrorEmbed.js');
 module.exports = {
 	name: 'setconfig',
 	aliases: [ 'config' ],
-	description: "Changed the server's config values (Roster sheet name, id, rank system, and essential column headers).",
+	description: "Changes the server's config values (Roster sheet name, id, rank system, and essential column headers).",
 	args: true,
 	usage: '<config header> <data>',
     guildOnly: true,

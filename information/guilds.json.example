@@ -1,13 +1,19 @@
 {
   "guilds": [
     {
-      "name": "logistics",
-      "guildId": "749775101435838554",
+      "guildName": "",
+      "guildId": "",
       "commandChannelId": "",
-      "sheetId": "",
-      "prefix": "+",
-      "bugReportWebhookId": "",
-      "bugReportWebhookToken": ""
+      "announcementChannelId": "",
+      "spreadsheetId": "",
+      "prefix": "",
+      "rosterName": "",
+      "nameHeader": "",
+      "rankHeader": "",
+      "lastPromotionDateHeader": "",
+      "discordHeader": "",
+      "statusHeader": "",
+      "rankStructure": ""
     }
   ]
 }

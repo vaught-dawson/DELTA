@@ -116,7 +116,7 @@ if (!rosterSheet)
 	announcementChannel.send(embed);
 })
 
-process.on('uncaughtException', (err) => {
+process.on('uncaughtException', async (err) => {
 	console.log(`Error: ${err.name}\n\nMessage: ${err.message}`);
 	await sendErrorEmbed(message, { message: `**Error:** ${err}` });
 });

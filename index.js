@@ -118,4 +118,5 @@ if (!rosterSheet)
 
 process.on('uncaughtException', (err) => {
 	console.log(`Error: ${err.name}\n\nMessage: ${err.message}`);
+	await sendErrorEmbed(message, { message: `**Error:** ${err}` });
 });

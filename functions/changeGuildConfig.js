@@ -1,5 +1,5 @@
 const fs = require('fs');
-const path = '.\\information\\guilds.json';
+const path = require('path');
 const servers = require('../information/guilds.json');
 
 async function changeGuildConfig(guild, header, data) {
@@ -7,7 +7,9 @@ async function changeGuildConfig(guild, header, data) {
 		if (server == guild) server[header] = data;
 	});
 
-	fs.writeFile(path, JSON.stringify(servers, null, 2), function writeJSON(err) {
+	let filePath = path.resolve('./information/guilds.json');
+
+	fs.writeFile(filePath, JSON.stringify(servers, null, 2), function writeJSON(err) {
 		if (err) {
 			console.log(err);
 			return message.channel.send('There was a problem saving to the config file.');

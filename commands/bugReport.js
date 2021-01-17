@@ -13,12 +13,14 @@ module.exports = {
 			bug: true,
 			message: args.join(' ')
 		};
+
 		try {
 			await sendErrorEmbed(message, error);
 		} catch (err) {
 			await sendErrorEmbed(message, { message: `**Command:** ${message.content}\n**Error:** ${err}` });
 			return message.channel.send('Failed to send bug report.');
 		}
+
 		return message.channel.send('Successfully sent bug report!');
 	}
 };

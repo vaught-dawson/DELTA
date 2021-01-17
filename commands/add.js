@@ -8,34 +8,34 @@ const { getMemberFromSheetByName } = require('../functions/getMemberFromSheetByN
 const { sendErrorEmbed } = require('../functions/sendErrorEmbed.js');
 
 module.exports = {
-	name: 'set',
-	aliases: [ 'set' ],
-	description: 'Sets data of members.',
+	name: 'add',
+	aliases: [ 'a' ],
+	description: 'Adds a number to a numerical column for a member.',
 	args: true,
 	sheets: true,
-	usage: '<column header> <member name/id> <data>',
+	usage: '<number> <column header> <member name/id>',
 	guildOnly: true,
 	commandChannel: true,
 	async execute(message, args, server) {
 		const spreadsheet = loadSpreadsheet(server.spreadsheetId);
 		const rosterSheet = (await spreadsheet).sheetsByTitle[server.rosterName];
 
-		args = combineElementsByCharacter(args, '"');
+        args = combineElementsByCharacter(args, '"');
+        var inputNumber = args.shift();
 		var inputHeader = args.shift();
 		var headers = await getSheetHeaders(rosterSheet);
-		var header = await getHeader(headers, inputHeader);
+        var header = await getHeader(headers, inputHeader);
+        
+        if (isNaN(inputNumber)) {
+            return message.channel.send('Invalid input number!');
+        }
 
 		if (!header) {
 			return message.channel.send('Invalid column header!');
-		}
-
+        }
+        
 		var inputMember = args.shift();
 		var member = await getDiscordMember(inputMember, message);
-		var data = args.join(' ');
-
-		if (message.mentions.members.size > 0 && header === server.discordHeader) {
-			data = 	message.mentions.members.last().id;
-		}
 
 		var memberData = await getMemberFromSheetById(member, rosterSheet, server);
 
@@ -47,11 +47,31 @@ module.exports = {
 					`Member \`${member.name == null ? member.id : member.name}\` not found on the roster!`
 				);
 			}
+        }
+        
+		let currentNumberValue = memberData[header];
+		
+		if (!currentNumberValue) {
+			currentNumberValue = 0;
+		}
+
+        if (isNaN(currentNumberValue)) {
+            return message.channel.send('This is not a numerical column!');
 		}
 
 		let memberName = memberData[server.nameHeader];
-		let oldData = memberData[header];
-		memberData[header] = data;
+        
+		let addedNumberTotal = parseInt(currentNumberValue) + parseInt(inputNumber)
+		
+		if (!addedNumberTotal) {
+			addedNumberTotal = 0;
+		}
+
+        if (addedNumberTotal === NaN) {
+            addedNumberTotal = inputNumber;
+        }
+
+		memberData[header] = addedNumberTotal;
 
 		let output;
 		try {
@@ -69,9 +89,9 @@ module.exports = {
 			rows[foundIndex] = memberData;
 			rows[foundIndex].save();
 
-			output = `Successfully changed \`${header}\` for \`${memberName}\` from \`${oldData
-				? oldData
-				: 'Undefined'}\` to \`${data}\`.`;
+			output = `Successfully changed \`${header}\` for \`${memberName}\` from \`${currentNumberValue
+				? currentNumberValue
+				: 'Undefined'}\` to \`${addedNumberTotal}\`.`;
 		} catch (err) {
 			sendErrorEmbed(message, { message: `**Command:** ${message.content}\n**Error:** ${err}` });
 			output = `There was a problem saving to the roster.`;

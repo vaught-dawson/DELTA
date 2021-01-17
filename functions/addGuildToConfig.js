@@ -1,5 +1,5 @@
 const fs = require('fs');
-const path = '.\\information\\guilds.json';
+const path = require('path');
 const servers = require('../information/guilds.json');
 
 function addGuildToConfig(guild) {
@@ -18,7 +18,10 @@ function addGuildToConfig(guild) {
 		discordHeader: 'Discord',
 		rankStructure: 'standard'
 	});
-	fs.writeFile(path, JSON.stringify(servers, null, 2), function writeJSON(err) {
+
+	let filePath = path.resolve('./information/guilds.json');
+
+	fs.writeFile(filePath, JSON.stringify(servers, null, 2), function writeJSON(err) {
 		if (err) {
 			return console.log(err);
 		}

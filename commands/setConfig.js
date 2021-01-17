@@ -17,7 +17,7 @@ module.exports = {
         let inputHeader = args.shift().toLowerCase();
         let newHeader = args.join(' ');
         let serverHeaders = Object.keys(server);
-        let actualHeader = serverHeaders.find((header) => header.toLowerCase() == inputHeader);
+        let actualHeader = serverHeaders.find((header) => header.toLowerCase() == inputHeader.toLowerCase());
 
         if (!actualHeader)
             return message.channel.send('Invalid header! `For the list of avaliable headers, take a look at the documentation.\`');

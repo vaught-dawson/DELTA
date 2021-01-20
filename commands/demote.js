@@ -7,7 +7,7 @@ const dateFormat = require('dateformat');
 
 module.exports = {
 	name: 'demote',
-	aliases: [ 'dmt', 'demo' ],
+	aliases: [ 'dmt', 'demo', 'd'],
 	description: 'Demotes a member on the roster.',
 	args: true,
 	sheets: true,

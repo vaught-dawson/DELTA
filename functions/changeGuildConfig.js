@@ -4,7 +4,9 @@ const servers = require('../information/guilds.json');
 
 async function changeGuildConfig(guild, header, data) {
 	servers.guilds.forEach((server) => {
-		if (server == guild) server[header] = data;
+		if (server == guild) {
+			server[header] = data;
+		}
 	});
 
 	let filePath = path.resolve('./information/guilds.json');

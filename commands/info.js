@@ -17,7 +17,11 @@ module.exports = {
 				'**Bot:** Made by Vio\n**Art:** Made by Ragnarok\n**Testing:** Conducted on RU (Lead by NeonJohn)'
 			)
 			.setFooter('Resistance Logistics', 'https://i.ibb.co/Wzd001F/677a08d8682923ca8cb51fe48df38208.png');
+
 		message.channel.send(embed);
-		if (args.length > 0) message.channel.send(`\`If you're trying to get member info, use 'member info <member>'!\``);
+
+		if (args.length > 0) {
+			message.channel.send(`\`If you're trying to get member info, use 'member info <member>'!\``);
+		}
 	}
 };

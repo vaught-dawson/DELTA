@@ -1,7 +1,7 @@
 module.exports = {
 	name: 'documentation',
 	aliases: [ 'doc' ],
-	description: 'Gives DELTA\'s Documentation site.',
+	description: "Gives DELTA's Documentation site.",
 	args: false,
 	guildOnly: false,
 	commandChannel: true,

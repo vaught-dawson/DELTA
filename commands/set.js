@@ -19,21 +19,32 @@ module.exports = {
 	async execute(message, args, server) {
 		const spreadsheet = loadSpreadsheet(server.spreadsheetId);
 		const rosterSheet = (await spreadsheet).sheetsByTitle[server.rosterName];
+
 		args = combineElementsByCharacter(args, '"');
 		var inputHeader = args.shift();
 		var headers = await getSheetHeaders(rosterSheet);
-		var header = await getHeader(headers, inputHeader)
-		if (!header)
+		var header = await getHeader(headers, inputHeader);
+
+		if (!header) {
 			return message.channel.send('Invalid column header!');
+		}
+
 		var inputMember = args.shift();
 		var member = await getDiscordMember(inputMember, message);
 		var data = args.join(' ');
 
 		var memberData = await getMemberFromSheetById(member, rosterSheet, server);
+
 		if (!memberData) {
 			memberData = await getMemberFromSheetByName(member, rosterSheet, server);
-			if (!memberData) return message.channel.send(`Member \`${member.name == null ? member.id : member.name}\` not found on the roster!`);
+
+			if (!memberData) {
+				return message.channel.send(
+					`Member \`${member.name == null ? member.id : member.name}\` not found on the roster!`
+				);
+			}
 		}
+
 		let memberName = memberData[server.nameHeader];
 		let oldData = memberData[header];
 		memberData[header] = data;
@@ -42,14 +53,21 @@ module.exports = {
 		try {
 			const rows = await rosterSheet.getRows();
 			var foundIndex = rows.findIndex((row) => row[server.discordHeader] == member.id);
+
 			if (foundIndex === -1) {
 				foundIndex = rows.findIndex((row) => row[server.nameHeader].toLowerCase() == member.name.toLowerCase());
-				if (foundIndex === -1) return message.channel.send(`Failed to find \`${member.name}\` on the roster.`);
+
+				if (foundIndex === -1) {
+					return message.channel.send(`Failed to find \`${member.name}\` on the roster.`);
+				}
 			}
 
 			rows[foundIndex] = memberData;
 			rows[foundIndex].save();
-			output = `Successfully changed \`${header}\` for \`${memberName}\` from \`${oldData ? oldData : 'Undefined'}\` to \`${data}\`.`;
+
+			output = `Successfully changed \`${header}\` for \`${memberName}\` from \`${oldData
+				? oldData
+				: 'Undefined'}\` to \`${data}\`.`;
 		} catch (err) {
 			sendErrorEmbed(message, { message: `**Command:** ${message.content}\n**Error:** ${err}` });
 			output = `There was a problem saving to the roster.`;

@@ -16,45 +16,63 @@ module.exports = {
 	guildOnly: true,
 	commandChannel: true,
 	async execute(message, args, server) {
-		if (args.length <= 1 || args == undefined)
+		if (args.length <= 1 || args == undefined) {
 			return message.channel.send(`Invalid Arguments! Usage: \`${server.prefix}${this.name} ${this.usage}\``);
+		}
+
 		var subcommand = args.shift().toLowerCase();
 		var inputMember = args.join('_');
-		if (inputMember.length > 256)
+
+		if (inputMember.length > 256) {
 			return message.channel.send('Name is too long! The name field maxes out at `256` characters.');
+		}
+
 		try {
 			var member = await getDiscordMember(inputMember, message);
 		} catch (err) {
 			return message.channel.send('Unknown user! Make sure you typed in a user id.');
 		}
+
 		const spreadsheet = await loadSpreadsheet(server.spreadsheetId);
-		if (spreadsheet === null) 
+
+		if (spreadsheet === null) {
 			return message.channel.send('Invalid spreadsheet id! Make sure you set it up properly in the config.');
+		}
+
 		var rosterSheet = spreadsheet.sheetsByTitle[server.rosterName];
-		if (!rosterSheet) 
+
+		if (!rosterSheet) {
 			return message.channel.send('Invalid roster sheet name! Make sure you set it up properly in the config.');
-		
+		}
+
 		try {
 			switch (subcommand) {
 				case 'add':
 					try {
-						if (await isNameOnSheet(member.name, rosterSheet, server))
-						return message.channel.send(`This name is already in use!`);
-					} catch {
+						if (await isNameOnSheet(member.name, rosterSheet, server)) {
+							return message.channel.send(`This name is already in use!`);
+						}
+					} catch (err) {
 						return message.channel.send('Cannot set a numerical name the same length as a Discord id!');
 					}
+
 					await addMemberToSheet(member, rosterSheet, server);
+
 					let output = `Successfully added \`${member.name}\` to the roster.`;
+
 					if (member.id === 'None') {
-						output += '\n\`Don\'t forget to add their Discord and Steam I.D.!\`';
+						output += "\n`Don't forget to add their Discord and Steam I.D.!`";
 					} else {
-						output += '\n\`Don\'t forget to add their Steam I.D.!\`'; 
+						output += "\n`Don't forget to add their Steam I.D.!`";
 					}
+
 					return message.channel.send(output);
 				case 'remove':
 					return message.channel.send(await removeMemberFromSheet(member, rosterSheet, server));
+
 				case 'info':
 					return message.channel.send(await getMemberInfo(member, rosterSheet, server));
+
 				default:
 					return message.channel.send(
 						`Invalid arguments! \nUsage: \`${server.prefix}${this.name} ${this.usage}\``

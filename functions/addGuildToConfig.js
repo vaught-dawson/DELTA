@@ -18,7 +18,9 @@ function addGuildToConfig(guild) {
 		discordHeader: 'Discord',
 		rankStructure: 'standard'
 	});
+
 	let filePath = path.resolve('./information/guilds.json');
+
 	fs.writeFile(filePath, JSON.stringify(servers, null, 2), function writeJSON(err) {
 		if (err) {
 			return console.log(err);

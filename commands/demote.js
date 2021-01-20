@@ -17,25 +17,43 @@ module.exports = {
 	async execute(message, args, server) {
 		const spreadsheet = loadSpreadsheet(server.spreadsheetId);
 		const rosterSheet = (await spreadsheet).sheetsByTitle[server.rosterName];
+
 		var member = await getDiscordMember(args.join('_'), message);
 		var memberData = await getMemberFromSheetById(member, rosterSheet, server);
+
 		if (!memberData) {
 			memberData = await getMemberFromSheetByName(member, rosterSheet, server);
-			if (!memberData) 
-				return message.channel.send(`Member \`${member.name == null ? member.id : member.name}\` not found on the roster!`);
+			if (!memberData) {
+				return message.channel.send(
+					`Member \`${member.name == null ? member.id : member.name}\` not found on the roster!`
+				);
+			}
 		}
+
 		let previousRank = memberData[server.rankHeader];
-		if (!previousRank)
-			return message.channel.send('Invalid rank header! Make sure this is correct in the config.')
-		if (!memberData[server.nameHeader])
-			return message.channel.send('Invalid name header! Make sure this is correct in the config.')
-		let newRank = await demote(previousRank, server);
-		if (!newRank) {
-			return message.channel.send(`Failed to demote \`${memberData[server.nameHeader]}\` from \`${memberData[server.rankHeader]}\`.\n\nAre you using the right rank system?`);
-		} else if (newRank === null) {
-			return message.channel.send('This server has an invalid rank structure set in the config.\nHave an admin change this with the \`setConfig\` command!');
+
+		if (!previousRank) {
+			return message.channel.send('Invalid rank header! Make sure this is correct in the config.');
 		}
-			
+
+		if (!memberData[server.nameHeader]) {
+			return message.channel.send('Invalid name header! Make sure this is correct in the config.');
+		}
+
+		let newRank = await demote(previousRank, server);
+
+		if (!newRank) {
+			return message.channel.send(
+				`Failed to demote \`${memberData[server.nameHeader]}\` from \`${memberData[
+					server.rankHeader
+				]}\`.\n\nAre you using the right rank system?`
+			);
+		} else if (newRank === null) {
+			return message.channel.send(
+				'This server has an invalid rank structure set in the config.\nHave an admin change this with the `setConfig` command!'
+			);
+		}
+
 		let today = dateFormat(new Date(), 'mm/dd/yy', true);
 
 		memberData[server.rankHeader] = newRank;
@@ -43,19 +61,28 @@ module.exports = {
 
 		try {
 			const rows = await rosterSheet.getRows();
+
 			var foundIndex = rows.findIndex((row) => row[server.discordHeader] == member.id);
+
 			if (foundIndex === -1) {
 				foundIndex = rows.findIndex((row) => row[server.nameHeader].toLowerCase() == member.name.toLowerCase());
-				if (foundIndex === -1) return message.channel.send(`Failed to find \`${member.name}\` on the roster.`);
+
+				if (foundIndex === -1) {
+					return message.channel.send(`Failed to find \`${member.name}\` on the roster.`);
+				}
 			}
 
 			rows[foundIndex] = memberData;
 			rows[foundIndex].save();
-			output = `Successfully demoted \`${memberData[server.nameHeader]}\` to \`${newRank}\` from \`${previousRank}\`.`;
+
+			output = `Successfully demoted \`${memberData[
+				server.nameHeader
+			]}\` to \`${newRank}\` from \`${previousRank}\`.`;
 		} catch (err) {
 			sendErrorEmbed(message, { message: `**Command:** ${message.content}\n**Error:** ${err}` });
 			output = `There was a problem saving to the roster.`;
 		}
+
 		return message.channel.send(output ? output : `Failed to find \`${member.name}\` on the roster.`);
 	}
 };
@@ -63,10 +90,16 @@ module.exports = {
 async function demote(currentRank, server) {
 	try {
 		let rankStructure = server.rankStructure;
-		const { ranks } = require(`../information/ranks/${rankStructure}.json`)
+		const { ranks } = require(`../information/ranks/${rankStructure}.json`);
+
 		let currRank = await ranks.find((r) => r.name == currentRank);
-		if (!currRank) throw 'Invalid Rank.';
+
+		if (!currRank) {
+			throw 'Invalid Rank.';
+		}
+
 		let newRank = await ranks.find((r) => r.index == currRank.index - 1);
+
 		return newRank.name;
 	} catch (err) {
 		console.log(err);

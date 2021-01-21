@@ -33,6 +33,10 @@ module.exports = {
 		var member = await getDiscordMember(inputMember, message);
 		var data = args.join(' ');
 
+		if (message.mentions.members.size > 0 && header === server.discordHeader) {
+			data = 	message.mentions.members.last().id;
+		}
+
 		var memberData = await getMemberFromSheetById(member, rosterSheet, server);
 
 		if (!memberData) {

@@ -81,8 +81,12 @@ module.exports = {
 				server.nameHeader
 			]}\` to \`${newRank}\` from \`${previousRank}\`.`;
 
+			output += `\n\n\`${server.memberLogPrefix} ${previousRank.split('-').pop()} ${memberData[
+				server.nameHeader
+			]} -> ${server.memberLogPrefix} ${newRank.split('-').pop()} ${memberData[server.nameHeader]}\``;
+
 			if (promoWarning) {
-				output += `\n\n\`Warning: This user has been promoted within the last week!\``;
+				output += `\n\`Warning: This user has been promoted within the last week!\``;
 			}
 		} catch (err) {
 			sendErrorEmbed(message, { message: `**Command:** ${message.content}\n**Error:** ${err}` });

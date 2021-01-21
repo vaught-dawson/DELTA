@@ -7,7 +7,7 @@ const dateFormat = require('dateformat');
 
 module.exports = {
 	name: 'demote',
-	aliases: [ 'dmt', 'demo', 'd'],
+	aliases: [ 'dmt', 'demo', 'd' ],
 	description: 'Demotes a member on the roster.',
 	args: true,
 	sheets: true,
@@ -83,6 +83,10 @@ module.exports = {
 			output = `Successfully demoted \`${memberData[
 				server.nameHeader
 			]}\` to \`${newRank}\` from \`${previousRank}\`.`;
+
+			output += `\n\n\`${server.memberLogPrefix} ${previousRank.split('-').pop()} ${memberData[
+				server.nameHeader
+			]} -> ${server.memberLogPrefix} ${newRank.split('-').pop()} ${memberData[server.nameHeader]}\``;
 		} catch (err) {
 			sendErrorEmbed(message, { message: `**Command:** ${message.content}\n**Error:** ${err}` });
 			output = `There was a problem saving to the roster.`;

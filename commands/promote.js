@@ -22,9 +22,10 @@ module.exports = {
 		}
 
 		const rosterSheet = (await spreadsheet).sheetsByTitle[server.rosterName];
+		
 		var member = await getDiscordMember(args.join('_'), message);
-		var memberData = await getMemberFromSheetById(member, rosterSheet, server);
 
+		var memberData = await getMemberFromSheetById(member, rosterSheet, server);
 		if (!memberData) {
 			memberData = await getMemberFromSheetByName(member, rosterSheet, server);
 			if (!memberData) {

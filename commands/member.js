@@ -30,6 +30,7 @@ module.exports = {
 		try {
 			var member = await getDiscordMember(inputMember, message);
 		} catch (err) {
+			console.log(err);
 			return message.channel.send('Unknown user! Make sure you typed in a user id.');
 		}
 
@@ -49,6 +50,8 @@ module.exports = {
 			switch (subcommand) {
 				case 'add':
 					try {
+						let name = member.name.split('_').pop();
+						member.name = name;
 						if (await isNameOnSheet(member.name, rosterSheet, server)) {
 							return message.channel.send(`This name is already in use!`);
 						}

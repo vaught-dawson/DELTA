@@ -1,24 +1,18 @@
 async function getDiscordMember(inputMember, message) {
 	var member = { name: inputMember, id: 'None' };
 
-	if (message.mentions.members.size > 0) {
-		member.id = message.mentions.members.first().id;
+	if (member.name.startsWith('<@!') && member.name.endsWith('>')) {
+		member.name = inputMember.substring(3, inputMember.length - 1);
+	}
+	else if (member.name.startsWith('<@') && member.name.endsWith('>')) {
+		member.name = inputMember.substring(2, inputMember.length - 1);
+	}
 
-		try {
-			let name = (await message.guild.members.fetch(member.id)).displayName.split(/ +/);
-			member.name = name[name.length - 1];
-		} catch (err) {
-			member.name = null;
-		}
-	} else if (inputMember.length == 18 && !isNaN(inputMember)) {
-		member.id = inputMember;
+	if (member.name.length == 18 && !isNaN(member.name)) {
+		member.id = member.name;
 
-		try {
-			let name = (await message.guild.members.fetch(member.id)).displayName.split(/ +/);
-			member.name = name[name.length - 1];
-		} catch (err) {
-			member.name = null;
-		}
+		let name = (await message.guild.members.fetch(member.id)).displayName.split(/ +/).join('_');
+		member.name = name;
 	}
 
 	return member;

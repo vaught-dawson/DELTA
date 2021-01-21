@@ -110,6 +110,10 @@ function promote(currentRank, server) {
 
 		let newRank = ranks.find((r) => r.index == currRank.index + 1);
 
+		if (!newRank) {
+			return null;
+		}
+
 		return newRank.name;
 	} catch (err) {
 		return null;

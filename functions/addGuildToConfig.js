@@ -16,7 +16,8 @@ function addGuildToConfig(guild) {
 		lastPromotionDateHeader: 'LastPromo',
 		statusHeader: 'Status',
 		discordHeader: 'Discord',
-		rankStructure: 'standard'
+		rankStructure: 'standard',
+		memberLogPrefix: 'Resistance'
 	});
 
 	let filePath = path.resolve('./information/guilds.json');

@@ -30,11 +30,25 @@ module.exports = {
 		}
 
 		var inputMember = args.shift();
-		var member = await getDiscordMember(inputMember, message);
-		var data = args.join(' ');
+		try {
+			var member = await getDiscordMember(inputMember, message);
+		} catch (err) {
+			console.log(err);
+			return message.channel.send('Unknown user! Make sure you typed in a user id.');
+		}
 
-		if (message.mentions.members.size > 0 && header === server.discordHeader) {
-			data = 	message.mentions.members.last().id;
+		var data = args.join(' ');
+		var dataMember;
+		try {
+			dataMember = await getDiscordMember(data, message);
+		} catch (err) {
+			return;
+		}
+
+		if (dataMember) {
+			if (dataMember.id != 'None') {
+				data = dataMember.id;
+			} 
 		}
 
 		var memberData = await getMemberFromSheetById(member, rosterSheet, server);

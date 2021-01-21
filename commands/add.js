@@ -49,15 +49,23 @@ module.exports = {
 			}
         }
         
-        let currentNumberValue = memberData[header];
+		let currentNumberValue = memberData[header];
+		
+		if (!currentNumberValue) {
+			currentNumberValue = 0;
+		}
 
         if (isNaN(currentNumberValue)) {
             return message.channel.send('This is not a numerical column!');
-        }
+		}
 
 		let memberName = memberData[server.nameHeader];
         
-        let addedNumberTotal = parseInt(currentNumberValue) + parseInt(inputNumber)
+		let addedNumberTotal = parseInt(currentNumberValue) + parseInt(inputNumber)
+		
+		if (!addedNumberTotal) {
+			addedNumberTotal = 0;
+		}
 
         if (addedNumberTotal === NaN) {
             addedNumberTotal = inputNumber;

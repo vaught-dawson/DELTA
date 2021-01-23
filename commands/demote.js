@@ -109,6 +109,10 @@ async function demote(currentRank, server) {
 
 		let newRank = await ranks.find((r) => r.index == currRank.index - 1);
 
+		if (!newRank) {
+			return null;
+		}
+
 		return newRank.name;
 	} catch (err) {
 		console.log(err);

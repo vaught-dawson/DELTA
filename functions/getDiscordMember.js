@@ -5,8 +5,8 @@ async function getDiscordMember(inputMember, message) {
 		member.id = message.mentions.members.first().id;
 
 		try {
-			let name = (await message.guild.members.fetch(member.id)).displayName.split(/ +/);
-			member.name = name[name.length - 1];
+			let name = (await message.guild.members.fetch(member.id)).displayName.split(/ +/).join('_');
+			member.name = name;
 		} catch (err) {
 			member.name = null;
 		}
@@ -14,8 +14,8 @@ async function getDiscordMember(inputMember, message) {
 		member.id = inputMember;
 
 		try {
-			let name = (await message.guild.members.fetch(member.id)).displayName.split(/ +/);
-			member.name = name[name.length - 1];
+			let name = (await message.guild.members.fetch(member.id)).displayName.split(/ +/).join('_');
+			member.name = name;
 		} catch (err) {
 			member.name = null;
 		}

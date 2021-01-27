@@ -14,7 +14,7 @@ async function changeGuildConfig(guild, header, data) {
 	fs.writeFile(filePath, JSON.stringify(servers, null, 2), function writeJSON(err) {
 		if (err) {
 			console.log(err);
-			return message.channel.send('There was a problem saving to the config file.');
+			return 'There was a problem saving to the config file.';
 		}
 	});
 }

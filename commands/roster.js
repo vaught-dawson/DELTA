@@ -1,10 +1,11 @@
 const { getMembersInfo } = require('../functions/getMembersInfo.js');
 const { loadSpreadsheet } = require('../functions/loadSpreadsheet.js');
+const { getRankCountFromSheet } = require('../functions/getRankCountFromSheet.js');
 const { splitEmbedsByFields } = require('../functions/splitEmbedsByFields.js');
 
 module.exports = {
-	name: 'members',
-	aliases: [ 'mbrs', 'listmembers', 'lstmbrs', 'list', 'lst' ],
+	name: 'roster',
+	aliases: [ 'members', 'mbrs', 'listmembers', 'lstmbrs', 'list', 'lst' ],
 	description: 'Lists all members in a roster.',
 	sheets: true,
 	usage: '<dm?>',
@@ -25,6 +26,12 @@ module.exports = {
 
 		var membersInfo = await getMembersInfo(rosterSheet, server);
 		var embeds = await splitEmbedsByFields(membersInfo, 24, spreadsheet.title);
+		var ranks = await getRankCountFromSheet(server, rosterSheet);
+		let iconUrl = require(`../information/embedThemes/resistanceLogistics.json`).footer.iconURL;
+		embeds[embeds.length - 1].setFooter(
+			`CO: ${ranks['CO']} | NCO: ${ranks['NCO']} | Enlisted: ${ranks['Enlisted']} | TR: ${ranks['TR']} | Honorary: ${ranks['Honorary']}`,
+			iconUrl
+		);
 
 		embeds.forEach((embed) => {
 			if (args.length == 0) {
@@ -33,6 +40,7 @@ module.exports = {
 				message.author.send(embed);
 			}
 		});
+
 
 		if (args.length > 0) {
 			return message.reply(

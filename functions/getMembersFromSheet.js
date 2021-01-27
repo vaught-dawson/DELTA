@@ -1,5 +1,6 @@
 async function getMembersFromSheet(sheet) {
-	return (rows = await sheet.getRows());
+	let rows = await sheet.getRows();
+	return await rows;
 }
 
 module.exports.getMembersFromSheet = getMembersFromSheet;

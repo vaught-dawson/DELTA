@@ -3,8 +3,7 @@ async function getDiscordMember(inputMember, message) {
 
 	if (member.name.startsWith('<@!') && member.name.endsWith('>')) {
 		member.name = inputMember.substring(3, inputMember.length - 1);
-	}
-	else if (member.name.startsWith('<@') && member.name.endsWith('>')) {
+	} else if (member.name.startsWith('<@') && member.name.endsWith('>')) {
 		member.name = inputMember.substring(2, inputMember.length - 1);
 	}
 

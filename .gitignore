@@ -1,4 +1,5 @@
 node_modules
 information/config.json
 information/guilds.json
-information/client_secret.json
+information/google_secret.json
+.env

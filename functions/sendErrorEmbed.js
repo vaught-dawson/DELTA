@@ -1,5 +1,5 @@
+/* eslint-disable no-undef */
 const Discord = require('discord.js');
-const { bugReportWebhook } = require('../information/config.json');
 
 async function sendErrorEmbed(message, error) {
 	console.log(error);
@@ -12,7 +12,7 @@ async function sendErrorEmbed(message, error) {
 		.setDescription(error.message ? error.message : 'Failed to grab error.')
 		.setFooter('Resistance Logistics', 'https://i.ibb.co/Wzd001F/677a08d8682923ca8cb51fe48df38208.png');
 
-	const bugReportWebhookClient = new Discord.WebhookClient(bugReportWebhook.id, bugReportWebhook.token);
+	const bugReportWebhookClient = new Discord.WebhookClient(process.env.BUGREPORT_WEBHOOK_ID, process.env.BUGREPORT_WEBHOOK_TOKEN);
 
 	bugReportWebhookClient.send('', {
 		username: error.bug ? 'Bug Report' : 'Error',

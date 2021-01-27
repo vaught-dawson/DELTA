@@ -8,13 +8,13 @@ module.exports = {
 	args: false,
 	guildOnly: false,
 	commandChannel: true,
-	async execute(message, args, server) {
+	async execute(message, args) {
 		const embed = new Discord.MessageEmbed()
 			.setColor(15105570)
 			.setThumbnail('https://i.ibb.co/2MHY6wn/D-E-L-T-A-4.jpg')
 			.setTitle(`${description} v${version}:`)
 			.setDescription(
-				'**Bot:** Made by Vio\n**Art:** Made by Ragnarok\n**Testing:** Conducted on RU (Lead by NeonJohn)'
+				'**Bot:** Made by Vio\n**Art:** Made by Ragnarok\n**Repository:** https://github.com/vaught-dawson/DELTA'
 			)
 			.setFooter('Resistance Logistics', 'https://i.ibb.co/Wzd001F/677a08d8682923ca8cb51fe48df38208.png');
 

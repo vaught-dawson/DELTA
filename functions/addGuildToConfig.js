@@ -17,7 +17,8 @@ function addGuildToConfig(guild) {
 		statusHeader: 'Status',
 		discordHeader: 'Discord',
 		rankStructure: 'standard',
-		memberLogPrefix: 'Resistance'
+		memberLogPrefix: 'Resistance',
+		staticMessages: []
 	});
 
 	let filePath = path.resolve('./information/guilds.json');

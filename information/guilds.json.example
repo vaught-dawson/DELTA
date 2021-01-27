@@ -13,7 +13,8 @@
       "lastPromotionDateHeader": "",
       "discordHeader": "",
       "statusHeader": "",
-      "rankStructure": ""
+      "rankStructure": "",
+      "memberLogPrefix": ""
     }
   ]
 }

@@ -30,6 +30,7 @@ module.exports = {
 		try {
 			var member = await getDiscordMember(inputMember, message);
 		} catch (err) {
+			console.log(err);
 			return message.channel.send('Unknown user! Make sure you typed in a user id.');
 		}
 

@@ -13,7 +13,7 @@ module.exports = {
 	description: 'Adds a number to a numerical column for a member.',
 	args: true,
 	sheets: true,
-	usage: '<number> <column header> <member name/id>',
+	usage: '<column header> <member name/id> <number>',
 	guildOnly: true,
 	commandChannel: true,
 	async execute(message, args, server) {
@@ -21,8 +21,10 @@ module.exports = {
 		const rosterSheet = (await spreadsheet).sheetsByTitle[server.rosterName];
 
         args = combineElementsByCharacter(args, '"');
-        var inputNumber = args.shift();
 		var inputHeader = args.shift();
+		var inputMember = args.shift();
+		var inputNumber = args.shift();
+
 		var headers = await getSheetHeaders(rosterSheet);
         var header = await getHeader(headers, inputHeader);
         
@@ -34,9 +36,7 @@ module.exports = {
 			return message.channel.send('Invalid column header!');
         }
         
-		var inputMember = args.shift();
 		var member = await getDiscordMember(inputMember, message);
-
 		var memberData = await getMemberFromSheetById(member, rosterSheet, server);
 
 		if (!memberData) {

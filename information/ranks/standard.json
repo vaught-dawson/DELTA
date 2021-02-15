@@ -2,66 +2,82 @@
     "ranks": [
 	{
         "name": "-01-TR",
-        "index": 1
+        "index": 1,
+        "group": "TR"
     },
 	{
         "name": "01-PVT",
-        "index": 2
+        "index": 2,
+        "group": "Enlisted"
     },
 	{
         "name": "02-PFC",
-        "index": 3
+        "index": 3,
+        "group": "Enlisted"
     },
 	{
         "name": "03-SPC",
-        "index": 4
+        "index": 4,
+        "group": "Enlisted"
     },
 	{
         "name": "04-LCPL",
-        "index": 5
+        "index": 5,
+        "group": "Enlisted"
     },
 	{
         "name": "05-CPL",
-        "index": 6
+        "index": 6,
+        "group": "Enlisted"
     },
 	{
         "name": "06-SGT",
-        "index": 7
+        "index": 7,
+        "group": "NCO"
     },
 	{
         "name": "07-SSGT",
-        "index": 8
+        "index": 8,
+        "group": "NCO"
     },
 	{
         "name": "08-MSGT",
-        "index": 9
+        "index": 9,
+        "group": "NCO"
     },
 	{
         "name": "09-SGM",
-        "index": 10
+        "index": 10,
+        "group": "NCO"
     },
 	{
         "name": "10-WO",
-        "index": 11
+        "index": 11,
+        "group": "NCO"
     },
 	{
         "name": "11-2ndLT",
-        "index": 12
+        "index": 12,
+        "group": "CO"
     },
 	{
         "name": "12-1stLT",
-        "index": 13
+        "index": 13,
+        "group": "CO"
     },
 	{
         "name": "13-CPT",
-        "index": 14
+        "index": 14,
+        "group": "CO"
     },
 	{
         "name": "14-Major",
-        "index": 15
+        "index": 15,
+        "group": "CO"
     },
 	{
         "name": "15-Colonel",
-        "index": 16
+        "index": 16,
+        "group": "CO"
     }
 ]}

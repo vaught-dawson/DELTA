@@ -2,62 +2,77 @@
     "ranks": [
 	{
         "name": "01-E10",
-        "index": 2
+        "index": 2,
+        "group": "Enlisted"
     },
 	{
         "name": "02-E9",
-        "index": 3
+        "index": 3,
+        "group": "Enlisted"
     },
 	{
         "name": "03-E8",
-        "index": 4
+        "index": 4,
+        "group": "Enlisted"
     },
 	{
         "name": "04-E7",
-        "index": 5
+        "index": 5,
+        "group": "Enlisted"
     },
 	{
         "name": "05-E6",
-        "index": 6
+        "index": 6,
+        "group": "Enlisted"
     },
 	{
         "name": "06-E5",
-        "index": 7
+        "index": 7,
+        "group": "NCO"
     },
 	{
         "name": "07-E4",
-        "index": 8
+        "index": 8,
+        "group": "NCO"
     },
 	{
         "name": "08-E3",
-        "index": 9
+        "index": 9,
+        "group": "NCO"
     },
 	{
         "name": "09-E2",
-        "index": 10
+        "index": 10,
+        "group": "NCO"
     },
 	{
         "name": "10-E1",
-        "index": 11
+        "index": 11,
+        "group": "NCO"
     },
 	{
         "name": "11-C1",
-        "index": 12
+        "index": 12,
+        "group": "CO"
     },
 	{
         "name": "12-C2",
-        "index": 13
+        "index": 13,
+        "group": "CO"
     },
 	{
         "name": "13-C3",
-        "index": 14
+        "index": 14,
+        "group": "CO"
     },
 	{
         "name": "14-C4",
-        "index": 15
+        "index": 15,
+        "group": "CO"
     },
 	{
         "name": "15-A0",
-        "index": 16
+        "index": 16,
+        "group": "CO"
     }
 ]}

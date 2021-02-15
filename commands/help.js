@@ -23,7 +23,7 @@ module.exports = {
 		const commandName = args[0].toLowerCase();
 		const command = commands.get(commandName) || commands.find((c) => c.aliases && c.aliases.includes(commandName));
 
-		if (!command) {
+		if (!command || command.hide) {
 			return message.reply("That's not a valid command!");
 		}
 
@@ -42,7 +42,9 @@ function dmUserAllCommands(message, prefix, commands) {
 		);
 
 	commands.forEach((command) => {
-		embed.addField(`${prefix}${command.name}`, command.description, false);
+		if (!command.hide) {
+			embed.addField(`${prefix}${command.name}`, command.description, false);
+		}
 	});
 
 	return message.author

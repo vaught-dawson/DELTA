@@ -1,4 +1,4 @@
-var { prefixDefault } = require('../information/config.json');
+/* eslint-disable no-undef */
 const Discord = require('discord.js');
 
 module.exports = {
@@ -10,7 +10,7 @@ module.exports = {
 	commandChannel: true,
 	execute(message, args, server) {
 		const { commands } = message.client;
-		let prefix = prefixDefault;
+		let prefix = process.env.PREFIX_DEFAULT;
 
 		if (server) {
 			prefix = server.prefix;

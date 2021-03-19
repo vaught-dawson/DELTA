@@ -1,4 +1,6 @@
-const { token, prefixDefault } = require('./information/config.json');
+/* eslint-disable no-undef */
+require('dotenv').config();
+
 const { sendErrorEmbed } = require('./functions/sendErrorEmbed.js');
 const { addGuildToConfig } = require('./functions/addGuildToConfig.js');
 const { getMemberFromSheetById } = require('./functions/getMemberFromSheetById.js');
@@ -8,90 +10,37 @@ const fs = require('fs');
 const Discord = require('discord.js');
 const client = new Discord.Client();
 
-client.commands = new Discord.Collection();
-
-const commandFiles = fs.readdirSync('./commands').filter((file) => file.endsWith('.js'));
-for (const file of commandFiles) {
-	const command = require(`./commands/${file}`);
-	client.commands.set(command.name, command);
-}
-
-client.login(token);
+client.login(process.env.TOKEN).catch(console.log('[ERROR] Failed to login.'));
 
 client.on('ready', async () => {
-	console.log(`Logged in as ${client.user.tag}!`);
+	console.log(`[Event] Logged in as ${client.user.tag}!`);
+
+	await initializeCommands().then(console.log('[Event] Initialized commands.'));
 });
 
 client.on('message', async (message) => {
 	if (message.author.bot) return;
 
-	var prefix = message.content.substring(0, 1);
 	var args = message.content.substring(1).split(/ +/);
 	var commandName = args.shift().toLowerCase();
 	var command = getCommandFromName(commandName);
 	var server;
 
 	if (message.channel.type == 'dm') {
-		if (message.mentions.has(client.user.id)) {
-			return message.channel.send(`I'm up! My prefix is \`+\`.`);
-		}
-
-		if (prefix != prefixDefault) return;
-
-		if (!command) return message.channel.send('Unknown command!');
-
-		if (command.guildOnly) {
-			return message.reply("I can't execute that command inside DMs!");
-		}
+		let isAbleToRun = canDMCommandRun(message, command);
+		if (!isAbleToRun) return;
 	} else {
-		if (command && command.commandChannel == false) {
-			server = servers.guilds.filter((o) => o.guildId === message.guild.id);
-			if (!server) return;
+		let isAbleToRun = canGuildCommandRun(message, command);
+		if (!isAbleToRun) return;
 
-			if (server.length > 1) {
-				server = server.filter((o) => o.prefix === prefix);
-			}
-
-			server = server[0];
-		} else {
-			server = servers.guilds.find((o) => o.commandChannelId === message.channel.id);
-		}
-
+		server = getServerFromGuildCommand(message, command);
 		if (!server) return;
-
-		if (!command) {
-			if (message.mentions.has(client.user.id)) {
-				return message.channel.send(`I'm up! My prefix is \`${server.prefix}\`.`);
-			}
-
-			if (server.commandChannelId === message.channel.id) {
-				if (prefix != server.prefix) return;
-				return message.channel.send('Unknown command!');
-			}
-
-			return;
-		}
-
-		if (prefix != server.prefix) return;
-
-		if (!message.member.hasPermission('MANAGE_ROLES')) {
-			return message.channel.send(
-				"You don't have the perms to run DELTA commands. You need permissions to `MANAGE_ROLES`."
-			);
-		}
-
-		if (command.sheets && server.spreadsheetId == null) {
-			return message.channel.send(
-				`You don't have a Google Sheet configured!\nGet an admin to set it with: \`${server.prefix ||
-					prefixDefault}setSpreadsheetID <spreadsheet id>\`.`
-			);
-		}
 	}
 
 	if (command.args && !args.length) {
 		return message.channel.send(
 			`You didn't add any arguments!\nThe proper usage would be: \`${server.prefix ||
-				prefixDefault}${command.name} ${command.usage}\``
+				process.env.PREFIX_DEFAULT}${command.name} ${command.usage}\``
 		);
 	}
 
@@ -106,6 +55,109 @@ client.on('message', async (message) => {
 		);
 	}
 });
+
+async function initializeCommands() {
+	new Promise((resolve) => {
+		client.commands = new Discord.Collection();
+		const commandFiles = fs.readdirSync('./commands').filter((file) => file.endsWith('.js'));
+		for (const file of commandFiles) {
+			const command = require(`./commands/${file}`);
+			client.commands.set(command.name, command);
+		}
+		resolve(true);
+	});
+}
+
+function canDMCommandRun(message, command) {
+	if (message.mentions.has(client.user.id)) {
+		message.channel.send(`I'm up! My prefix is \`${process.env.PREFIX_DEFAULT}\`.`);
+		return false;
+	}
+
+	let prefix = message.content.substring(0, 1);
+	if (prefix != process.env.PREFIX_DEFAULT) return false;
+
+	if (!command) {
+		message.channel.send('Unknown command!');
+		return false;
+	}
+
+	if (command.guildOnly) {
+		message.reply("I can't execute that command inside DMs!");
+		return false;
+	}
+	return true;
+}
+
+function canGuildCommandRun(message, command) {
+	let server;
+	let prefix = message.content.substring(0, 1);
+
+	if (command && command.commandChannel == false) {
+		server = servers.guilds.filter((o) => o.guildId === message.guild.id);
+		if (!server) return false;
+
+		if (server.length > 1) {
+			server = server.filter((o) => o.prefix === prefix);
+		}
+
+		server = server[0];
+	} else {
+		server = servers.guilds.find((o) => o.commandChannelId === message.channel.id);
+	}
+
+	if (!server) return false;
+
+	if (!command) {
+		if (message.mentions.has(client.user.id)) {
+			message.channel.send(`I'm up! My prefix is \`${server.prefix}\`.`);
+			return false;
+		}
+
+		if (server.commandChannelId === message.channel.id) {
+			if (prefix == server.prefix) {
+				message.channel.send('Unknown command!');
+			}
+		}
+
+		return false;
+	}
+
+	if (prefix != server.prefix) return false;
+
+	if (!message.member.hasPermission('MANAGE_ROLES')) {
+		message.channel.send("You don't have the perms to run DELTA commands. You need permissions to `MANAGE_ROLES`.");
+		return false;
+	}
+
+	if (command.sheets && server.spreadsheetId == null) {
+		message.channel.send(
+			`You don't have a Google Sheet configured!\nGet an admin to set it with: \`${server.prefix ||
+				process.env.PREFIX_DEFAULT}setSpreadsheetID <spreadsheet id>\`.`
+		);
+		return false;
+	}
+
+	return true;
+}
+
+function getServerFromGuildCommand(message, command) {
+	let server;
+	if (command && command.commandChannel == false) {
+		server = servers.guilds.filter((o) => o.guildId === message.guild.id);
+		if (!server) return;
+
+		if (server.length > 1) {
+			server = server.filter((o) => o.prefix === prefix);
+		}
+
+		server = server[0];
+	} else {
+		server = servers.guilds.find((o) => o.commandChannelId === message.channel.id);
+	}
+
+	return server;
+}
 
 function getCommandFromName(commandName) {
 	return (

@@ -1,6 +1,6 @@
 const { GoogleSpreadsheet } = require('delta-google-spreadsheet');
 const { sendErrorEmbed } = require('../functions/sendErrorEmbed.js');
-const creds = require('../information/client_secret.json');
+const creds = require('../information/google_secret.json');
 
 async function loadSpreadsheet(spreadsheetId) {
 	const spreadsheet = new GoogleSpreadsheet(spreadsheetId);
@@ -8,7 +8,7 @@ async function loadSpreadsheet(spreadsheetId) {
 	try {
 		await spreadsheet.useServiceAccountAuth(creds);
 	} catch (err) {
-		sendErrorEmbed(message, { message: `**Error:** ${err}` });
+		sendErrorEmbed({ message: `**Error:** ${err}` });
 		return null;
 	}
 

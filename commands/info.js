@@ -8,7 +8,7 @@ module.exports = {
 	args: false,
 	guildOnly: false,
 	commandChannel: true,
-	async execute(message, args, server) {
+	async execute(message, args) {
 		const embed = new Discord.MessageEmbed()
 			.setColor(15105570)
 			.setThumbnail('https://i.ibb.co/2MHY6wn/D-E-L-T-A-4.jpg')

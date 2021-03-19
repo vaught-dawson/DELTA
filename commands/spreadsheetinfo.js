@@ -1,6 +1,7 @@
 const { getSpreadsheetInfo } = require('../functions/getSpreadsheetInfo.js');
 const { loadSpreadsheet } = require('../functions/loadSpreadsheet.js');
 const { splitEmbedsByFields } = require('../functions/splitEmbedsByFields');
+const { sendErrorEmbed } = require('../functions/sendErrorEmbed.js');
 
 module.exports = {
 	name: 'spreadsheetinfo',

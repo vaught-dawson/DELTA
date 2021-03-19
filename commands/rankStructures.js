@@ -9,7 +9,7 @@ module.exports = {
 	args: false,
 	guildOnly: false,
 	commandChannel: true,
-	async execute(message, args, server) {
+	async execute(message) {
 		const embed = new Discord.MessageEmbed()
 			.setColor(15105570)
 			.setTitle(`Avaliable rank structures:`)

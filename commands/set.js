@@ -48,7 +48,7 @@ module.exports = {
 		if (dataMember) {
 			if (dataMember.id != 'None') {
 				data = dataMember.id;
-			} 
+			}
 		}
 
 		var memberData = await getMemberFromSheetById(member, rosterSheet, server);

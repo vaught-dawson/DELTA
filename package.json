@@ -13,8 +13,11 @@
     "dateformat": "^4.4.1",
     "delta-google-spreadsheet": "^3.1.16",
     "discord.js": "^12.5.1",
+    "dotenv": "^8.2.0",
     "googleapis": "^39.2.0",
-    "path": "^0.12.7",
-    "xmlhttprequest": "^1.8.0"
+    "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "eslint": "^7.22.0"
   }
 }

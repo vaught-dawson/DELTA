@@ -14,12 +14,11 @@ function combineElementsByCharacter(args, outlineCharacter) {
 			newArray.push(newElement);
 		} else if (combineElements) {
 			newElement += arg + ' ';
-		}
-		else {
+		} else {
 			newArray.push(arg);
 		}
 	});
-	
+
 	return newArray;
 }
 

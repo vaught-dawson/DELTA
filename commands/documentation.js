@@ -5,7 +5,7 @@ module.exports = {
 	args: false,
 	guildOnly: false,
 	commandChannel: true,
-	async execute(message, args, server) {
+	async execute(message) {
 		return message.channel.send('https://sites.google.com/view/deltadocumentation');
 	}
 };

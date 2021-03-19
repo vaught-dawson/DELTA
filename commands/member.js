@@ -1,3 +1,4 @@
+/* eslint-disable no-case-declarations */
 const { addMemberToSheet } = require('../functions/addMemberToSheet.js');
 const { getDiscordMember } = require('../functions/getDiscordMember.js');
 const { getMemberInfo } = require('../functions/getMemberInfo.js');

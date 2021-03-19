@@ -8,7 +8,7 @@ module.exports = {
 	usage: '<report info>',
 	guildOnly: true,
 	commandChannel: true,
-	async execute(message, args, server) {
+	async execute(message, args) {
 		var error = {
 			bug: true,
 			message: args.join(' ')

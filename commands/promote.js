@@ -7,7 +7,7 @@ const dateFormat = require('dateformat');
 
 module.exports = {
 	name: 'promote',
-	aliases: [ 'pmt', 'promo', 'p'],
+	aliases: [ 'pmt', 'promo', 'p' ],
 	description: 'Promotes a member on the roster.',
 	args: true,
 	sheets: true,
@@ -22,7 +22,7 @@ module.exports = {
 		}
 
 		const rosterSheet = (await spreadsheet).sheetsByTitle[server.rosterName];
-		
+
 		var member = await getDiscordMember(args.join('_'), message);
 
 		var memberData = await getMemberFromSheetById(member, rosterSheet, server);

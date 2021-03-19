@@ -20,22 +20,22 @@ module.exports = {
 		const spreadsheet = loadSpreadsheet(server.spreadsheetId);
 		const rosterSheet = (await spreadsheet).sheetsByTitle[server.rosterName];
 
-        args = combineElementsByCharacter(args, '"');
+		args = combineElementsByCharacter(args, '"');
 		var inputHeader = args.shift();
 		var inputMember = args.shift();
 		var inputNumber = args.shift();
 
 		var headers = await getSheetHeaders(rosterSheet);
-        var header = await getHeader(headers, inputHeader);
-        
-        if (isNaN(inputNumber)) {
-            return message.channel.send('Invalid input number!');
-        }
+		var header = await getHeader(headers, inputHeader);
+
+		if (isNaN(inputNumber)) {
+			return message.channel.send('Invalid input number!');
+		}
 
 		if (!header) {
 			return message.channel.send('Invalid column header!');
-        }
-        
+		}
+
 		var member = await getDiscordMember(inputMember, message);
 		var memberData = await getMemberFromSheetById(member, rosterSheet, server);
 
@@ -47,29 +47,29 @@ module.exports = {
 					`Member \`${member.name == null ? member.id : member.name}\` not found on the roster!`
 				);
 			}
-        }
-        
+		}
+
 		let currentNumberValue = memberData[header];
-		
+
 		if (!currentNumberValue) {
 			currentNumberValue = 0;
 		}
 
-        if (isNaN(currentNumberValue)) {
-            return message.channel.send('This is not a numerical column!');
+		if (isNaN(currentNumberValue)) {
+			return message.channel.send('This is not a numerical column!');
 		}
 
 		let memberName = memberData[server.nameHeader];
-        
-		let addedNumberTotal = parseInt(currentNumberValue) + parseInt(inputNumber)
-		
+
+		let addedNumberTotal = parseInt(currentNumberValue) + parseInt(inputNumber);
+
 		if (!addedNumberTotal) {
 			addedNumberTotal = 0;
 		}
 
-        if (addedNumberTotal === NaN) {
-            addedNumberTotal = inputNumber;
-        }
+		if (isNaN(addedNumberTotal)) {
+			addedNumberTotal = inputNumber;
+		}
 
 		memberData[header] = addedNumberTotal;
 

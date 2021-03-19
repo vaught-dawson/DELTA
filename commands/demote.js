@@ -66,6 +66,7 @@ module.exports = {
 
 		try {
 			const rows = await rosterSheet.getRows();
+			var output;
 
 			var foundIndex = rows.findIndex((row) => row[server.discordHeader] == member.id);
 

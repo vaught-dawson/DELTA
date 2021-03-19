@@ -1,4 +1,5 @@
-## Document Editing Logistics Technical Aid v1.3.4
+
+<h1 align="center"><strong>Document Editing Logistics Technical Aid v1.3.4</strong></h1>
 <p align="center"><img src="https://i.ibb.co/2MHY6wn/D-E-L-T-A-4.jpg" alt="DELTA Logo"/></p>
 
 ---

@@ -4,8 +4,8 @@
 ---
 ### Content
 - [Features](#Features)
-- [Getting Started](#Getting Started)
-- [Default Documentation](#Default Documentation)
+- [Getting Started](#Getting-Started)
+- [Default Documentation](#Default-Documentation)
 - [Support](#Support)
 
 ---
@@ -30,9 +30,9 @@
 - [At least Node v12](https://nodejs.org/en/download/)
 - This Repository
 
-### Getting Started
+### Getting-Started
 
-##### 1. Install Dependancies via Console
+##### 1. Install Dependancies via Console in the Main Directory
 ```
 npm install
 ```
@@ -51,14 +51,16 @@ BUGREPORT_WEBHOOK_TOKEN=
 
 ##### 5. Set up Rank Structures in `./information/ranks` if Needed
 
-##### 6. Invite your Bot to a Server
+##### 6. Start the Bot with `npm start`
+
+##### 7. Invite your Bot to a Server
 DELTA will automatically add an instance to that server in `guilds.json`
 
-##### 7. Run `init` with the default prefix and fill out Spreadsheet Info
+##### 8. Run `init` with the default prefix and fill out Spreadsheet Info
 That is it! It should run flawlessly; otherwise make sure you filled out the info correctly.
 Run `list` and `sheets` to test.
 
-### Default Documentation
+### Default-Documentation
 The Documentation for the original purpose of DELTA, including commands and features, can be found [here](https://sites.google.com/view/deltadocumentation/documentation).
 
 ### Support

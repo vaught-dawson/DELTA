@@ -7,7 +7,7 @@ async function getMembersInfo(sheet, server) {
 	rows.forEach((row) => {
 		if (row[server.nameHeader] != '') {
 			output.push({
-				name: `${row[server.nameHeader]}`,
+				name: `*${row[server.nameHeader]}*`,
 				value: `**Rank:** ${row[server.rankHeader]}\n**Status:** ${row[server.statusHeader]}`,
 				inline: true
 			});

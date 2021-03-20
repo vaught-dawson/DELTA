@@ -10,7 +10,7 @@ const fs = require('fs');
 const Discord = require('discord.js');
 const client = new Discord.Client();
 
-client.login(process.env.TOKEN).catch(console.log('[ERROR] Failed to login.'));
+client.login().catch(console.log('[ERROR] Failed to login.'));
 
 client.on('ready', async () => {
 	console.log(`[Event] Logged in as ${client.user.tag}!`);
@@ -27,11 +27,9 @@ client.on('message', async (message) => {
 	var server;
 
 	if (message.channel.type == 'dm') {
-		let isAbleToRun = canDMCommandRun(message, command);
-		if (!isAbleToRun) return;
+		if (!canDMCommandRun(message, command)) return;
 	} else {
-		let isAbleToRun = canGuildCommandRun(message, command);
-		if (!isAbleToRun) return;
+		if (!canGuildCommandRun(message, command)) return;
 
 		server = getServerFromGuildCommand(message, command);
 		if (!server) return;

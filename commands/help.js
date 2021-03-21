@@ -32,9 +32,7 @@ module.exports = {
 };
 
 function dmUserAllCommands(message, prefix, commands) {
-	let embed = new Discord.MessageEmbed()
-		.setColor(15105570)
-		.setThumbnail('https://i.ibb.co/2MHY6wn/D-E-L-T-A-4.jpg')
+	let embed = new Discord.MessageEmbed(require('../information/embedThemes/resistanceLogistics.json'))
 		.setTitle("Here's a list of all my commands:")
 		.setFooter(
 			`You can send \`${prefix}help [command name]\` to get more info on a specific command!`,
@@ -46,6 +44,8 @@ function dmUserAllCommands(message, prefix, commands) {
 			embed.addField(`${prefix}${command.name}`, command.description, false);
 		}
 	});
+
+	embed.setDescription('*You can find the full documentation [here](https://github.com/vaught-dawson/DELTA)!*');
 
 	return message.author
 		.send(embed)

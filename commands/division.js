@@ -14,7 +14,9 @@ module.exports = {
 		let divisionGuild;
 		if (args && args.length > 0) {
 			if (message.author.id != '203944534839656448') {
-				return message.channel.send('Unknown command!');
+				return message.channel.send(
+					`You don't have permission to run this on any division except your own!\nUse \`${server.prefix}division\` to get data on your own division!`
+				);
 			}
 
 			args = args.join(/ +/);

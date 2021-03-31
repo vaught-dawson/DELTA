@@ -5,6 +5,7 @@ const { sendErrorEmbed } = require('./functions/sendErrorEmbed.js');
 const { addGuildToConfig } = require('./functions/addGuildToConfig.js');
 const { getMemberFromSheetById } = require('./functions/getMemberFromSheetById.js');
 const { loadSpreadsheet } = require('./functions/loadSpreadsheet.js');
+const { StaticMessage } = require('./util/StaticMessage.js');
 const servers = require('./information/guilds.json');
 const fs = require('fs');
 const Discord = require('discord.js');
@@ -16,6 +17,10 @@ client.on('ready', async () => {
 	console.log(`[Event] Logged in as ${client.user.tag}!`);
 
 	await initializeCommands().then(console.log('[Event] Initialized commands.'));
+
+	setInterval(() => {
+		updateAllStaticMessages();
+	}, 60*60*1000)
 });
 
 client.on('message', async (message) => {
@@ -31,7 +36,7 @@ client.on('message', async (message) => {
 	} else {
 		if (!canGuildCommandRun(message, command)) return;
 
-		server = getServerFromGuildCommand(message, command);
+		server = getServerFromGuildCommand(message, command, message.content.substring(0, 1));
 		if (!server) return;
 	}
 
@@ -139,7 +144,7 @@ function canGuildCommandRun(message, command) {
 	return true;
 }
 
-function getServerFromGuildCommand(message, command) {
+function getServerFromGuildCommand(message, command, prefix) {
 	let server;
 	if (command && command.commandChannel == false) {
 		server = servers.guilds.filter((o) => o.guildId === message.guild.id);
@@ -211,3 +216,13 @@ process.on('uncaughtException', async (err) => {
 	console.log(`Error: ${err.name}\n\nMessage: ${err.message}`);
 	await sendErrorEmbed(message, { message: `**Error:** ${err}` });
 });
+
+function updateAllStaticMessages() {
+	servers.guilds.forEach(guild => {
+		if (guild.staticMessages.length === 0) return;
+		guild.staticMessages.forEach(staticMessageFromFile => {
+			let staticMessageObj = new StaticMessage(staticMessageFromFile);
+			staticMessageObj.update(client);
+		})
+	})
+}

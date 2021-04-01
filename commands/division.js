@@ -48,6 +48,7 @@ module.exports = {
 		var rows = await rosterSheet.getRows();
 
 		var ranks = {
+			Honorary: 0,
 			TR: 0,
 			Enlisted: 0,
 			NCO: 0,
@@ -66,6 +67,7 @@ module.exports = {
             **NCOs:** ${ranks['NCO']}
             **Enlisted:** ${ranks['Enlisted']}
             **TR:** ${ranks['TR']}
+			**Honorary:** ${ranks['Honorary']}
             **Other:** ${ranks['Other']}`
 		);
 

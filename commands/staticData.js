@@ -12,6 +12,12 @@ module.exports = {
 	guildOnly: true,
 	commandChannel: false,
 	async execute(message = Message, args = [], server = {}) {
+		if (!message.member.hasPermission('ADMINISTRATOR')) {
+			return message.channel.send(
+				"You don't have the perms to change this! If this needs to be changed then message a server admin."
+			);
+		}
+
 		var subcommand = args.shift().toLowerCase();
 		let inputColumn = args.join(' ').toLowerCase();
 		let sheetColumn = await getSheetColumn(inputColumn, server).catch((error) => {
@@ -33,7 +39,7 @@ module.exports = {
 				);
 				await thisStaticMessageObject.addToFile();
 				await thisStaticMessageObject.update(message.client);
-				
+
 				await message.delete();
 				await message.channel.send('Successfully updated static message!').then(message => {
 					setTimeout(() => {

@@ -51,13 +51,14 @@ module.exports = {
 			);
 		}
 
+		let lastPromoDate = memberData[server.lastPromotionDateHeader];
+
 		
 		let isConfirmed = await getReactionConfirmation(`Are your sure you want to do this? \n\`${server.memberLogPrefix} ${previousRank.split('-').pop()} ${memberData[
 			server.nameHeader
-		]} -> ${server.memberLogPrefix} ${newRank.split('-').pop()} ${memberData[server.nameHeader]}\``, message);
+		]} -> ${server.memberLogPrefix} ${newRank.split('-').pop()} ${memberData[server.nameHeader]}\`\n\`Last Promotion: ${lastPromoDate}\``, message);
 		if (!(await isConfirmed)) return;
 
-		let lastPromoDate = memberData[server.lastPromotionDateHeader];
 		let today = dateFormat(new Date(), 'mm/dd/yy', true);
 		let promoWarning = false;
 

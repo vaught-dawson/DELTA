@@ -3,8 +3,8 @@ const { loadSpreadsheet } = require('../functions/loadSpreadsheet.js');
 const { splitEmbedsByFields } = require('../functions/splitEmbedsByFields.js');
 
 module.exports = {
-	name: 'members',
-	aliases: [ 'mbrs', 'listmembers', 'lstmbrs', 'list', 'lst' ],
+	name: 'roster',
+	aliases: [ 'members', 'mbrs', 'listmembers', 'lstmbrs', 'list', 'lst' ],
 	description: 'Lists all members in a roster.',
 	sheets: true,
 	usage: '<dm?>',

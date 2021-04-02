@@ -40,7 +40,7 @@ npm install
 
 ##### 2. Create .env and Fill Required Info
 ```
-TOKEN=
+DISCORD_TOKEN=
 PREFIX_DEFAULT=
 BUGREPORT_WEBHOOK_ID=
 BUGREPORT_WEBHOOK_TOKEN=

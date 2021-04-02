@@ -1,5 +1,10 @@
 {
     "ranks": [
+    {
+        "name": "00-Honorary",
+        "index": 0,
+        "group": "Honorary"
+    },
 	{
         "name": "-01-SQUID",
         "index": 1,

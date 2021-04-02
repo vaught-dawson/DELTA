@@ -5,17 +5,29 @@ const { sendErrorEmbed } = require('./functions/sendErrorEmbed.js');
 const { addGuildToConfig } = require('./functions/addGuildToConfig.js');
 const { getMemberFromSheetById } = require('./functions/getMemberFromSheetById.js');
 const { loadSpreadsheet } = require('./functions/loadSpreadsheet.js');
+const { StaticMessage } = require('./util/StaticMessage.js');
 const servers = require('./information/guilds.json');
 const fs = require('fs');
 const Discord = require('discord.js');
 const client = new Discord.Client();
 
-client.login(process.env.TOKEN).catch(console.log('[ERROR] Failed to login.'));
+client.login().catch(console.log('[ERROR] Failed to login.'));
 
 client.on('ready', async () => {
 	console.log(`[Event] Logged in as ${client.user.tag}!`);
+	client.user.setPresence({
+		status: 'online',
+		activity: {
+			name: 'hentai with Vad',
+			type: 'WATCHING'
+		}
+	})
 
 	await initializeCommands().then(console.log('[Event] Initialized commands.'));
+
+	setInterval(() => {
+		updateAllStaticMessages();
+	}, 60*60*1000)
 });
 
 client.on('message', async (message) => {
@@ -27,13 +39,11 @@ client.on('message', async (message) => {
 	var server;
 
 	if (message.channel.type == 'dm') {
-		let isAbleToRun = canDMCommandRun(message, command);
-		if (!isAbleToRun) return;
+		if (!canDMCommandRun(message, command)) return;
 	} else {
-		let isAbleToRun = canGuildCommandRun(message, command);
-		if (!isAbleToRun) return;
+		if (!canGuildCommandRun(message, command)) return;
 
-		server = getServerFromGuildCommand(message, command);
+		server = getServerFromGuildCommand(message, command, message.content.substring(0, 1));
 		if (!server) return;
 	}
 
@@ -141,7 +151,7 @@ function canGuildCommandRun(message, command) {
 	return true;
 }
 
-function getServerFromGuildCommand(message, command) {
+function getServerFromGuildCommand(message, command, prefix) {
 	let server;
 	if (command && command.commandChannel == false) {
 		server = servers.guilds.filter((o) => o.guildId === message.guild.id);
@@ -213,3 +223,13 @@ process.on('uncaughtException', async (err) => {
 	console.log(`Error: ${err.name}\n\nMessage: ${err.message}`);
 	await sendErrorEmbed(message, { message: `**Error:** ${err}` });
 });
+
+function updateAllStaticMessages() {
+	servers.guilds.forEach(guild => {
+		if (guild.staticMessages.length === 0) return;
+		guild.staticMessages.forEach(staticMessageFromFile => {
+			let staticMessageObj = new StaticMessage(staticMessageFromFile);
+			staticMessageObj.update(client);
+		})
+	})
+}

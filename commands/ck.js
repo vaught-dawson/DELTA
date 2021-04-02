@@ -5,6 +5,7 @@ const { getDiscordMember } = require('../functions/getDiscordMember.js');
 const { loadSpreadsheet } = require('../functions/loadSpreadsheet.js');
 const { removeMemberFromSheet } = require('../functions/removeMemberFromSheet.js');
 const { sendErrorEmbed } = require('../functions/sendErrorEmbed.js');
+const { getReactionConfirmation } = require('../functions/getReactionConfirmation.js');
 
 module.exports = {
 	name: 'ck',
@@ -55,11 +56,12 @@ module.exports = {
 					memberData = await getMemberFromSheetByName(members[i], rosterSheet, server);
 
 					if (!memberData) {
-						return message.channel.send(
+						message.channel.send(
 							`Member \`${members[i].name == null
 								? members[i].id
 								: members[i].name}\` not found on the roster!`
 						);
+						continue;
 					}
 				}
 
@@ -67,7 +69,6 @@ module.exports = {
 					.split('-')
 					.pop()} ${memberData[server.nameHeader]} -> CK\``;
 
-				message.channel.send(await removeMemberFromSheet(members[i], rosterSheet, server));
 			} catch (err) {
 				console.log(err);
 				await sendErrorEmbed(message, { message: `**Command:** ${message.content}\n**Error:** ${err}` });
@@ -75,6 +76,13 @@ module.exports = {
 			}
 		}
 
-		return message.channel.send(outputLog);
+		let isConfirmed = await getReactionConfirmation(`Are your sure you want to do this? ${outputLog}`, message);
+
+		if (await isConfirmed) {
+			for (let member of members) {
+				message.channel.send(await removeMemberFromSheet(member, rosterSheet, server));
+			}
+			return message.channel.send(outputLog);
+		}
 	}
 };

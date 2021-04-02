@@ -3,6 +3,7 @@ const { getMemberFromSheetById } = require('../functions/getMemberFromSheetById.
 const { getMemberFromSheetByName } = require('../functions/getMemberFromSheetByName.js');
 const { loadSpreadsheet } = require('../functions/loadSpreadsheet.js');
 const { sendErrorEmbed } = require('../functions/sendErrorEmbed.js');
+const { getReactionConfirmation } = require('../functions/getReactionConfirmation.js');
 const dateFormat = require('dateformat');
 
 module.exports = {
@@ -55,9 +56,14 @@ module.exports = {
 			);
 		} else if (newRank === null) {
 			return message.channel.send(
-				'This server has an invalid rank structure set in the config.\nHave an admin change this with the `setConfig` command!'
+				'This server has an invalid rank structure set in the config or the member has an invalid rank.\nHave an admin change this with the `setConfig` command!'
 			);
 		}
+
+		let isConfirmed = await getReactionConfirmation(`Are your sure you want to do this? \n\`${server.memberLogPrefix} ${previousRank.split('-').pop()} ${memberData[
+			server.nameHeader
+		]} -> ${server.memberLogPrefix} ${newRank.split('-').pop()} ${memberData[server.nameHeader]}\``, message);
+		if (!(await isConfirmed)) return;
 
 		let today = dateFormat(new Date(), 'mm/dd/yy', true);
 

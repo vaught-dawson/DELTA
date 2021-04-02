@@ -14,7 +14,8 @@
       "discordHeader": "",
       "statusHeader": "",
       "rankStructure": "",
-      "memberLogPrefix": ""
+      "memberLogPrefix": "",
+      "staticMessages": []
     }
   ]
 }

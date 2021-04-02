@@ -1,6 +1,6 @@
 const { getMembersFromSheet } = require('./getMembersFromSheet');
 
-async function getMembersInfo(sheet, server) {
+async function getColumnInfo(sheet, column, server) {
 	var rows = await getMembersFromSheet(sheet);
 	var output = [];
 
@@ -8,7 +8,7 @@ async function getMembersInfo(sheet, server) {
 		if (row[server.nameHeader] != '') {
 			output.push({
 				name: `*${row[server.nameHeader]}*`,
-				value: `**Rank:** ${row[server.rankHeader]}\n**Status:** ${row[server.statusHeader]}`,
+				value: `**${column}:** ${row[column]}`,
 				inline: true
 			});
 		}
@@ -17,4 +17,4 @@ async function getMembersInfo(sheet, server) {
 	return output;
 }
 
-module.exports.getMembersInfo = getMembersInfo;
+module.exports.getColumnInfo = getColumnInfo;

@@ -36,13 +36,11 @@ module.exports = {
 		}
 
 		const spreadsheet = await loadSpreadsheet(server.spreadsheetId);
-
 		if (spreadsheet === null) {
 			return message.channel.send('Invalid spreadsheet id! Make sure you set it up properly in the config.');
 		}
 
 		var rosterSheet = spreadsheet.sheetsByTitle[server.rosterName];
-
 		if (!rosterSheet) {
 			return message.channel.send('Invalid roster sheet name! Make sure you set it up properly in the config.');
 		}

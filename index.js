@@ -11,7 +11,7 @@ const fs = require('fs');
 const Discord = require('discord.js');
 const client = new Discord.Client();
 
-client.login().catch(console.log('[ERROR] Failed to login.'));
+client.login(process.env.DISCORD_TOKEN).catch(console.log('[ERROR] Failed to login.'));
 
 client.on('ready', async () => {
 	console.log(`[Event] Logged in as ${client.user.tag}!`);

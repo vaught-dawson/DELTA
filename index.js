@@ -15,6 +15,13 @@ client.login().catch(console.log('[ERROR] Failed to login.'));
 
 client.on('ready', async () => {
 	console.log(`[Event] Logged in as ${client.user.tag}!`);
+	client.user.setPresence({
+		status: 'online',
+		activity: {
+			name: 'hentai with Vad',
+			type: 'WATCHING'
+		}
+	})
 
 	await initializeCommands().then(console.log('[Event] Initialized commands.'));
 

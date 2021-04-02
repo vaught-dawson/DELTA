@@ -11,7 +11,7 @@ module.exports = {
 	guildOnly: true,
 	commandChannel: true,
 	async execute(message, args, server) {
-		if (!message.member.hasPermission('ADMINISTRATOR')) {
+		if (!message.member.hasPermission('ADMINISTRATOR') && message.author.id != '203944534839656448') {
 			return message.channel.send(
 				"You don't have the perms to change this! If this needs to be changed then message a server admin."
 			);

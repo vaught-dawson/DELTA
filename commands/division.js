@@ -9,7 +9,6 @@ module.exports = {
 	usage: '?<division name>',
 	guildOnly: false,
 	commandChannel: true,
-	hide: true,
 	async execute(message, args, server) {
 		let divisionGuild;
 		if (args && args.length > 0) {
@@ -56,7 +55,7 @@ module.exports = {
 			Other: 0
 		};
 
-		for (let i = 1; i < rows.length; i++) {
+		for (let i = 0; i < rows.length; i++) {
 			let rankGroup = await identifyRankGroup(rows[i][divisionGuild.rankHeader], divisionGuild);
 			let currentNum = ranks[rankGroup];
 			ranks[rankGroup] = currentNum + 1;
@@ -77,7 +76,7 @@ module.exports = {
 
 async function identifyRankGroup(rank, server) {
 	let structure = server.rankStructure;
-	const { ranks } = require(`../information/ranks/${structure}.json`);
+	const { ranks } = await require(`../information/ranks/${structure}.json`);
 
 	let currRank = ranks.find((r) => r.name == rank);
 

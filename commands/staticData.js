@@ -6,7 +6,7 @@ const { Message } = require('discord.js');
 module.exports = {
 	name: 'staticdata',
 	aliases: [ 'static' ],
-	description: "Creates embeds and updates it's data hourly from a column in the Google Sheet.",
+	description: "Creates embeds and updates it's data hourly from a column in the roster.",
 	args: true,
 	usage: '<add/remove/update> <column>',
 	guildOnly: true,

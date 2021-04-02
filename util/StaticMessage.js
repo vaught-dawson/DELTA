@@ -43,7 +43,7 @@ class StaticMessage {
     async getObjectIndexFromFile() {
         let server = await this.getServerFromFile();
         let thisObjectIndex = server.staticMessages.findIndex(messageObject => {
-            return messageObject?.column === this.column && messageObject?.channelID === this.channelID ; 
+            return messageObject.column === this.column && messageObject.channelID === this.channelID ; 
         })
         return thisObjectIndex;
     }

@@ -169,7 +169,7 @@ class StaticMessage {
     async validateIntegrityOfEmbeds(client) {
         const channel = await this.getChannel(client);
         for (let staticEmbed of this.messageEmbeds) {
-            let message = await channel.messages.fetch({ around: staticEmbed, limit: 1 });
+            let message = await (await channel).messages.fetch({ around: staticEmbed, limit: 1 });
             message = await message.get(staticEmbed);
             if (!(await message)) return false;
         }

@@ -18,8 +18,8 @@ client.on('ready', async () => {
 	client.user.setPresence({
 		status: 'online',
 		activity: {
-			name: 'hentai with Vad',
-			type: 'WATCHING'
+			name: 'on H.E.C.U #JoinFH',
+			type: 'PLAYING'
 		}
 	})
 

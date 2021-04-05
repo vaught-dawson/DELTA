@@ -19,24 +19,27 @@ module.exports = {
 			'Resistance Divisions'
 		);
 
+		const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
+
 		for (let guild of guilds) {
 			if (guild.guildName == 'Logistics') continue;
-            message.channel.send(`Getting ${guild.guildName} members!`);
-            const spreadsheet = await loadSpreadsheet(guild.spreadsheetId).catch((err) => {
-                console.log(err);
-                message.channel.send(`Unable to load spreadsheet: \`${guild.guildName}\``)
-            });
-            if (spreadsheet === null) {
-                return message.channel.send('Invalid spreadsheet id! Make sure you set it up properly in the config.');
-            }
-            
+			await delay(3000);
+			message.channel.send(`Getting ${guild.guildName} members!`);
 
-            var rosterSheet = spreadsheet.sheetsByTitle[guild.rosterName];
-            if (!rosterSheet) {
-                return message.channel.send(
-                    'Invalid roster sheet name! Make sure you set it up properly in the config.'
-                );
-            }
+			const spreadsheet = await loadSpreadsheet(guild.spreadsheetId).catch((err) => {
+				console.log(err);
+				message.channel.send(`Unable to load spreadsheet: \`${guild.guildName}\``);
+			});
+			if (spreadsheet === null) {
+				return message.channel.send('Invalid spreadsheet id! Make sure you set it up properly in the config.');
+			}
+
+			var rosterSheet = spreadsheet.sheetsByTitle[guild.rosterName];
+			if (!rosterSheet) {
+				return message.channel.send(
+					'Invalid roster sheet name! Make sure you set it up properly in the config.'
+				);
+			}
 
 			var rows = await rosterSheet.getRows();
 
@@ -58,11 +61,11 @@ module.exports = {
 			embed.addField(
 				`*${guild.guildName}*`,
 				`**COs:** ${ranks['CO']}
-                **NCOs:** ${ranks['NCO']}
-                **Enlisted:** ${ranks['Enlisted']}
-                **TR:** ${ranks['TR']}
-                **Honorary:** ${ranks['Honorary']}
-                **Other:** ${ranks['Other']}`,
+					**NCOs:** ${ranks['NCO']}
+					**Enlisted:** ${ranks['Enlisted']}
+					**TR:** ${ranks['TR']}
+					**Honorary:** ${ranks['Honorary']}
+					**Other:** ${ranks['Other']}`,
 				true
 			);
 		}

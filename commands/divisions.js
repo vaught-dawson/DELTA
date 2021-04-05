@@ -22,21 +22,20 @@ module.exports = {
 		for (let guild of guilds) {
 			if (guild.guildName == 'Logistics') continue;
             message.channel.send(`Getting ${guild.guildName} members!`);
-            try {
-                const spreadsheet = await loadSpreadsheet(guild.spreadsheetId);
-                if (spreadsheet === null) {
-                    return message.channel.send('Invalid spreadsheet id! Make sure you set it up properly in the config.');
-                }
-                
+            const spreadsheet = await loadSpreadsheet(guild.spreadsheetId).catch((err) => {
+                console.log(err);
+                message.channel.send(`Unable to load spreadsheet: \`${guild.guildName}\``)
+            });
+            if (spreadsheet === null) {
+                return message.channel.send('Invalid spreadsheet id! Make sure you set it up properly in the config.');
+            }
+            
 
-                var rosterSheet = spreadsheet.sheetsByTitle[guild.rosterName];
-                if (!rosterSheet) {
-                    return message.channel.send(
-                        'Invalid roster sheet name! Make sure you set it up properly in the config.'
-                    );
-                }
-            } catch {
-                message.channel.send(`Problem loading spreadsheet: ${guild.guildName}`);
+            var rosterSheet = spreadsheet.sheetsByTitle[guild.rosterName];
+            if (!rosterSheet) {
+                return message.channel.send(
+                    'Invalid roster sheet name! Make sure you set it up properly in the config.'
+                );
             }
 
 			var rows = await rosterSheet.getRows();

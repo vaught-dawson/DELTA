@@ -1,6 +1,8 @@
 const { StaticMessage } = require('../util/StaticMessage.js');
 const { loadSpreadsheet } = require('../functions/loadSpreadsheet.js');
 const { getSheetHeaders } = require('../functions/getSheetHeaders.js');
+const { requestMessageInput } = require('../functions/requestMessageInput.js');
+const { splitEmbedsByFields } = require('../functions/splitEmbedsByFields.js');
 const { Message } = require('discord.js');
 
 module.exports = {
@@ -48,10 +50,18 @@ module.exports = {
 				})
 				return;
 			case 'remove':
-				if (!thisStaticMessageObject)
-					return message.channel.send(
-						"Cannot Delete Static Message: `This static message object doesn't exist!`"
+				if (!thisStaticMessageObject) {
+					message.channel.send(
+						"Couldn't Delete Static Message: `Static Message Column Not Defined!`"
 					);
+					
+					let staticMessages = await getStaticMessagesFromFile(server);
+					await sendStaticMessageListToCommandChannel(message, await staticMessages);
+					let staticMessageIndex = await requestMessageInput(message, "Enter the index of the static message you want to delete:").catch();
+
+					thisStaticMessageObject = await getStaticMessageFromFile(server, await staticMessages[staticMessageIndex]['column'], await staticMessages[staticMessageIndex]['channelID']);
+				}
+
 				await thisStaticMessageObject.deleteMessages(message.client).then(() => {
 					thisStaticMessageObject.removeFromFile();
 				})
@@ -84,7 +94,7 @@ module.exports = {
 };
 
 async function getSheetColumn(inputColumn = '', server = {}) {
-	const spreadsheet = await loadSpreadsheet(server.spreadsheetId);
+	const spreadsheet = await loadSpreadsheet(server.spreadsheetId, server);
 	if (spreadsheet === null) {
 		throw new Error('Invalid spreadsheet id! Make sure you set it up properly in the config.');
 	}
@@ -111,6 +121,25 @@ async function getStaticMessageFromFile(server = {}, sheetColumn = '', channelID
 	});
 	if (await staticMessageFromFile) return new StaticMessage(staticMessageFromFile);
 	return null;
+}
+
+async function getStaticMessagesFromFile(server = {}) {
+	return await server.staticMessages;
+}
+
+async function sendStaticMessageListToCommandChannel(originalCommandMessageObject, staticMessageList) {
+	let fields = [];
+	for (let staticMessage of staticMessageList) {
+		fields.push({
+			name: `Index: ${fields.length}`,
+			value: `**Column Name:** ${staticMessage['column']}\n**Channel Id:** ${staticMessage['channelID']}`,
+			inline: false
+		});
+	}
+	let embeds = splitEmbedsByFields(fields, 24, "Static Messages");
+	embeds.forEach((embed) => {
+		originalCommandMessageObject.channel.send(embed);
+	});
 }
 
 // async function isValidStaticMessage(staticMessageObject = StaticMessage) {

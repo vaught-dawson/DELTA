@@ -18,7 +18,8 @@ function addGuildToConfig(guild) {
 		discordHeader: 'Discord',
 		rankStructure: 'standard',
 		memberLogPrefix: 'Resistance',
-		staticMessages: []
+		staticMessages: [],
+		googleClientCredentials: {}
 	});
 
 	let filePath = path.resolve('./information/guilds.json');

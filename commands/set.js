@@ -17,7 +17,7 @@ module.exports = {
 	guildOnly: true,
 	commandChannel: true,
 	async execute(message, args, server) {
-		const spreadsheet = loadSpreadsheet(server.spreadsheetId);
+		const spreadsheet = loadSpreadsheet(server.spreadsheetId, server);
 		const rosterSheet = (await spreadsheet).sheetsByTitle[server.rosterName];
 
 		args = combineElementsByCharacter(args, '"');

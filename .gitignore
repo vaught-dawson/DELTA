@@ -1,5 +1,4 @@
 node_modules
 information/config.json
 information/guilds.json
-information/google_secret.json
 .env

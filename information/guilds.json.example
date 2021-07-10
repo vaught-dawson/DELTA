@@ -15,7 +15,8 @@
       "statusHeader": "",
       "rankStructure": "",
       "memberLogPrefix": "",
-      "staticMessages": []
+      "staticMessages": [],
+      "googleClientCredentials": {}
     }
   ]
 }

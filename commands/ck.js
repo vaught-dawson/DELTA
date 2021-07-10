@@ -36,7 +36,7 @@ module.exports = {
 			}
 		}
 
-		const spreadsheet = await loadSpreadsheet(server.spreadsheetId);
+		const spreadsheet = await loadSpreadsheet(server.spreadsheetId, server);
 
 		if (spreadsheet === null) {
 			return message.channel.send('Invalid spreadsheet id! Make sure you set it up properly in the config.');

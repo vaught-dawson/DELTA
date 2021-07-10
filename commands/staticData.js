@@ -84,7 +84,7 @@ module.exports = {
 };
 
 async function getSheetColumn(inputColumn = '', server = {}) {
-	const spreadsheet = await loadSpreadsheet(server.spreadsheetId);
+	const spreadsheet = await loadSpreadsheet(server.spreadsheetId, server);
 	if (spreadsheet === null) {
 		throw new Error('Invalid spreadsheet id! Make sure you set it up properly in the config.');
 	}

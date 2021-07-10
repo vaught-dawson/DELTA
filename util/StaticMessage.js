@@ -64,7 +64,7 @@ class StaticMessage {
 
     async generateEmbeds() {
         let server = await this.getServerFromFile();
-        const spreadsheet = await loadSpreadsheet(await server.spreadsheetId);
+        const spreadsheet = await loadSpreadsheet(await server.spreadsheetId, await server);
         if (!spreadsheet)
             throw new Error('Invalid spreadsheet id! Make sure you set it up properly in the config.');
         const rosterSheet = spreadsheet.sheetsByTitle[server.rosterName];

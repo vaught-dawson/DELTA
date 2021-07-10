@@ -26,7 +26,7 @@ module.exports = {
 			await delay(3000);
 			message.channel.send(`Getting ${guild.guildName} members!`);
 
-			const spreadsheet = await loadSpreadsheet(guild.spreadsheetId).catch((err) => {
+			const spreadsheet = await loadSpreadsheet(guild.spreadsheetId, guild).catch((err) => {
 				console.log(err);
 				message.channel.send(`Unable to load spreadsheet: \`${guild.guildName}\``);
 			});

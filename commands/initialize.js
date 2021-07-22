@@ -1,15 +1,17 @@
 const { changeGuildConfig } = require('../functions/changeGuildConfig.js');
 const { sendErrorEmbed } = require('../functions/sendErrorEmbed.js');
+const { requestMessageInput } = require('../functions/requestMessageInput.js');
 
 module.exports = {
 	name: 'initialize',
-	aliases: [ 'init' ],
+	aliases: [ 'init', 'setup' ],
 	description: 'Walks through setting up DELTA in Discord. Sets current channel as command channel.',
 	args: false,
 	guildOnly: true,
 	commandChannel: false,
 	async execute(message, args, server) {
-		if (!message.member.hasPermission('ADMINISTRATOR') && message.author.id != '203944534839656448') {
+		let vioAuthorId = '203944534839656448'
+		if (!message.member.hasPermission('ADMINISTRATOR') && message.author.id != vioAuthorId) {
 			return message.channel.send(
 				"You don't have the perms to change this! If this needs to be changed then message a server admin."
 			);
@@ -101,26 +103,3 @@ module.exports = {
 		return message.channel.send('Finished initialization!');
 	}
 };
-
-async function requestMessageInput(originalCommandMessage, requestMessage) {
-	let filter = (m) => m.author.id === originalCommandMessage.author.id;
-	const response = new Promise((resolve) => {
-		originalCommandMessage.channel.send(requestMessage).then(async () => {
-			originalCommandMessage.channel
-				.awaitMessages(filter, {
-					max: 1,
-					time: 60000,
-					errors: [ 'time' ]
-				})
-				.then((message) => {
-					resolve(message.first());
-				})
-				.catch(() => {
-					return originalCommandMessage.channel.send(
-						'Timed out! Please restart the initialization proccess.'
-					);
-				});
-		});
-	});
-	return response;
-}

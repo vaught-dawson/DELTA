@@ -100,6 +100,6 @@ module.exports = {
 				return message.channel.send("Failed to set the 'discord' header");
 			});
 
-		return message.channel.send('Finished initialization!');
+		return message.channel.send('Finished initialization! Last step is for an admin to set up the Google client credentials!');
 	}
 };

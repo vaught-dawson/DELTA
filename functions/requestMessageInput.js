@@ -1,8 +1,8 @@
-async function requestMessageInput(originalCommandMessage, requestMessage) {
-	let filter = (m) => m.author.id === originalCommandMessage.author.id;
+async function requestMessageInput(originalCommandMessageObject, promptToAsk) {
+	let filter = (m) => m.author.id === originalCommandMessageObject.author.id;
 	const response = new Promise((resolve) => {
-		originalCommandMessage.channel.send(requestMessage).then(async () => {
-			originalCommandMessage.channel
+		originalCommandMessageObject.channel.send(promptToAsk).then(async () => {
+			originalCommandMessageObject.channel
 				.awaitMessages(filter, {
 					max: 1,
 					time: 60000,
@@ -12,8 +12,8 @@ async function requestMessageInput(originalCommandMessage, requestMessage) {
 					resolve(message.first());
 				})
 				.catch(() => {
-					return originalCommandMessage.channel.send(
-						'Timed out! Please restart the initialization proccess.'
+					throw originalCommandMessageObject.channel.send(
+						'Timed out! User has not answered the prompt in time.'
 					);
 				});
 		});

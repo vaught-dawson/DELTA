@@ -1,44 +1,48 @@
-
-<h1 align="center"><strong>Document Editing Logistics Technical Aid v1.3.4</strong></h1>
+<h1 align="center"><strong>Document Editing Logistics Technical Aid v2.0.0</strong></h1>
 <p align="center"><img src="https://i.ibb.co/2MHY6wn/D-E-L-T-A-4.jpg" alt="DELTA Logo"/></p>
 
 ---
+
 ### Content
-- [Features](#Features)
-- [Getting Started](#Getting-Started)
-- [Default Documentation](#Default-Documentation)
-- [Support](#Support)
+
+-   [Features](#Features)
+-   [Getting Started](#Getting-Started)
+-   [Default Documentation](#Default-Documentation)
+-   [Support](#Support)
 
 ---
 
 ### Features
 
-- Command aliasing.
-- Action Shortcuts:
-	- Promote/demote with custom rank structure.
-	- Add to numerical columns.
-	- Remove member from sheet with configurable log.
-- Support for custom columns.
-- Route errors and bug reports to a Discord channel with a webhook.
-- Get notifications when a member on the roster leaves the Discord.
-- Send announcements to all Discords using the bot that have them enabled.
-- Change config options directly with commands.
-- Dynamic help command and command loading/handling.
-- Custom prefix option for each guild instance.
+-   Command aliasing.
+-   Action Shortcuts:
+    -   Promote/demote with custom rank structure.
+    -   Add to numerical columns.
+    -   Remove member from sheet with configurable log.
+-   Support for custom columns.
+-   Route errors and bug reports to a Discord channel with a webhook.
+-   Get notifications when a member on the roster leaves the Discord.
+-   Send announcements to all Discords using the bot that have them enabled.
+-   Change config options directly with commands.
+-   Dynamic help command and command loading/handling.
+-   Custom prefix option for each guild instance.
 
 ### Requirements
-- [A Discord Bot](https://github.com/reactiflux/discord-irc/wiki/Creating-a-discord-bot-&-getting-a-token)
-- [At least Node v12](https://nodejs.org/en/download/)
-- This Repository
+
+-   [A Discord Bot](https://github.com/reactiflux/discord-irc/wiki/Creating-a-discord-bot-&-getting-a-token)
+-   [At least Node v12](https://nodejs.org/en/download/)
+-   This Repository
 
 ### Getting-Started
 
 ##### 1. Install Dependancies via Console in the Main Directory
+
 ```
 npm install
 ```
 
 ##### 2. Create .env and Fill Required Info
+
 ```
 DISCORD_TOKEN=
 PREFIX_DEFAULT=
@@ -55,13 +59,16 @@ BUGREPORT_WEBHOOK_TOKEN=
 ##### 6. Start the Bot with `npm start`
 
 ##### 7. Invite your Bot to a Server
+
 DELTA will automatically add an instance to that server in `guilds.json`
 
 ##### 8. Run `init` with the default prefix and fill out Spreadsheet Info
+
 That is it! It should run flawlessly; otherwise make sure you filled out the info correctly.
 Run `list` and `sheets` to test.
 
 ### Default-Documentation
+
 The Documentation for the original purpose of DELTA, including commands and features, can be found [here](https://sites.google.com/view/deltadocumentation/documentation).
 
 ### Support

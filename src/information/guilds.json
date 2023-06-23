@@ -1,0 +1,33 @@
+{
+	"guilds": [
+		{
+			"guildName": "Logistics",
+			"guildId": "749775101435838554",
+			"commandChannelId": "770157072556884008",
+			"announcementChannelId": "798720079406825502",
+			"spreadsheetId": "1exaORvaPVze-3xaBLTN7__tME5h-wWPn_n6l6iJajCQ",
+			"prefix": "+",
+			"rosterName": "HECU_Roster",
+			"nameHeader": "Name",
+			"rankHeader": "Rank",
+			"lastPromotionDateHeader": "Last Promoted",
+			"discordHeader": "Discord",
+			"statusHeader": "Status",
+			"rankStructure": "standard",
+			"memberLogPrefix": "Dev",
+			"staticMessages": [],
+			"googleClientCredentials": {
+				"type": "service_account",
+				"project_id": "delta-testing",
+				"private_key_id": "5f96a343963ab60f3dd0e386c272bb117ac37c10",
+				"private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCvMmxuAMwKhyV1\nE2tXbaizo6jiMzLzTAvVOmoY2qmWNQVWUAV1m/ecX5ToHjsbjUeKFXtzNtg7aIMO\nTs7nKr1t3nk8s2qvUxynuasKSQEOe18V10PI5dtEw69sPH0+bsGEngDZHnE/KfWj\nrmgpLqX5B1USZyOcPU4AgTyaGBnPnWrLDJBLVU1P0WnX42st1sPC0N01TebKQoIl\nmP+EmopeTVDxWhIVJuJv5ruyuzmclVfMbwBWV7p2fu/yQoKhlnYeuB5CfnRokeht\nj+PeWHdgC66Y/ervIamMpexw0DIbbk0VCs3+UhNCjtLkpJnD73PHBGUPKotZvJK4\nP2adf5lPAgMBAAECggEACI440sJmWQb7q7mLekLPFqxq6w2IKdyZjsKUhKsOsVi4\nEwEe0yGhbzR+lTtIIjvh2lZIzFVuB9U+UAghfRMOiESWBjlENubHtVCRIiZyzzBh\nu1gHrvbgV1kvnb/yd4Z5ZRxmMesDF1VHFqAzm/vPDkWBQHb1O4QqUtjYQcfkYICl\nlZYOwI6pqpL1WAt3H6wX3GfPLTod9oXBzFMofAiSSH0aScpaI2w2XuXAl0D+gtmf\nMl4xR045/dZ2/Y9zYEcMrss0XIiwf4aJXJlpFolkwrV2udFySG8rQuLuZYGE12hK\n5cXkeIEZT8L8uH4zA0jtcdDuKRZnOV21/3TEGYbs+QKBgQDz7HIyt4OsH+USg6Pr\nD7hs8aPbOVeOtZizOSCi7FVgXhw96FGRftSvufkTw5Ju5Cb3tsyBULESmNyFoZP1\nxgMuRXwAmLwBuBynHmLvmdasm6fUxC9M83h+o5YpLS6tLHk/HPnUFGeUl2CYVIAB\nqRI5+m7o6Oq7uhXWUAeH7ZawvQKBgQC33urUnvA/ZgO6N+ybTZGvziay/Hbk/liJ\nUKePJ9LYcO8uV9EwjwxcceHEYCkHHQYw9dBHQKd0Z5dDyueKvhrvKhcUcIdj9ypw\nmzq26JtDEwNTgbf+sxvRDh2RHDbjfJWu1WnZAaOAfDy8nxt7CqGQYSazoFMwcMhk\nzjNbgQ6Q+wKBgDtXotDD5LzTZZ+DdzWQtYWLpBmJccu+UlAH7fC1HnA7dRN6mZ2U\nBZpa3EX6pn1j9Db/ufEb+HhVyBCapqx8Z/mx3eEnR1YDvLTLp7Yy7w8/Ly2MLRXD\nheUJV1bdLyXiU/0Ox5jY/fogedeVdy7wOwbv7lurjq/tLbLd9XcUTjzhAoGAdv3A\nIxEokR7H0r9WU7sDSS60RKi1mMQxL8wOY8p13LRZVThnnHE2oqzgWmGQq5XQ5+Zs\nf3AL7n0Lm0e4SEV20MgAX63jMIJH6M/MU4p80A+B24zbMe1fVw83ey0zKEz74UUj\nVtiEoyXDeJ3O/vWGURVOInji3TpftTzsZ49BifkCgYB5crjYK3RERobyjZRkiD51\ni02xxsFDO9BIk1X30YKWKT5a8igST+url8/ZLjAj5e82hanBqmR6WnRBWNteEqWc\nI6HkAhLmOUR+ru8NwADQ3nUaFvv7N/UUEkmNu9JehtigB+dzueihO3G2+8Ffgd+z\nJcEoU1v+M560YnyGpAzDJQ==\n-----END PRIVATE KEY-----\n",
+				"client_email": "delta-testing@delta-testing.iam.gserviceaccount.com",
+				"client_id": "108731946446534909303",
+				"auth_uri": "https://accounts.google.com/o/oauth2/auth",
+				"token_uri": "https://oauth2.googleapis.com/token",
+				"auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+				"client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/delta-testing%40delta-testing.iam.gserviceaccount.com"
+			}
+		}
+	]
+}

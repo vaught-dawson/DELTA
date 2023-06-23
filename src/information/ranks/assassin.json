@@ -1,0 +1,39 @@
+{
+	"ranks": [
+		{
+			"name": "00-Honorary",
+			"index": 0,
+			"group": "Honorary"
+		},
+		{
+			"name": "-01-Trainee",
+			"index": 1,
+			"group": "TR"
+		},
+		{
+			"name": "01-Sharpshooter",
+			"index": 2,
+			"group": "Enlisted"
+		},
+		{
+			"name": "02-Blitz",
+			"index": 3,
+			"group": "Enlisted"
+		},
+		{
+			"name": "03-Mercenary",
+			"index": 4,
+			"group": "Enlisted"
+		},
+		{
+			"name": "04-Veteran",
+			"index": 5,
+			"group": "Enlisted"
+		},
+		{
+			"name": "05-Chief",
+			"index": 6,
+			"group": "CO"
+		}
+	]
+}

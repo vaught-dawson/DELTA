@@ -1,0 +1,34 @@
+{
+	"ranks": [
+		{
+			"name": "00-Honorary",
+			"index": 0,
+			"group": "Honorary"
+		},
+		{
+			"name": "-01-Trainee",
+			"index": 1,
+			"group": "TR"
+		},
+		{
+			"name": "01-Besieger",
+			"index": 2,
+			"group": "Enlisted"
+		},
+		{
+			"name": "02-Berserker",
+			"index": 3,
+			"group": "Enlisted"
+		},
+		{
+			"name": "03-Ace",
+			"index": 4,
+			"group": "Enlisted"
+		},
+		{
+			"name": "04-Paladin",
+			"index": 5,
+			"group": "CO"
+		}
+	]
+}

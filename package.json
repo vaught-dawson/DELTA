@@ -4,7 +4,10 @@
 	"description": "Document Editing Logistics Technical Aid",
 	"main": "index.js",
 	"scripts": {
-		"start": "node src/bot.js"
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"start": "node src/bot.js",
+		"build": "docker build -t %npm_package_name%/alpine:%npm_package_version% .",
+		"container": "docker run -d --restart unless-stopped --name %npm_package_name% %npm_package_name%/alpine:%npm_package_version%"
 	},
 	"keywords": [],
 	"author": "Vio",
